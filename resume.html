@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume — Logan Finney</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Georgia:ital@0;1&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background-color: #ffffff;
+            color: #1a1a1a;
+            line-height: 1.6;
+        }
+
+        body.dark-mode {
+            background-color: #0a0a0a;
+            color: #f5f5f5;
+        }
+
+        /* Header */
+        header {
+            padding: 2rem;
+            border-bottom: 1px solid #e0e0e0;
+            position: sticky;
+            top: 0;
+            background-color: #ffffff;
+            z-index: 100;
+        }
+
+        body.dark-mode header {
+            background-color: #0a0a0a;
+            border-bottom-color: #333;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #1a1a1a;
+            border: 2px dashed #2563eb;
+            padding: 0.5rem 1rem;
+        }
+
+        body.dark-mode .logo {
+            color: #f5f5f5;
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #1a1a1a;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border: 2px dashed #2563eb;
+            padding: 0.5rem 1rem;
+            transition: all 0.3s;
+        }
+
+        body.dark-mode nav a {
+            color: #f5f5f5;
+        }
+
+        nav a:hover {
+            background-color: #2563eb;
+            color: #ffffff;
+            border-color: #2563eb;
+        }
+
+        #themeToggle {
+            background: none;
+            border: 2px dashed #2563eb;
+            color: #1a1a1a;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        body.dark-mode #themeToggle {
+            color: #f5f5f5;
+        }
+
+        #themeToggle:hover {
+            background-color: #2563eb;
+            color: #ffffff;
+            border-color: #2563eb;
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            margin-top: 3rem;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 1rem;
+        }
+
+        body.dark-mode h2 {
+            border-bottom-color: #333;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-top: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .job-title {
+            font-weight: 700;
+            color: #2563eb;
+        }
+
+        .job-company {
+            color: #2563eb;
+        }
+
+        .job-dates {
+            color: #999;
+            font-size: 0.95rem;
+        }
+
+        body.dark-mode .job-dates {
+            color: #666;
+        }
+
+        .job-description {
+            margin: 1rem 0;
+            color: #666;
+        }
+
+        body.dark-mode .job-description {
+            color: #aaa;
+        }
+
+        .job-description p {
+            margin-bottom: 0.5rem;
+        }
+
+        .job-description a {
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        .job-description a:hover {
+            text-decoration: underline;
+        }
+
+        ul {
+            margin: 1rem 0 1rem 2rem;
+            color: #666;
+        }
+
+        body.dark-mode ul {
+            color: #aaa;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        blockquote {
+            margin: 1rem 0 1rem 2rem;
+            padding-left: 1rem;
+            border-left: 3px solid #2563eb;
+            color: #666;
+            font-style: italic;
+        }
+
+        body.dark-mode blockquote {
+            color: #aaa;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid #e0e0e0;
+            padding: 2rem;
+            text-align: center;
+            color: #666;
+            margin-top: 4rem;
+        }
+
+        body.dark-mode footer {
+            border-top-color: #333;
+            color: #aaa;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            h2 {
+                font-size: 1.3rem;
+            }
+
+            nav {
+                gap: 0.5rem;
+            }
+
+            nav a {
+                font-size: 0.75rem;
+                padding: 0.4rem 0.8rem;
+            }
+
+            .job-header {
+                flex-direction: column;
+            }
+
+            main {
+                padding: 1.5rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">Logan Finney</div>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="work.html">Work</a>
+                <button id="themeToggle">🌙</button>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <h1>Resume</h1>
+
+        <h2>Experience</h2>
+
+        <h3>Associate Producer — Idaho Public Television</h3>
+        <div class="job-header">
+            <span class="job-dates">March 2021 to Present</span>
+        </div>
+        <div class="job-description">
+            <p>Logan was hired full-time at Idaho Public Television as an associate producer in 2021. He produces interviews and writes scripts for weekly episodes of the station's public policy and legislative affairs program <em>Idaho Reports</em>. He occasionally fills in as host of the show, and manages the show's blog, podcast and social media channels.</p>
+        </div>
+
+        <h3>Production Assistant — Idaho Public Television</h3>
+        <div class="job-header">
+            <span class="job-dates">March 2020 to March 2021</span>
+        </div>
+        <div class="job-description">
+            <p><strong>Daily COVID-19 Updates:</strong> <em>Idaho Reports</em> produced daily and weekly COVID-19 updates which aired before and after <em>PBS NewsHour</em> on Idaho Public Television. Logan was part of a rotating team that wrote, voiced and edited the updates each week. The one to two minute segments included up-to-date data from Idaho Department of Health and Welfare and additional news on the pandemic.</p>
+            <p><strong>Idaho Reports Podcast:</strong> Prior to Logan joining the staff, <em>Idaho Reports</em> used an audio hosting site to embed interviews in blog posts and to post an occasional episode of the show. Logan took advantage of the site's existing RSS capability to set up an <em>Idaho Reports</em> podcast which appears on all major podcast platforms.</p>
+            <p>After shifting to more consistent distribution and the addition of original podcast episodes, the show's listenership exploded from under 300 plays per year to just over 18,000 plays in 2020 and more than 44,000 plays in 2021.</p>
+        </div>
+
+        <h3>Student Intern — Idaho Public Television</h3>
+        <div class="job-header">
+            <span class="job-dates">January 2020 to March 2020</span>
+        </div>
+        <div class="job-description">
+            <p>Logan started with Idaho Public Television as a University of Idaho intern covering the 2020 legislative session in Boise. After the session adjourned in March, he stayed with the station as a production assistant to continue covering the COVID-19 pandemic's impacts on the state of Idaho.</p>
+        </div>
+
+        <h2>Education</h2>
+
+        <h3>University of Idaho — B.S. Broadcasting & Digital Media</h3>
+        <div class="job-header">
+            <span class="job-dates">2016–2020</span>
+        </div>
+        <div class="job-description">
+            <p>Logan graduated from the University of Idaho School of Journalism and Mass Media in 2020 with a bachelor's degree in Broadcasting and Digital Media. In the journalism program he studied media history, ethics and law. He also gained valuable hands-on production experience for film, television and independent media at Idaho Public Television's KUID studio.</p>
+        </div>
+
+        <h3>McClure Center for Public Policy Research — Idaho Public Radio</h3>
+        <div class="job-header">
+            <span class="job-dates">Spring 2020</span>
+        </div>
+        <div class="job-description">
+            <p>In his final semester, Logan covered the 2020 state legislative session as an intern for Idaho Public Radio at the university's McClure Center for Public Policy Research in Boise. He interned concurrently with Idaho Public Television as a production assistant for <em>Idaho Reports</em>.</p>
+            <p>Alongside veteran capitol reporters, Logan wrote regular stories for rural newspapers across Idaho. His work at the statehouse was published in the <em>Bonner County Daily Bee</em>, the <em>Coeur d'Alene Press</em>, the <em>Idaho County Free Press</em>, the <em>Owyhee Avalanche</em>, the <em>Power County Press</em> and the <em>Aberdeen Times</em>, and published online by <em>Idaho Public Radio</em>.</p>
+        </div>
+
+        <h3>University of Idaho — The Argonaut & BLOT Magazine</h3>
+        <div class="job-header">
+            <span class="job-dates">2018–2020</span>
+        </div>
+        <div class="job-description">
+            <p>As a student media staff member, Logan proofread and copyedited pages on production nights for <em>The Argonaut</em> newspaper. He also produced occasional video features for the paper and promotional segments for pieces in <em>Blot</em> magazine.</p>
+        </div>
+
+        <h3>Sandpoint High School — The Cedar Post</h3>
+        <div class="job-header">
+            <span class="job-dates">2015–2016</span>
+        </div>
+        <div class="job-description">
+            <p>Logan got his first taste of journalism when he was recruited as a high school senior to be the Multimedia Editor for the <em>Cedar Post</em>, Sandpoint High School's student newspaper. He edited the daily video announcements that were played in class, oversaw the paper's video team, and worked on print and multimedia stories.</p>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Logan Finney. All rights reserved.</p>
+    </footer>
+
+    <script src="config.js"></script>
+</body>
+</html>

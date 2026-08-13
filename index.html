@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logan Finney - Multimedia Journalist</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Georgia:ital@0;1&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background-color: #ffffff;
+            color: #1a1a1a;
+            line-height: 1.6;
+        }
+
+        body.dark-mode {
+            background-color: #0a0a0a;
+            color: #f5f5f5;
+        }
+
+        /* Header */
+        header {
+            padding: 2rem;
+            border-bottom: 1px solid #e0e0e0;
+            position: sticky;
+            top: 0;
+            background-color: #ffffff;
+            z-index: 100;
+        }
+
+        body.dark-mode header {
+            background-color: #0a0a0a;
+            border-bottom-color: #333;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #1a1a1a;
+            border: 2px dashed #2563eb;
+            padding: 0.5rem 1rem;
+        }
+
+        body.dark-mode .logo {
+            color: #f5f5f5;
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #1a1a1a;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border: 2px dashed #2563eb;
+            padding: 0.5rem 1rem;
+            transition: all 0.3s;
+        }
+
+        body.dark-mode nav a {
+            color: #f5f5f5;
+        }
+
+        nav a:hover {
+            background-color: #2563eb;
+            color: #ffffff;
+            border-color: #2563eb;
+        }
+
+        #themeToggle {
+            background: none;
+            border: 2px dashed #2563eb;
+            color: #1a1a1a;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        body.dark-mode #themeToggle {
+            color: #f5f5f5;
+        }
+
+        #themeToggle:hover {
+            background-color: #2563eb;
+            color: #ffffff;
+            border-color: #2563eb;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            width: 100%;
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-size: cover;
+            background-position: center;
+            opacity: 0.3;
+            transition: opacity 0.8s ease-in-out;
+            z-index: 0;
+        }
+
+        .hero-bg.active {
+            opacity: 0.5;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.85) 100%);
+            z-index: 1;
+        }
+
+        body.dark-mode .hero::before {
+            background: linear-gradient(135deg, rgba(10, 10, 10, 0.95) 0%, rgba(10, 10, 10, 0.9) 100%);
+        }
+
+        .hero-content {
+            max-width: 900px;
+            z-index: 2;
+            position: relative;
+            text-align: left;
+            padding: 2rem;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+            color: #1a1a1a;
+        }
+
+        body.dark-mode .hero h1 {
+            color: #f5f5f5;
+        }
+
+        .hero p {
+            font-size: 1rem;
+            max-width: 700px;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+            color: #666;
+        }
+
+        body.dark-mode .hero p {
+            color: #aaa;
+        }
+
+        .tagline {
+            font-style: italic;
+            color: #2563eb;
+            margin: 1.5rem 0;
+            font-size: 1rem;
+        }
+
+        /* CTA Buttons */
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: 2px dashed #2563eb;
+            background: transparent;
+            color: #2563eb;
+            text-decoration: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            font-family: 'Georgia', serif;
+        }
+
+        .btn:hover {
+            background-color: #2563eb;
+            color: #ffffff;
+            border-color: #2563eb;
+        }
+
+        /* Social Icons */
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .social-icons a {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed #2563eb;
+            color: #2563eb;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .social-icons a:hover {
+            background-color: #2563eb;
+            color: #ffffff;
+            border-color: #2563eb;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid #e0e0e0;
+            padding: 2rem;
+            text-align: center;
+            color: #666;
+            margin-top: 4rem;
+        }
+
+        body.dark-mode footer {
+            border-top-color: #333;
+            color: #aaa;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            nav {
+                gap: 0.5rem;
+            }
+
+            nav a {
+                font-size: 0.75rem;
+                padding: 0.4rem 0.8rem;
+            }
+
+            .hero-content {
+                padding: 1rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">Logan Finney</div>
+            <nav>
+                <a href="resume.html">Resume</a>
+                <a href="work.html">Work</a>
+                <button id="themeToggle">🌙</button>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <!-- Rotating Hero Images -->
+            <div class="hero-bg active" id="hero-0"></div>
+            <div class="hero-bg" id="hero-1"></div>
+            <div class="hero-bg" id="hero-2"></div>
+            <div class="hero-bg" id="hero-3"></div>
+            <div class="hero-bg" id="hero-4"></div>
+
+            <div class="hero-content">
+                <h1>Idaho Multimedia Journalist</h1>
+                <p>Logan Finney is an award-winning professional journalist who specializes in covering politics and government. An Idahoan by birth, he grew up hunting, hiking, and skiing in the panhandle mountains and remains forever fascinated with the state's history, culture, and people.</p>
+                <p class="tagline">The world is quiet here.</p>
+                
+                <div class="cta-buttons">
+                    <a href="resume.html" class="btn">Resume</a>
+                    <a href="work.html" class="btn">Work</a>
+                </div>
+
+                <div class="social-icons">
+                    <a href="mailto:logan.finney@idahoptv.org" title="Email">✉</a>
+                    <a href="https://twitter.com" title="Twitter">𝕏</a>
+                    <a href="https://facebook.com" title="Facebook">f</a>
+                    <a href="https://youtube.com" title="YouTube">▶</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Logan Finney. All rights reserved.</p>
+    </footer>
+
+    <script src="config.js"></script>
+</body>
+</html>

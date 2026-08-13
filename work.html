@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Work — Logan Finney</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Georgia:ital@0;1&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background-color: #ffffff;
+            color: #1a1a1a;
+            line-height: 1.6;
+        }
+
+        body.dark-mode {
+            background-color: #0a0a0a;
+            color: #f5f5f5;
+        }
+
+        /* Header */
+        header {
+            padding: 2rem;
+            border-bottom: 1px solid #e0e0e0;
+            position: sticky;
+            top: 0;
+            background-color: #ffffff;
+            z-index: 100;
+        }
+
+        body.dark-mode header {
+            background-color: #0a0a0a;
+            border-bottom-color: #333;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #1a1a1a;
+            border: 2px dashed #2563eb;
+            padding: 0.5rem 1rem;
+        }
+
+        body.dark-mode .logo {
+            color: #f5f5f5;
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #1a1a1a;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border: 2px dashed #2563eb;
+            padding: 0.5rem 1rem;
+            transition: all 0.3s;
+        }
+
+        body.dark-mode nav a {
+            color: #f5f5f5;
+        }
+
+        nav a:hover {
+            background-color: #2563eb;
+            color: #ffffff;
+            border-color: #2563eb;
+        }
+
+        #themeToggle {
+            background: none;
+            border: 2px dashed #2563eb;
+            color: #1a1a1a;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        body.dark-mode #themeToggle {
+            color: #f5f5f5;
+        }
+
+        #themeToggle:hover {
+            background-color: #2563eb;
+            color: #ffffff;
+            border-color: #2563eb;
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            margin-top: 3rem;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 1rem;
+        }
+
+        body.dark-mode h2 {
+            border-bottom-color: #333;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-item {
+            margin: 1.5rem 0;
+            padding: 1rem;
+            border-left: 3px solid #2563eb;
+        }
+
+        .project-item a {
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        .project-item a:hover {
+            text-decoration: underline;
+        }
+
+        .project-description {
+            color: #666;
+            margin: 0.5rem 0;
+        }
+
+        body.dark-mode .project-description {
+            color: #aaa;
+        }
+
+        .project-meta {
+            font-size: 0.9rem;
+            color: #999;
+            margin-top: 0.5rem;
+        }
+
+        body.dark-mode .project-meta {
+            color: #666;
+        }
+
+        ul {
+            margin: 1rem 0 1rem 2rem;
+            color: #666;
+        }
+
+        body.dark-mode ul {
+            color: #aaa;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        li a {
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        li a:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid #e0e0e0;
+            padding: 2rem;
+            text-align: center;
+            color: #666;
+            margin-top: 4rem;
+        }
+
+        body.dark-mode footer {
+            border-top-color: #333;
+            color: #aaa;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            h2 {
+                font-size: 1.3rem;
+            }
+
+            nav {
+                gap: 0.5rem;
+            }
+
+            nav a {
+                font-size: 0.75rem;
+                padding: 0.4rem 0.8rem;
+            }
+
+            main {
+                padding: 1.5rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">Logan Finney</div>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="resume.html">Resume</a>
+                <button id="themeToggle">🌙</button>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <h1>Work</h1>
+
+        <h2>News Writing</h2>
+
+        <h3>Recent Stories</h3>
+        <p>For the most recent stories, visit <a href="https://www.idahoptv.org">Idaho Public Television</a> or <a href="https://www.idahoradio.org">Idaho Public Radio</a>.</p>
+
+        <h3>2021 Legislative Redistricting</h3>
+        <ul>
+            <li><a href="#">Redistricting commission builds foundation for next 90 days</a></li>
+            <li><a href="#">Redistricting commission takes first crack at drawing maps</a></li>
+            <li><a href="#">Treasure Valley calls for urban southwestern congressional district</a></li>
+            <li><a href="#">Canyon, Ada residents consider communities of interest</a></li>
+            <li><a href="#">North Idaho communities make redistricting requests</a></li>
+            <li><a href="#">Idaho's final redistricting maps approved</a></li>
+            <li><a href="#">One person, one vote, forty-four counties</a></li>
+        </ul>
+
+        <h3>2021 Idaho Campaigns</h3>
+        <ul>
+            <li><a href="#">House Speaker Scott Bedke joins lieutenant governor race</a></li>
+            <li><a href="#">Sandpoint mayor announces governor campaign</a></li>
+        </ul>
+
+        <h3>2021 Idaho Legislature</h3>
+        <ul>
+            <li><a href="#">Education funding ballot initiative delayed after 'premature' start</a></li>
+            <li><a href="#">Lt. Gov. McGeachin issues executive order while Little leaves Idaho</a></li>
+            <li><a href="#">Proposed constitutional amendment on drug policy would set Idaho apart even more</a></li>
+            <li><a href="#">House committee considers formalizing gallery rules</a></li>
+        </ul>
+
+        <h3>2020 Idaho Legislature</h3>
+        <p>Logan covered Idaho's 2020 legislative session as a capitol reporting intern with the UI McClure Center for Public Policy Research. His articles were printed in the <em>Bonner County Daily Bee</em>, the <em>Coeur d'Alene Press</em>, the <em>Idaho County Free Press</em>, the <em>Owyhee Avalanche</em>, the <em>Power County Press</em> and the <em>Aberdeen Times</em>, and published online by <em>Idaho Public Radio</em>.</p>
+
+        <h2>Video</h2>
+
+        <h3>Associate Producer — Idaho Reports</h3>
+        <div class="project-item">
+            <h4>Kelly Packer | Association of Idaho Cities</h4>
+            <p class="project-meta">2022 Legislative Session, Public Defense</p>
+        </div>
+        <div class="project-item">
+            <h4>Rep. Lauren Necochea | D-Boise</h4>
+            <p class="project-meta">2021 Legislative Session, Tax Policy</p>
+        </div>
+        <div class="project-item">
+            <h4>Rep. Sage Dixon | R-Ponderay</h4>
+            <p class="project-meta">2021 Legislative Session, COVID Policy</p>
+        </div>
+
+        <h3>Awards</h3>
+        <div class="project-item">
+            <h4>Can We Do More with One Penny?</h4>
+            <p class="project-description">Idaho State Broadcasters Association 2022 Best in Broadcasting Awards — Division A: News and Public Affairs - Best Spot News Story, 3rd place</p>
+        </div>
+
+        <h3>Host — CIV•ED | A Guide to Idaho Politics and Civic Engagement</h3>
+        <div class="project-item">
+            <h4>Public Participation in Idaho Government</h4>
+            <p class="project-description">Of everyone involved in government, it's the public that has the most important role. And at no time is that more apparent than on election day.</p>
+        </div>
+        <div class="project-item">
+            <h4>How a Bill becomes a Law in Idaho</h4>
+            <p class="project-description">Idaho has 35 legislative districts, each with two representatives and one senator.</p>
+        </div>
+        <div class="project-item">
+            <h4>The Role of the Media</h4>
+            <p class="project-description">Professional journalists gather information by interviewing sources, reviewing documents, and fact-checking claims.</p>
+        </div>
+
+        <h2>Audio</h2>
+
+        <h3>Podcast Manager — Idaho Public Television</h3>
+        <div class="project-item">
+            <h4>Idaho Reports Podcast</h4>
+            <p class="project-description">Weekly episodes of Idaho Public Television's public policy and legislative affairs program.</p>
+        </div>
+        <div class="project-item">
+            <h4>Dialogue with Marcia Franklin</h4>
+            <p class="project-description">A podcast series featuring conversations about Idaho politics and policy.</p>
+        </div>
+
+        <h3>University of Idaho</h3>
+        <div class="project-item">
+            <h4>Senate Education Committee Coverage</h4>
+            <p class="project-description">Story about a bill that would have decreased the number of finalists that public state universities must name in presidential searches. Published in the Argonaut and played on KUOI 89.3 FM.</p>
+        </div>
+
+        <h3>The RAM Examiner: Virtual Reality</h3>
+        <div class="project-item">
+            <h4>Hosts: Chris Graham, Logan Finney, Kali Nelson</h4>
+            <p class="project-description">Explore the use of virtual reality from video games to 3D mapping and its possible future in professional architecture. (JAMM 426: Narrative Journalism)</p>
+        </div>
+
+        <h3>This Idaho Life: "Out of Fuel in Fruitland"</h3>
+        <div class="project-item">
+            <h4>Narrative podcast assignment</h4>
+            <p class="project-description">A narrative podcast in the style of <em>This American Life</em>. (JAMM 122: Multimedia Storytelling)</p>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Logan Finney. All rights reserved.</p>
+    </footer>
+
+    <script src="config.js"></script>
+</body>
+</html>
