@@ -261,9 +261,35 @@
                 padding: 1.5rem 1rem;
             }
         }
+
+        /* Accessibility: skip link is visually hidden until keyboard focus */
+        .skip-link {
+            position: absolute;
+            left: -9999px;
+            top: 0;
+            background-color: #1a1a1a;
+            color: #ffffff;
+            padding: 0.5rem 1rem;
+            z-index: 200;
+        }
+
+        .skip-link:focus {
+            left: 0;
+        }
+
+        /* Accessibility: honor reduced-motion preference */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
     </style>
 </head>
 <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
     <header>
         <div class="header-content">
             <div class="logo">Logan Finney</div>
@@ -275,7 +301,7 @@
         </div>
     </header>
 
-    <main>
+    <main id="main-content">
         <h1>Resume</h1>
 
         <h2>Experience</h2>
