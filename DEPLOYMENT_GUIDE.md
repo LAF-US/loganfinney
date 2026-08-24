@@ -7,7 +7,7 @@ The Bluesky handle `@loganfinney.com` is verified via the **HTTPS well-known met
 | File | Purpose |
 | :--- | :--- |
 | `.well-known/atproto-did` | Contains the account DID; Bluesky fetches `https://loganfinney.com/.well-known/atproto-did` to verify domain ownership. |
-| `.nojekyll` | Disables Jekyll processing on GitHub Pages, which otherwise ignores dot-folders like `.well-known`. |
+| `_config.yml` | Jekyll configuration with `include: [".well-known"]`, so the Jekyll build on GitHub Pages publishes the dot-folder instead of dropping it. This works with the current plain-HTML site and with any future Jekyll-based site — just carry the `include` entry into the new config. |
 
 If the handle ever shows as invalid, confirm the URL above returns the DID, then re-verify in the Bluesky app under **Settings → Account → Handle → I have my own domain → Verify Text File**.
 
