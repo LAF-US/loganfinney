@@ -1,4 +1,2 @@
-# Jekyll excludes dot-folders from the built site by default; this keeps
-# .well-known published so the Bluesky handle verification file stays live.
 include:
   - ".well-known"
