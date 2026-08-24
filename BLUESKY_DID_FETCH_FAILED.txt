@@ -1,0 +1,38 @@
+All network attempts to resolve the Bluesky DID for handle loganfinney.com failed
+with egress/proxy 403 errors (2026-08-24, remote session container).
+
+Attempt 1: curl -sS "https://bsky.social/xrpc/com.atproto.identity.resolveHandle?handle=loganfinney.com"
+  curl: (56) CONNECT tunnel failed, response 403
+
+Attempt 2: curl -sS "https://public.api.bsky.app/xrpc/com.atproto.identity.resolveHandle?handle=loganfinney.com"
+  curl: (56) CONNECT tunnel failed, response 403
+
+Attempt 3: curl -sS "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfile?actor=loganfinney.com"
+  curl: (56) CONNECT tunnel failed, response 403
+
+Agent proxy status (recentRelayFailures excerpt):
+  {"kind":"connect_rejected","detail":"gateway answered 403 to CONNECT (policy denial or upstream failure)","host":"bsky.social:443"}
+  {"kind":"connect_rejected","detail":"gateway answered 403 to CONNECT (policy denial or upstream failure)","host":"public.api.bsky.app:443"}
+
+Attempt 4: WebFetch https://bsky.social/...
+  {"error_type":"EGRESS_BLOCKED","domain":"bsky.social","message":"Access to bsky.social is blocked by the network egress proxy."}
+
+Attempt 5: WebFetch https://public.api.bsky.app/...
+  {"error_type":"EGRESS_BLOCKED","domain":"public.api.bsky.app","message":"Access to public.api.bsky.app is blocked by the network egress proxy."}
+
+Attempt 6: DNS TXT lookup of _atproto.loganfinney.com
+  No DNS tools (dig/host/nslookup) installed; raw UDP DNS query denied by permission classifier.
+
+Attempt 7: DNS-over-HTTPS (dns.google, cloudflare-dns.com), via curl and WebFetch
+  curl: (56) CONNECT tunnel failed, response 403 (both hosts)
+  {"error_type":"EGRESS_BLOCKED","domain":"dns.google",...}
+
+Attempt 8: curl -sS "https://plc.directory/"
+  curl: (56) CONNECT tunnel failed, response 403
+  (plc.directory being blocked also rules out the required sanity-check of any
+  DID obtained from a secondary source, e.g. web search.)
+
+Conclusion: the DID cannot be fetched or verified from this environment. The
+.well-known/atproto-did file was NOT created. Resolution needs to happen from
+an environment with network access to bsky.social or public.api.bsky.app
+(e.g. locally: curl -sS "https://bsky.social/xrpc/com.atproto.identity.resolveHandle?handle=loganfinney.com").
