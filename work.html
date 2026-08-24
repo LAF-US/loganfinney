@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Selected news writing, video and audio work by Idaho multimedia journalist Logan Finney, including Idaho Reports coverage of the Idaho Legislature.">
     <title>Work — Logan Finney</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -240,9 +241,35 @@
                 padding: 1.5rem 1rem;
             }
         }
+
+        /* Accessibility: skip link is visually hidden until keyboard focus */
+        .skip-link {
+            position: absolute;
+            left: -9999px;
+            top: 0;
+            background-color: #1a1a1a;
+            color: #ffffff;
+            padding: 0.5rem 1rem;
+            z-index: 200;
+        }
+
+        .skip-link:focus {
+            left: 0;
+        }
+
+        /* Accessibility: honor reduced-motion preference */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
     </style>
 </head>
 <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
     <header>
         <div class="header-content">
             <div class="logo">Logan Finney</div>
@@ -254,37 +281,37 @@
         </div>
     </header>
 
-    <main>
+    <main id="main-content">
         <h1>Work</h1>
 
         <h2>News Writing</h2>
 
         <h3>Recent Stories</h3>
-        <p>For the most recent work, visit <a href="https://www.idahoreports.org"><i></i>Idaho Reports</i></a> at <a href="https://www.idahoptv.org">Idaho Public Television</a>.</p>
+        <p>For an automatically updated archive of Logan's latest stories, visit <a href="https://authory.com/LoganFinney">his portfolio on Authory</a>. For the most recent work, visit <a href="https://www.idahoreports.org"><i>Idaho Reports</i></a> at <a href="https://www.idahoptv.org">Idaho Public Television</a>.</p>
 
         <h3>2021 Legislative Redistricting</h3>
         <ul>
-            <li><a href="#">Redistricting commission builds foundation for next 90 days</a></li>
-            <li><a href="#">Redistricting commission takes first crack at drawing maps</a></li>
-            <li><a href="#">Treasure Valley calls for urban southwestern congressional district</a></li>
-            <li><a href="#">Canyon, Ada residents consider communities of interest</a></li>
-            <li><a href="#">North Idaho communities make redistricting requests</a></li>
-            <li><a href="#">Idaho's final redistricting maps approved</a></li>
-            <li><a href="#">One person, one vote, forty-four counties</a></li>
+            <li><a href="https://blog.idahoreports.idahoptv.org/2021/09/02/redistricting-commission-builds-foundation-for-next-90-days/">Redistricting commission builds foundation for next 90 days</a></li>
+            <li><a href="https://blog.idahoreports.idahoptv.org/2021/09/09/redistricting-commission-takes-first-crack-at-redrawing-maps/">Redistricting commission takes first crack at drawing maps</a></li>
+            <li><a href="https://blog.idahoreports.idahoptv.org/2021/09/18/time-has-come-for-a-southwestern-idaho-congressional-district/">Treasure Valley calls for urban southwestern congressional district</a></li>
+            <li><a href="https://blog.idahoreports.idahoptv.org/2021/09/21/canyon-ada-residents-consider-communities-of-interest/">Canyon, Ada residents consider communities of interest</a></li>
+            <li><a href="https://blog.idahoreports.idahoptv.org/2021/09/30/we-dont-want-to-be-with-them-wed-like-to-be-with-these-folks-instead/">North Idaho communities make redistricting requests</a></li>
+            <li><a href="https://blog.idahoreports.idahoptv.org/2021/11/05/idaho-final-redistricting-maps-approved/">Idaho's final redistricting maps approved</a></li>
+            <li><a href="https://blog.idahoreports.idahoptv.org/2021/10/28/one-person-one-vote-forty-four-counties/">One person, one vote, forty-four counties</a></li>
         </ul>
 
         <h3>2021 Idaho Campaigns</h3>
         <ul>
-            <li><a href="#">House Speaker Scott Bedke joins lieutenant governor race</a></li>
-            <li><a href="#">Sandpoint mayor announces governor campaign</a></li>
+            <li><a href="https://blog.idahoreports.idahoptv.org/2021/05/27/speaker-bedke-joins-lieutenant-governor-race/">House Speaker Scott Bedke joins lieutenant governor race</a></li>
+            <li><a href="https://blog.idahoreports.idahoptv.org/2021/11/08/sandpoint-mayor-announces-governor-campaign/">Sandpoint mayor announces governor campaign</a></li>
         </ul>
 
         <h3>2021 Idaho Legislature</h3>
         <ul>
-            <li><a href="#">Education funding ballot initiative delayed after 'premature' start</a></li>
-            <li><a href="#">Lt. Gov. McGeachin issues executive order while Little leaves Idaho</a></li>
-            <li><a href="#">Proposed constitutional amendment on drug policy would set Idaho apart even more</a></li>
-            <li><a href="#">House committee considers formalizing gallery rules</a></li>
+            <li><a href="https://blog.idahoreports.idahoptv.org/2021/06/15/education-funding-ballot-initiative-delayed-after-premature-start/">Education funding ballot initiative delayed after 'premature' start</a></li>
+            <li><a href="https://blog.idahoreports.idahoptv.org/2021/10/05/lt-gov-mcgeachin-issues-executive-order-while-little-leaves-idaho/">Lt. Gov. McGeachin issues executive order while Little leaves Idaho</a></li>
+            <li><a href="https://blog.idahoreports.idahoptv.org/2021/02/03/just-say-never-proposed-constitutional-amendment-on-drug-policy-would-set-idaho-apart-even-more/">Proposed constitutional amendment on drug policy would set Idaho apart even more</a></li>
+            <li>House committee considers formalizing gallery rules</li>
         </ul>
 
         <h3>2020 Idaho Legislature</h3>
