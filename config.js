@@ -21,7 +21,7 @@ function initHeroRotation() {
             heroBgs[index].style.backgroundImage = `url('${imageUrl}')`;
         }
     });
-    
+
     let currentIndex = 0;
 
     function rotateHeroImage() {
@@ -38,7 +38,7 @@ function initHeroRotation() {
 function initThemeToggle() {
     const themeToggle = document.getElementById('themeToggle');
     const currentTheme = localStorage.getItem('theme') || 'light';
-    
+
     if (currentTheme === 'dark') {
         document.body.classList.add('dark-mode');
         themeToggle.textContent = '☀️';
