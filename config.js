@@ -24,20 +24,32 @@ function initHeroRotation() {
 
     // Only slides that received an image may rotate; extras would show blank
     const slides = Array.from(heroBgs).slice(0, HERO_IMAGES.length);
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    if (slides.length < 2 || reducedMotion) {
+    if (slides.length < 2) {
         return;
     }
 
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     let currentIndex = 0;
+    let timer = null;
 
-    // Rotate every 7 seconds
-    setInterval(() => {
+    function rotate() {
         slides[currentIndex].classList.remove('active');
         currentIndex = (currentIndex + 1) % slides.length;
         slides[currentIndex].classList.add('active');
-    }, 7000);
+    }
+
+    // Rotate every 7 seconds, stopping or resuming if the motion preference changes
+    function updateRotation() {
+        if (reducedMotion.matches) {
+            clearInterval(timer);
+            timer = null;
+        } else if (timer === null) {
+            timer = setInterval(rotate, 7000);
+        }
+    }
+
+    updateRotation();
+    reducedMotion.addEventListener('change', updateRotation);
 }
 
 // Initialize theme toggle
@@ -47,12 +59,16 @@ function initThemeToggle() {
         return;
     }
 
+    const root = document.documentElement;
+    const currentTheme = () => root.getAttribute('data-theme') ||
+        (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    const syncPressed = () => themeToggle.setAttribute('aria-pressed', String(currentTheme() === 'dark'));
+    syncPressed();
+
     themeToggle.addEventListener('click', () => {
-        const root = document.documentElement;
-        const current = root.getAttribute('data-theme') ||
-            (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-        const next = current === 'dark' ? 'light' : 'dark';
+        const next = currentTheme() === 'dark' ? 'light' : 'dark';
         root.setAttribute('data-theme', next);
+        syncPressed();
         try {
             localStorage.setItem('theme', next);
         } catch (e) {
