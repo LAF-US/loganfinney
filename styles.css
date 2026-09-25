@@ -212,11 +212,24 @@ body {
     pointer-events: none;
 }
 
-/* On narrow screens the text spans the full width, so the whole photo sits
-   under a near-solid veil to keep hero text at WCAG AAA contrast */
+/* On narrow screens the text spans the full width: the photo shows clear in a
+   band at the top, then fades to a near-solid veil where the text begins so
+   hero text keeps WCAG AAA contrast */
 @media (max-width: 720px) {
+    .hero {
+        min-height: 0;
+        padding-top: 38vh;
+    }
+
     .hero::after {
-        background: rgba(var(--bg-rgb), 0.96);
+        background: linear-gradient(to bottom,
+            var(--hero-scrim) 0%,
+            var(--hero-scrim) 18vh,
+            rgba(var(--bg-rgb), 0.96) 38vh);
+    }
+
+    .hero-content {
+        padding-top: 1.5rem;
     }
 }
 
