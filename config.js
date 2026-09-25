@@ -1,5 +1,5 @@
 // Hero Images Configuration
-// Update the URLs below to change hero images across ALL pages automatically
+// Update the URLs below to change hero images on the home page
 const HERO_IMAGES = [
     'https://live.staticflickr.com/65535/54182454660_c81075673a_b.jpg',
     'https://live.staticflickr.com/65535/55018540576_bf68c1f794_b.jpg',
@@ -22,33 +22,58 @@ function initHeroRotation() {
         }
     });
 
-    let currentIndex = 0;
-
-    function rotateHeroImage() {
-        heroBgs[currentIndex].classList.remove('active');
-        currentIndex = (currentIndex + 1) % heroBgs.length;
-        heroBgs[currentIndex].classList.add('active');
+    // Only slides that received an image may rotate; extras would show blank
+    const slides = Array.from(heroBgs).slice(0, HERO_IMAGES.length);
+    if (slides.length < 2) {
+        return;
     }
 
-    // Rotate every 5 seconds
-    setInterval(rotateHeroImage, 5000);
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let currentIndex = 0;
+    let timer = null;
+
+    function rotate() {
+        slides[currentIndex].classList.remove('active');
+        currentIndex = (currentIndex + 1) % slides.length;
+        slides[currentIndex].classList.add('active');
+    }
+
+    // Rotate every 7 seconds, stopping or resuming if the motion preference changes
+    function updateRotation() {
+        if (reducedMotion.matches) {
+            clearInterval(timer);
+            timer = null;
+        } else if (timer === null) {
+            timer = setInterval(rotate, 7000);
+        }
+    }
+
+    updateRotation();
+    reducedMotion.addEventListener('change', updateRotation);
 }
 
 // Initialize theme toggle
 function initThemeToggle() {
     const themeToggle = document.getElementById('themeToggle');
-    const currentTheme = localStorage.getItem('theme') || 'light';
-
-    if (currentTheme === 'dark') {
-        document.body.classList.add('dark-mode');
-        themeToggle.textContent = '☀️';
+    if (!themeToggle) {
+        return;
     }
 
+    const root = document.documentElement;
+    const currentTheme = () => root.getAttribute('data-theme') ||
+        (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    const syncPressed = () => themeToggle.setAttribute('aria-pressed', String(currentTheme() === 'dark'));
+    syncPressed();
+
     themeToggle.addEventListener('click', () => {
-        document.body.classList.toggle('dark-mode');
-        const theme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
-        localStorage.setItem('theme', theme);
-        themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
+        const next = currentTheme() === 'dark' ? 'light' : 'dark';
+        root.setAttribute('data-theme', next);
+        syncPressed();
+        try {
+            localStorage.setItem('theme', next);
+        } catch (e) {
+            // Ignore storage failures; the toggle still works for this page view.
+        }
     });
 }
 
