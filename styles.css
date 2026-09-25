@@ -12,7 +12,7 @@
     --bg-elevated-rgb: 255, 255, 255;
     --ink: #1c1b1a;
     --ink-soft: #57534e;
-    --ink-faint: #a8a29e;
+    --ink-faint: #6b6762;
     --line: #e7e5e4;
     --accent: #b45309;
     --accent-ink: #92400e;
@@ -30,7 +30,7 @@
     --bg-elevated-rgb: 29, 27, 26;
     --ink: #f4f2f0;
     --ink-soft: #b8b2ac;
-    --ink-faint: #6f6a65;
+    --ink-faint: #a8a29e;
     --line: #2d2a28;
     --accent: #f59e0b;
     --accent-ink: #fbbf24;
@@ -47,7 +47,7 @@
         --bg-elevated-rgb: 29, 27, 26;
         --ink: #f4f2f0;
         --ink-soft: #b8b2ac;
-        --ink-faint: #6f6a65;
+        --ink-faint: #a8a29e;
         --line: #2d2a28;
         --accent: #f59e0b;
         --accent-ink: #fbbf24;
