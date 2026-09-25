@@ -6,21 +6,6 @@ const HERO_IMAGES = [
     'https://live.staticflickr.com/65535/54182454575_3de8877cca_b.jpg'
 ];
 
-// Apply the stored (or system-preferred) theme as early as possible
-// to avoid a flash of the wrong theme. This runs at parse time,
-// before DOMContentLoaded.
-(function applyInitialTheme() {
-    try {
-        const stored = localStorage.getItem('theme');
-        if (stored === 'dark' || stored === 'light') {
-            document.documentElement.setAttribute('data-theme', stored);
-        }
-    } catch (e) {
-        // localStorage can be unavailable (private mode); fall back to
-        // the prefers-color-scheme handling in CSS.
-    }
-})();
-
 // Initialize hero image rotation
 function initHeroRotation() {
     const heroBgs = document.querySelectorAll('.hero-bg');
@@ -37,7 +22,11 @@ function initHeroRotation() {
         }
     });
 
-    if (heroBgs.length < 2) {
+    // Only slides that received an image may rotate; extras would show blank
+    const slides = Array.from(heroBgs).slice(0, HERO_IMAGES.length);
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (slides.length < 2 || reducedMotion) {
         return;
     }
 
@@ -45,9 +34,9 @@ function initHeroRotation() {
 
     // Rotate every 7 seconds
     setInterval(() => {
-        heroBgs[currentIndex].classList.remove('active');
-        currentIndex = (currentIndex + 1) % heroBgs.length;
-        heroBgs[currentIndex].classList.add('active');
+        slides[currentIndex].classList.remove('active');
+        currentIndex = (currentIndex + 1) % slides.length;
+        slides[currentIndex].classList.add('active');
     }, 7000);
 }
 

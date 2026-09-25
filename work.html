@@ -15,6 +15,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css?family=Inter:400,500,600|Playfair+Display:700,900,700italic&display=swap" rel="stylesheet">
+    <script>
+        // Runs before the stylesheet applies so a stored theme never flashes the wrong colors
+        try {
+            var t = localStorage.getItem('theme');
+            if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t);
+        } catch (e) {}
+    </script>
     <link rel="stylesheet" href="styles.css">
     <script src="config.js" defer></script>
 </head>
