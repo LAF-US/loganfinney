@@ -3,22 +3,25 @@
 const HERO_IMAGES = [
     'https://live.staticflickr.com/65535/54182454660_c81075673a_b.jpg',
     'https://live.staticflickr.com/65535/55018540576_bf68c1f794_b.jpg',
-    'https://live.staticflickr.com/65535/55018540576_bf68c1f794_b.jpg',
-    'https://live.staticflickr.com/65535/54182454575_3de8877cca_b.jpg',
-    'https://live.staticflickr.com/65535/54182454530_8f9g0h1i2j_b.jpg'
+    'https://live.staticflickr.com/65535/54182454575_3de8877cca_b.jpg'
 ];
 
 // Initialize hero image rotation
 function initHeroRotation() {
     const heroBgs = document.querySelectorAll('.hero-bg');
-    
+
+    // Pages without a hero section (resume, work) load this script too
+    if (heroBgs.length === 0) {
+        return;
+    }
+
     // Populate hero images from config
     HERO_IMAGES.forEach((imageUrl, index) => {
         if (heroBgs[index]) {
             heroBgs[index].style.backgroundImage = `url('${imageUrl}')`;
         }
     });
-    
+
     let currentIndex = 0;
 
     function rotateHeroImage() {
@@ -35,7 +38,7 @@ function initHeroRotation() {
 function initThemeToggle() {
     const themeToggle = document.getElementById('themeToggle');
     const currentTheme = localStorage.getItem('theme') || 'light';
-    
+
     if (currentTheme === 'dark') {
         document.body.classList.add('dark-mode');
         themeToggle.textContent = '☀️';
