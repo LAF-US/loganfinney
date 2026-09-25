@@ -193,24 +193,6 @@ body {
     transition: opacity 1.2s ease-in-out;
 }
 
-.hero-caption {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    z-index: 3;
-    max-width: min(26rem, calc(100% - 2rem));
-    margin: 0;
-    padding: 0.35rem 0.7rem;
-    border-radius: 4px;
-    font-size: 0.85rem;
-    color: var(--ink);
-    background-color: rgba(var(--bg-rgb), 0.92);
-}
-
-.hero-caption:empty {
-    display: none;
-}
-
 .hero-bg.active {
     opacity: 1;
 }
@@ -219,37 +201,25 @@ body {
     content: '';
     position: absolute;
     inset: 0;
-    background:
-        linear-gradient(78deg,
-            rgba(var(--bg-rgb), 0.96) 0%,
-            rgba(var(--bg-rgb), 0.93) 50%,
-            var(--hero-scrim) 80%),
-        linear-gradient(to top,
-            rgba(var(--bg-rgb), 0.98) 0%,
-            rgba(var(--bg-rgb), 0.55) 32%,
-            var(--hero-scrim) 68%);
+    background-color: rgba(0, 0, 0, 0.72);
     pointer-events: none;
 }
 
-/* On narrow screens the text spans the full width: the photo shows clear in a
-   band at the top, then fades to a near-solid veil where the text begins so
-   hero text keeps WCAG AAA contrast */
-@media (max-width: 720px) {
-    .hero {
-        min-height: 0;
-        padding-top: 38vh;
-    }
-
-    .hero::after {
-        background: linear-gradient(to bottom,
-            var(--hero-scrim) 0%,
-            var(--hero-scrim) 18vh,
-            rgba(var(--bg-rgb), 0.96) 38vh);
-    }
-
-    .hero-content {
-        padding-top: 1.5rem;
-    }
+/* The whole photo shows under one even overlay, so the hero always uses the
+   dark palette: light text over the darkened photo keeps WCAG AAA contrast */
+.hero {
+    color-scheme: dark;
+    --bg-rgb: 19, 18, 17;
+    --bg-elevated: #1d1b1a;
+    --bg-elevated-rgb: 29, 27, 26;
+    --ink: #ffffff;
+    --ink-soft: #f4f2f0;
+    --ink-faint: #e7e5e4;
+    --line: #57534e;
+    --accent: #6fbf98;
+    --accent-ink: #d6f1e2;
+    --on-accent: #131211;
+    color: var(--ink);
 }
 
 .hero-content {
