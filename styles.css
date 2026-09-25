@@ -11,11 +11,11 @@
     --bg-elevated: #ffffff;
     --bg-elevated-rgb: 255, 255, 255;
     --ink: #1c1b1a;
-    --ink-soft: #57534e;
-    --ink-faint: #6b6762;
+    --ink-soft: #4a4641;
+    --ink-faint: #595550;
     --line: #e7e5e4;
-    --accent: #b45309;
-    --accent-ink: #92400e;
+    --accent: #245a41;
+    --accent-ink: #1f4f39;
     --on-accent: #ffffff;
     --hero-scrim: rgba(250, 249, 247, 0);
     --shadow: 0 1px 3px rgba(28, 27, 26, 0.08), 0 8px 24px rgba(28, 27, 26, 0.06);
@@ -31,10 +31,10 @@
     --bg-elevated-rgb: 29, 27, 26;
     --ink: #f4f2f0;
     --ink-soft: #b8b2ac;
-    --ink-faint: #a8a29e;
+    --ink-faint: #b0aaa5;
     --line: #2d2a28;
-    --accent: #f59e0b;
-    --accent-ink: #fbbf24;
+    --accent: #6fbf98;
+    --accent-ink: #9ad4b6;
     --on-accent: #131211;
     --hero-scrim: rgba(19, 18, 17, 0);
     --shadow: 0 1px 3px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.3);
@@ -49,10 +49,10 @@
         --bg-elevated-rgb: 29, 27, 26;
         --ink: #f4f2f0;
         --ink-soft: #b8b2ac;
-        --ink-faint: #a8a29e;
+        --ink-faint: #b0aaa5;
         --line: #2d2a28;
-        --accent: #f59e0b;
-        --accent-ink: #fbbf24;
+        --accent: #6fbf98;
+        --accent-ink: #9ad4b6;
         --on-accent: #131211;
         --hero-scrim: rgba(19, 18, 17, 0);
         --shadow: 0 1px 3px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.3);
@@ -202,14 +202,22 @@ body {
     inset: 0;
     background:
         linear-gradient(78deg,
-            rgba(var(--bg-rgb), 0.94) 0%,
-            rgba(var(--bg-rgb), 0.78) 42%,
-            var(--hero-scrim) 72%),
+            rgba(var(--bg-rgb), 0.96) 0%,
+            rgba(var(--bg-rgb), 0.93) 50%,
+            var(--hero-scrim) 80%),
         linear-gradient(to top,
             rgba(var(--bg-rgb), 0.98) 0%,
             rgba(var(--bg-rgb), 0.55) 32%,
             var(--hero-scrim) 68%);
     pointer-events: none;
+}
+
+/* On narrow screens the text spans the full width, so the whole photo sits
+   under a near-solid veil to keep hero text at WCAG AAA contrast */
+@media (max-width: 720px) {
+    .hero::after {
+        background: rgba(var(--bg-rgb), 0.96);
+    }
 }
 
 .hero-content {
@@ -242,7 +250,7 @@ body {
 
 .hero .lede {
     font-size: 1.1rem;
-    color: var(--ink-soft);
+    color: var(--ink);
     max-width: 62ch;
     margin-bottom: 0.75rem;
 }
@@ -250,7 +258,7 @@ body {
 .hero .tagline {
     font-family: var(--font-display);
     font-style: italic;
-    color: var(--ink-faint);
+    color: var(--ink-soft);
     margin-bottom: 2rem;
 }
 
