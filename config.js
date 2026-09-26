@@ -35,7 +35,22 @@ function initHeroRotation() {
         layers[layer].style.backgroundImage = `url('${HERO_DIR}${HERO_IMAGES[index]}')`;
     }
 
-    show(0, 0);
+    // Show the first photo that loads, so a missing file never leaves the hero empty
+    function showFirst(index) {
+        const img = new Image();
+        img.onload = () => {
+            current = index;
+            show(index, 0);
+        };
+        img.onerror = () => {
+            if (index + 1 < HERO_IMAGES.length) {
+                showFirst(index + 1);
+            }
+        };
+        img.src = HERO_DIR + HERO_IMAGES[index];
+    }
+
+    showFirst(0);
     if (HERO_IMAGES.length < 2) {
         return;
     }
