@@ -1,22 +1,22 @@
 // Hero Images Configuration
-// Edit this list to change the hero photo rotation
+// Edit this list to change the hero photo rotation; it alternates people and places
 const HERO_DIR = 'images/hero/';
 const HERO_IMAGES = [
     '278.jpg',
-    '83.jpg',
-    '55.jpg',
-    '249.jpg',
-    '260.jpg',
-    '262.jpg',
     '334.jpg',
+    '83.jpg',
     '331.jpg',
+    '55.jpg',
     '177.jpg',
+    '249.jpg',
     '164.jpg',
+    '260.jpg',
     '270.jpg',
+    '262.jpg',
     '78.jpg',
+    'sq4.jpg',
     '345.jpg',
-    'sq1.jpg',
-    'sq4.jpg'
+    'sq1.jpg'
 ];
 
 // Initialize hero image rotation
