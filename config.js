@@ -42,12 +42,27 @@ function initHeroRotation() {
 
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     let timer = null;
+    let loading = false;
 
-    // Load the next photo first so the crossfade never reveals a blank layer
+    // Load the next photo first so the crossfade never reveals a blank layer.
+    // Only one load runs at a time, and a photo that fails to load is skipped.
     function rotate() {
+        if (loading) {
+            return;
+        }
+        loading = true;
         const next = (current + 1) % HERO_IMAGES.length;
         const img = new Image();
+        img.onerror = () => {
+            loading = false;
+            current = next;
+        };
         img.onload = () => {
+            loading = false;
+            // Reduced motion may have been switched on while this photo loaded
+            if (reducedMotion.matches) {
+                return;
+            }
             const back = 1 - front;
             show(next, back);
             layers[back].classList.add('active');
