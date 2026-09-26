@@ -40,15 +40,31 @@ function initHeroRotation() {
     // Show the first photo that loads, so a missing file never leaves the hero empty
     function showFirst(index) {
         const img = new Image();
+        let settled = false;
+        // A photo that fails, or doesn't answer within 10 seconds, hands off to the next one
+        const tryNext = () => {
+            if (settled) {
+                return;
+            }
+            settled = true;
+            if (index + 1 < HERO_IMAGES.length) {
+                showFirst(index + 1);
+            }
+        };
+        const timedOut = setTimeout(tryNext, 10000);
         img.onload = () => {
+            clearTimeout(timedOut);
+            if (settled) {
+                return;
+            }
+            settled = true;
             current = index;
             show(index, 0);
             ready = true;
         };
         img.onerror = () => {
-            if (index + 1 < HERO_IMAGES.length) {
-                showFirst(index + 1);
-            }
+            clearTimeout(timedOut);
+            tryNext();
         };
         img.src = HERO_DIR + HERO_IMAGES[index];
     }
