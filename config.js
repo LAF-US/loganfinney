@@ -1,23 +1,42 @@
 // Hero Images Configuration
-// Edit this list to change the hero photo rotation; it alternates people and places
+// Edit this list to change the hero photo rotation; photos of Logan alternate with his own photography
 const HERO_DIR = 'images/hero/';
 const HERO_IMAGES = [
     '278.jpg',
+    'me-sand-dunes.jpg',
     '334.jpg',
+    'me-studio-guests.jpg',
     '83.jpg',
+    'me-selfie-mountains.jpg',
     '331.jpg',
+    'me-ktvb-2022.jpg',
     '55.jpg',
+    'me-capitol-rotunda.jpg',
     '177.jpg',
+    'me-nicar.jpg',
     '249.jpg',
+    'me-dialogue.jpg',
     '164.jpg',
+    'me-ptv-mosaic.jpg',
     '260.jpg',
+    'me-award.jpg',
     '270.jpg',
+    'me-capitol-steps.jpg',
     '262.jpg',
+    'me-ptv-portrait.jpg',
     '78.jpg',
     'sq4.jpg',
     '345.jpg',
     'sq1.jpg'
 ];
+// Where to anchor photos whose subject is off-center, so narrow screens keep it in frame
+const HERO_FOCUS = {
+    'me-sand-dunes.jpg': '69% center',
+    'me-selfie-mountains.jpg': '24% center',
+    'me-dialogue.jpg': '70% center',
+    'me-ptv-mosaic.jpg': '82% 100%',
+    'me-award.jpg': '28% center'
+};
 
 // Initialize hero image rotation
 function initHeroRotation() {
@@ -34,7 +53,9 @@ function initHeroRotation() {
     let ready = false;
 
     function show(index, layer) {
-        layers[layer].style.backgroundImage = `url('${HERO_DIR}${HERO_IMAGES[index]}')`;
+        const name = HERO_IMAGES[index];
+        layers[layer].style.backgroundImage = `url('${HERO_DIR}${name}')`;
+        layers[layer].style.backgroundPosition = HERO_FOCUS[name] || '';
     }
 
     // Show the first photo that loads, so a missing file never leaves the hero empty
