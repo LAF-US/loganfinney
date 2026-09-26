@@ -68,11 +68,24 @@ function initHeroRotation() {
         loading = true;
         const next = (current + 1) % HERO_IMAGES.length;
         const img = new Image();
+        // A request that never answers counts as failed, so the rotation can't freeze
+        let expired = false;
+        const timedOut = setTimeout(() => {
+            expired = true;
+            loading = false;
+            current = next;
+        }, 10000);
         img.onerror = () => {
+            clearTimeout(timedOut);
             loading = false;
             current = next;
         };
         img.onload = () => {
+            clearTimeout(timedOut);
+            // A photo that arrives after its timeout is ignored
+            if (expired) {
+                return;
+            }
             loading = false;
             // Reduced motion may have been switched on while this photo loaded
             if (reducedMotion.matches) {
