@@ -30,6 +30,8 @@ function initHeroRotation() {
 
     let current = 0;
     let front = 0;
+    // The rotation waits until the first photo is on screen
+    let ready = false;
 
     function show(index, layer) {
         layers[layer].style.backgroundImage = `url('${HERO_DIR}${HERO_IMAGES[index]}')`;
@@ -41,6 +43,7 @@ function initHeroRotation() {
         img.onload = () => {
             current = index;
             show(index, 0);
+            ready = true;
         };
         img.onerror = () => {
             if (index + 1 < HERO_IMAGES.length) {
@@ -62,7 +65,7 @@ function initHeroRotation() {
     // Load the next photo first so the crossfade never reveals a blank layer.
     // Only one load runs at a time, and a photo that fails to load is skipped.
     function rotate() {
-        if (loading) {
+        if (!ready || loading) {
             return;
         }
         loading = true;
