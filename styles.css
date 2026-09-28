@@ -160,6 +160,19 @@ body {
 
 /* ---------- Hero (home) ---------- */
 
+/* On the home page the photo starts at the top of the page and the masthead
+   sits on it, over the top of the photo's frost instead of its own bar */
+.home .site-header {
+    position: absolute;
+    left: 0;
+    right: 0;
+    background: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border-bottom: 0;
+}
+
+
 .hero {
     position: relative;
     /* At least as tall as the full-width 3:2 photo, so its fade stays in view */
@@ -178,10 +191,10 @@ body {
     width: 100%;
     aspect-ratio: 3 / 2;
     /* The wash sits in the same layer as the photo so both fade out together.
-       It is a frost that softens the photo's edges: it fades out from the
-       header at the top, stays clear through the middle, and eases in to
-       full strength near the bottom, where the text starts */
-    background-image: linear-gradient(to bottom, var(--hero-wash), transparent min(8rem, 15%), transparent 30%, var(--hero-wash) 90%), var(--photo, none);
+       It is a frost that softens the photo's edges: full strength behind the
+       header at the top, fading out below it, clear through the middle, and
+       easing back in to full strength near the bottom, where the text starts */
+    background-image: linear-gradient(to bottom, var(--hero-wash) 4rem, transparent calc(4rem + min(6rem, 15%)), transparent 30%, var(--hero-wash) 90%), var(--photo, none);
     background-size: 100% auto;
     background-position: top center;
     background-repeat: no-repeat;
