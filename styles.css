@@ -194,9 +194,9 @@ body {
     width: 100%;
     aspect-ratio: 3 / 2;
     /* The wash sits in the same layer as the photo so both fade out together.
-       It is clear over the top half of the photo and full strength from the
-       middle down, where the text starts */
-    background-image: linear-gradient(to bottom, transparent, var(--hero-wash) 50%), var(--photo, none);
+       It stays clear over the top of the photo, then eases in to full
+       strength where the text starts */
+    background-image: linear-gradient(to bottom, transparent 30%, var(--hero-wash) 62%), var(--photo, none);
     background-size: 100% auto;
     background-position: top center;
     background-repeat: no-repeat;
@@ -220,8 +220,8 @@ body {
     max-width: 1100px;
     width: 100%;
     margin: 0 auto;
-    /* Text starts halfway down the photo, below its clear top half */
-    padding: calc(100vw / 3) 1.5rem 4rem;
+    /* Text starts where the wash reaches full strength */
+    padding: calc(100vw * 0.41) 1.5rem 4rem;
 }
 
 .hero .kicker {
@@ -650,7 +650,7 @@ a.card:hover {
     }
 
     .hero-content {
-        padding: calc(100vw / 3) 1rem 2.5rem;
+        padding: calc(100vw * 0.41) 1rem 2.5rem;
     }
 
     .page {
