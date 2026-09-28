@@ -181,7 +181,7 @@ body {
     /* At least as tall as the full-width 3:2 photo, so its fade stays in view */
     min-height: calc(100vw * 2 / 3);
     display: flex;
-    align-items: flex-end;
+    align-items: flex-start;
     overflow: hidden;
 }
 
@@ -193,8 +193,10 @@ body {
     left: 0;
     width: 100%;
     aspect-ratio: 3 / 2;
-    /* The wash sits in the same layer as the photo so both fade out together */
-    background-image: linear-gradient(var(--hero-wash), var(--hero-wash)), var(--photo, none);
+    /* The wash sits in the same layer as the photo so both fade out together.
+       It is clear over the top half of the photo and full strength from the
+       middle down, where the text starts */
+    background-image: linear-gradient(to bottom, transparent, var(--hero-wash) 50%), var(--photo, none);
     background-size: 100% auto;
     background-position: top center;
     background-repeat: no-repeat;
@@ -218,7 +220,8 @@ body {
     max-width: 1100px;
     width: 100%;
     margin: 0 auto;
-    padding: 6rem 1.5rem 4rem;
+    /* Text starts halfway down the photo, below its clear top half */
+    padding: calc(100vw / 3) 1.5rem 4rem;
 }
 
 .hero .kicker {
@@ -647,7 +650,7 @@ a.card:hover {
     }
 
     .hero-content {
-        padding: 4rem 1rem 2.5rem;
+        padding: calc(100vw / 3) 1rem 2.5rem;
     }
 
     .page {
