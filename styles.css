@@ -17,7 +17,7 @@
     --accent: #245a41;
     --accent-ink: #1f4f39;
     --on-accent: #ffffff;
-    --hero-wash: rgba(250, 249, 247, 0.84);
+    --hero-wash: rgba(250, 249, 247, 0.92);
     --shadow: 0 1px 3px rgba(28, 27, 26, 0.08), 0 8px 24px rgba(28, 27, 26, 0.06);
     --shadow-lift: 0 2px 6px rgba(28, 27, 26, 0.1), 0 16px 40px rgba(28, 27, 26, 0.12);
     --font-display: Georgia, Palatino, serif;
@@ -37,7 +37,7 @@
     --accent: #6fbf98;
     --accent-ink: #9ad4b6;
     --on-accent: #131211;
-    --hero-wash: rgba(0, 0, 0, 0.72);
+    --hero-wash: rgba(0, 0, 0, 0.87);
     --shadow: 0 1px 3px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.3);
     --shadow-lift: 0 2px 6px rgba(0, 0, 0, 0.5), 0 16px 40px rgba(0, 0, 0, 0.4);
 }
@@ -55,7 +55,7 @@
         --accent: #6fbf98;
         --accent-ink: #9ad4b6;
         --on-accent: #131211;
-        --hero-wash: rgba(0, 0, 0, 0.72);
+        --hero-wash: rgba(0, 0, 0, 0.87);
         --shadow: 0 1px 3px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.3);
         --shadow-lift: 0 2px 6px rgba(0, 0, 0, 0.5), 0 16px 40px rgba(0, 0, 0, 0.4);
     }
@@ -206,32 +206,6 @@ body {
 
 .hero-bg.active {
     opacity: 1;
-}
-
-/* Hero text over the washed photo sits a step past the page palette, darker
-   in light mode and brighter in dark mode, so it keeps WCAG AAA contrast */
-.hero {
-    --ink-soft: #2b2825;
-    --ink-faint: #2b2825;
-    --accent-ink: #173d2b;
-}
-
-[data-theme="dark"] .hero {
-    --ink: #ffffff;
-    --ink-soft: #f4f2f0;
-    --ink-faint: #e7e5e4;
-    --line: #57534e;
-    --accent-ink: #d6f1e2;
-}
-
-@media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) .hero {
-        --ink: #ffffff;
-        --ink-soft: #f4f2f0;
-        --ink-faint: #e7e5e4;
-        --line: #57534e;
-        --accent-ink: #d6f1e2;
-    }
 }
 
 .hero {
