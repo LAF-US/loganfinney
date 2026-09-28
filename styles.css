@@ -17,7 +17,7 @@
     --accent: #245a41;
     --accent-ink: #1f4f39;
     --on-accent: #ffffff;
-    --hero-scrim: rgba(250, 249, 247, 0);
+    --hero-wash: rgba(250, 249, 247, 0.92);
     --shadow: 0 1px 3px rgba(28, 27, 26, 0.08), 0 8px 24px rgba(28, 27, 26, 0.06);
     --shadow-lift: 0 2px 6px rgba(28, 27, 26, 0.1), 0 16px 40px rgba(28, 27, 26, 0.12);
     --font-display: Georgia, Palatino, serif;
@@ -37,7 +37,7 @@
     --accent: #6fbf98;
     --accent-ink: #9ad4b6;
     --on-accent: #131211;
-    --hero-scrim: rgba(19, 18, 17, 0);
+    --hero-wash: rgba(0, 0, 0, 0.87);
     --shadow: 0 1px 3px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.3);
     --shadow-lift: 0 2px 6px rgba(0, 0, 0, 0.5), 0 16px 40px rgba(0, 0, 0, 0.4);
 }
@@ -55,7 +55,7 @@
         --accent: #6fbf98;
         --accent-ink: #9ad4b6;
         --on-accent: #131211;
-        --hero-scrim: rgba(19, 18, 17, 0);
+        --hero-wash: rgba(0, 0, 0, 0.87);
         --shadow: 0 1px 3px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.3);
         --shadow-lift: 0 2px 6px rgba(0, 0, 0, 0.5), 0 16px 40px rgba(0, 0, 0, 0.4);
     }
@@ -178,17 +178,30 @@ body {
 
 .hero {
     position: relative;
-    min-height: 82vh;
+    /* At least as tall as the full-width 3:2 photo, so its fade stays in view */
+    min-height: calc(100vw * 2 / 3);
     display: flex;
-    align-items: flex-end;
+    align-items: flex-start;
     overflow: hidden;
 }
 
+/* The photo spans the full width at its own 3:2 shape, anchored to the top of
+   the page so it scrolls away with it, and dissolves into the page at the bottom */
 .hero-bg {
     position: absolute;
-    inset: 0;
-    background-size: cover;
-    background-position: center;
+    top: 0;
+    left: 0;
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    /* The wash sits in the same layer as the photo so both fade out together.
+       It stays clear over the top of the photo, then eases in to full
+       strength where the text starts */
+    background-image: linear-gradient(to bottom, transparent 30%, var(--hero-wash) 62%), var(--photo, none);
+    background-size: 100% auto;
+    background-position: top center;
+    background-repeat: no-repeat;
+    -webkit-mask-image: linear-gradient(to bottom, #000 80%, transparent);
+    mask-image: linear-gradient(to bottom, #000 80%, transparent);
     opacity: 0;
     transition: opacity 1.2s ease-in-out;
 }
@@ -197,41 +210,8 @@ body {
     opacity: 1;
 }
 
-.hero::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background:
-        linear-gradient(78deg,
-            rgba(var(--bg-rgb), 0.96) 0%,
-            rgba(var(--bg-rgb), 0.93) 50%,
-            var(--hero-scrim) 80%),
-        linear-gradient(to top,
-            rgba(var(--bg-rgb), 0.98) 0%,
-            rgba(var(--bg-rgb), 0.55) 32%,
-            var(--hero-scrim) 68%);
-    pointer-events: none;
-}
-
-/* On narrow screens the text spans the full width: the photo shows clear in a
-   band at the top, then fades to a near-solid veil where the text begins so
-   hero text keeps WCAG AAA contrast */
-@media (max-width: 720px) {
-    .hero {
-        min-height: 0;
-        padding-top: 38vh;
-    }
-
-    .hero::after {
-        background: linear-gradient(to bottom,
-            var(--hero-scrim) 0%,
-            var(--hero-scrim) 18vh,
-            rgba(var(--bg-rgb), 0.96) 38vh);
-    }
-
-    .hero-content {
-        padding-top: 1.5rem;
-    }
+.hero {
+    color: var(--ink);
 }
 
 .hero-content {
@@ -240,7 +220,8 @@ body {
     max-width: 1100px;
     width: 100%;
     margin: 0 auto;
-    padding: 6rem 1.5rem 4rem;
+    /* Text starts where the wash reaches full strength */
+    padding: calc(100vw * 0.41) 1.5rem 4rem;
 }
 
 .hero .kicker {
@@ -668,12 +649,8 @@ a.card:hover {
         margin-left: 0.15rem;
     }
 
-    .hero {
-        min-height: 72vh;
-    }
-
     .hero-content {
-        padding: 4rem 1rem 2.5rem;
+        padding: calc(100vw * 0.41) 1rem 2.5rem;
     }
 
     .page {

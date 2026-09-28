@@ -1,41 +1,113 @@
 // Hero Images Configuration
-// Update the URLs below to change hero images on the home page
+// Edit this list to change the hero photo rotation
+const HERO_DIR = 'images/hero/';
 const HERO_IMAGES = [
-    'https://live.staticflickr.com/65535/54182454660_c81075673a_b.jpg',
-    'https://live.staticflickr.com/65535/55018540576_bf68c1f794_b.jpg',
-    'https://live.staticflickr.com/65535/54182454575_3de8877cca_b.jpg'
+    '278.jpg',
+    '334.jpg',
+    '260.jpg',
+    '177.jpg'
 ];
 
 // Initialize hero image rotation
 function initHeroRotation() {
-    const heroBgs = document.querySelectorAll('.hero-bg');
+    const layers = document.querySelectorAll('.hero-bg');
 
     // Pages without a hero section (resume, work) load this script too
-    if (heroBgs.length === 0) {
+    if (layers.length < 2 || HERO_IMAGES.length === 0) {
         return;
     }
 
-    // Populate hero images from config
-    HERO_IMAGES.forEach((imageUrl, index) => {
-        if (heroBgs[index]) {
-            heroBgs[index].style.backgroundImage = `url('${imageUrl}')`;
-        }
-    });
+    let current = 0;
+    let front = 0;
+    // The rotation waits until the first photo is on screen
+    let ready = false;
 
-    // Only slides that received an image may rotate; extras would show blank
-    const slides = Array.from(heroBgs).slice(0, HERO_IMAGES.length);
-    if (slides.length < 2) {
+    function show(index, layer) {
+        const name = HERO_IMAGES[index];
+        layers[layer].style.setProperty('--photo', `url('${HERO_DIR}${name}')`);
+    }
+
+    // Show the first photo that loads, so a missing file never leaves the hero empty
+    function showFirst(index) {
+        const img = new Image();
+        let settled = false;
+        // A photo that fails, or doesn't answer within 10 seconds, hands off to the next one
+        const tryNext = () => {
+            if (settled) {
+                return;
+            }
+            settled = true;
+            if (index + 1 < HERO_IMAGES.length) {
+                showFirst(index + 1);
+            }
+        };
+        const timedOut = setTimeout(tryNext, 10000);
+        img.onload = () => {
+            clearTimeout(timedOut);
+            if (settled) {
+                return;
+            }
+            settled = true;
+            current = index;
+            show(index, 0);
+            ready = true;
+        };
+        img.onerror = () => {
+            clearTimeout(timedOut);
+            tryNext();
+        };
+        img.src = HERO_DIR + HERO_IMAGES[index];
+    }
+
+    showFirst(0);
+    if (HERO_IMAGES.length < 2) {
         return;
     }
 
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    let currentIndex = 0;
     let timer = null;
+    let loading = false;
 
+    // Load the next photo first so the crossfade never reveals a blank layer.
+    // Only one load runs at a time, and a photo that fails to load is skipped.
     function rotate() {
-        slides[currentIndex].classList.remove('active');
-        currentIndex = (currentIndex + 1) % slides.length;
-        slides[currentIndex].classList.add('active');
+        if (!ready || loading) {
+            return;
+        }
+        loading = true;
+        const next = (current + 1) % HERO_IMAGES.length;
+        const img = new Image();
+        // A request that never answers counts as failed, so the rotation can't freeze
+        let expired = false;
+        const timedOut = setTimeout(() => {
+            expired = true;
+            loading = false;
+            current = next;
+        }, 10000);
+        img.onerror = () => {
+            clearTimeout(timedOut);
+            loading = false;
+            current = next;
+        };
+        img.onload = () => {
+            clearTimeout(timedOut);
+            // A photo that arrives after its timeout is ignored
+            if (expired) {
+                return;
+            }
+            loading = false;
+            // Reduced motion may have been switched on while this photo loaded
+            if (reducedMotion.matches) {
+                return;
+            }
+            const back = 1 - front;
+            show(next, back);
+            layers[back].classList.add('active');
+            layers[front].classList.remove('active');
+            front = back;
+            current = next;
+        };
+        img.src = HERO_DIR + HERO_IMAGES[next];
     }
 
     // Rotate every 7 seconds, stopping or resuming if the motion preference changes
