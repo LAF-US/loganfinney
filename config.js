@@ -3,7 +3,9 @@
 const HERO_DIR = 'images/hero/';
 const HERO_IMAGES = [
     '278.jpg',
-    '334.jpg'
+    '334.jpg',
+    '260.jpg',
+    '177.jpg'
 ];
 // Where to anchor photos whose subject is off-center, so narrow screens keep it in frame
 const HERO_FOCUS = {
