@@ -175,31 +175,38 @@ body {
 
 .hero {
     position: relative;
-    min-height: 82vh;
+    /* At least as tall as the full-width 3:2 photo, so its fade stays in view */
+    min-height: calc(100vw * 2 / 3);
     display: flex;
     align-items: flex-end;
     overflow: hidden;
 }
 
+.hero {
+    background-color: rgb(19, 18, 17);
+}
+
+/* The photo spans the full width at its own 3:2 shape, anchored to the top of
+   the page so it scrolls away with it, and dissolves into the page at the bottom */
 .hero-bg {
     position: absolute;
-    inset: 0;
-    background-size: cover;
-    background-position: center;
+    top: 0;
+    left: 0;
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    /* The darkening sits in the same layer as the photo so both fade out together */
+    background-image: linear-gradient(rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.72)), var(--photo, none);
+    background-size: 100% auto;
+    background-position: top center;
+    background-repeat: no-repeat;
+    -webkit-mask-image: linear-gradient(to bottom, #000 80%, transparent);
+    mask-image: linear-gradient(to bottom, #000 80%, transparent);
     opacity: 0;
     transition: opacity 1.2s ease-in-out;
 }
 
 .hero-bg.active {
     opacity: 1;
-}
-
-.hero::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-color: rgba(0, 0, 0, 0.72);
-    pointer-events: none;
 }
 
 /* The whole photo shows under one even overlay, so the hero always uses the
@@ -651,10 +658,6 @@ a.card:hover {
 
     #themeToggle {
         margin-left: 0.15rem;
-    }
-
-    .hero {
-        min-height: 72vh;
     }
 
     .hero-content {

@@ -1,5 +1,5 @@
 // Hero Images Configuration
-// Edit this list to change the hero photo rotation; photos of Logan alternate with his own photography
+// Edit this list to change the hero photo rotation
 const HERO_DIR = 'images/hero/';
 const HERO_IMAGES = [
     '278.jpg',
@@ -7,12 +7,6 @@ const HERO_IMAGES = [
     '260.jpg',
     '177.jpg'
 ];
-// Where to anchor photos whose subject is off-center, so narrow screens keep it in frame
-const HERO_FOCUS = {
-    'me-sand-dunes.jpg': '69% center',
-    'me-selfie-mountains.jpg': '24% center',
-    'me-dialogue.jpg': '70% center'
-};
 
 // Initialize hero image rotation
 function initHeroRotation() {
@@ -30,8 +24,7 @@ function initHeroRotation() {
 
     function show(index, layer) {
         const name = HERO_IMAGES[index];
-        layers[layer].style.backgroundImage = `url('${HERO_DIR}${name}')`;
-        layers[layer].style.backgroundPosition = HERO_FOCUS[name] || '';
+        layers[layer].style.setProperty('--photo', `url('${HERO_DIR}${name}')`);
     }
 
     // Show the first photo that loads, so a missing file never leaves the hero empty
