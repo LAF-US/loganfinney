@@ -134,13 +134,11 @@ function initThemeToggle() {
     const root = document.documentElement;
     const currentTheme = () => root.getAttribute('data-theme') ||
         (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-    const syncPressed = () => themeToggle.setAttribute('aria-pressed', String(currentTheme() === 'dark'));
-    syncPressed();
 
     themeToggle.addEventListener('click', () => {
         const next = currentTheme() === 'dark' ? 'light' : 'dark';
+        // The button's visible word names the theme it switches to, so it needs no pressed state
         root.setAttribute('data-theme', next);
-        syncPressed();
         try {
             localStorage.setItem('theme', next);
         } catch (e) {
