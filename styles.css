@@ -160,6 +160,12 @@ body {
 
 /* ---------- Hero (home) ---------- */
 
+/* No rule between the masthead and the photo on the home page */
+.home .site-header {
+    border-bottom: 0;
+}
+
+
 .hero {
     position: relative;
     /* At least as tall as the full-width 3:2 photo, so its fade stays in view */
