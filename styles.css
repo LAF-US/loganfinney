@@ -178,9 +178,9 @@ body {
     width: 100%;
     aspect-ratio: 3 / 2;
     /* The wash sits in the same layer as the photo so both fade out together.
-       It stays clear over the top of the photo, then eases in to full
-       strength where the text starts */
-    background-image: linear-gradient(to bottom, transparent 30%, var(--hero-wash) 62%), var(--photo, none);
+       It is a frost to soften the photo's bottom edge: clear over the top,
+       easing in to full strength near the bottom, where the text starts */
+    background-image: linear-gradient(to bottom, transparent 30%, var(--hero-wash) 90%), var(--photo, none);
     background-size: 100% auto;
     background-position: top center;
     background-repeat: no-repeat;
@@ -205,7 +205,7 @@ body {
     width: 100%;
     margin: 0 auto;
     /* Text starts where the wash reaches full strength */
-    padding: calc(100vw * 0.41) 1.5rem 4rem;
+    padding: calc(100vw * 0.6) 1.5rem 4rem;
 }
 
 /* Small annotations in Courier, like notes on a drawing */
@@ -638,7 +638,7 @@ a.card:hover h4 {
     }
 
     .hero-content {
-        padding: calc(100vw * 0.41) 1rem 2.5rem;
+        padding: calc(100vw * 0.6) 1rem 2.5rem;
     }
 
     .page {
