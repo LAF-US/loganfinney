@@ -356,9 +356,9 @@ body {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    /* Every button is the same five-square width, so the row stays on the grid */
+    /* Four-square buttons: the three together are twelve squares, the same as the six icons */
     flex-shrink: 0;
-    width: 7.5rem;
+    width: 6rem;
     height: 3rem;
     padding: 0;
     text-transform: uppercase;
@@ -398,6 +398,11 @@ body {
 .social-icons svg {
     width: 1.15rem;
     height: 1.15rem;
+}
+
+/* The Muck Rack mark is wide and short, so it gets a wider box to match the others' height */
+.social-icons .wide {
+    width: 1.75rem;
 }
 
 /* ---------- Page scaffolding ---------- */
@@ -732,11 +737,6 @@ a.card:hover h4 {
 
     .hero-content {
         padding: round(down, 60vw, 1.5rem) 1.5rem 1.5rem;
-    }
-
-    /* Four-square buttons: the three together match the width of the six icons below */
-    .btn {
-        width: 6rem;
     }
 
     .page {
