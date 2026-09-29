@@ -84,10 +84,9 @@ body {
         linear-gradient(var(--line) 1px, transparent 1px),
         linear-gradient(90deg, var(--line) 1px, transparent 1px);
     background-size: 1.5rem 1.5rem;
-    /* The pattern is anchored to the screen's center line, so the page is
-       mirror-symmetric (a percentage offset is measured against width minus one
-       square, hence the extra half square) */
-    background-position: calc(50% + 0.75rem) 0;
+    /* The pattern is centered on the screen: the center line runs through the
+       middle of a square, so the page is mirror-symmetric */
+    background-position: 50% 0;
     color: var(--ink);
     /* Every line of text is one grid square tall */
     line-height: 1.5rem;
@@ -97,14 +96,14 @@ body {
 }
 
 /* Everything sits on the 1.5rem graph-paper grid. The content column is centered
-   and an even number of squares wide (at most 48), so its edges land on grid lines
-   and the gutters match. Rules are drawn with box-shadow so they add no height
-   and land on grid lines */
+   and an odd number of squares wide (at most 47), so with the center of the grid
+   mid-square its edges land on grid lines and the gutters match. Rules are drawn
+   with box-shadow so they add no height and land on grid lines */
 .header-content,
 .hero-content,
 .page,
 .footer-content {
-    width: min(72rem, calc(100% - 3rem));
+    width: min(70.5rem, calc(100% - 3rem));
     margin: 0 auto;
 }
 
@@ -113,7 +112,7 @@ body {
     .hero-content,
     .page,
     .footer-content {
-        width: min(72rem, round(down, 100% - 3rem, 3rem));
+        width: min(70.5rem, round(down, 100% - 4.5rem, 3rem) + 1.5rem);
     }
 }
 
@@ -731,14 +730,16 @@ a.card:hover h4 {
     .header-content {
         height: 3rem;
         padding: 0;
+        /* space-between already separates the logo and nav; a fixed gap overflows the column */
+        gap: 0;
     }
 
     .logo {
-        font-size: 1.1rem;
+        font-size: 1rem;
     }
 
     .site-nav {
-        gap: 0.9rem;
+        gap: 0.75rem;
         font-size: 0.85rem;
     }
 
