@@ -395,6 +395,11 @@ body {
     height: 1.15rem;
 }
 
+/* The Muck Rack mark is wide and short, so it gets a wider box to match the others' height */
+.social-icons .wide {
+    width: 1.75rem;
+}
+
 /* ---------- Page scaffolding ---------- */
 
 .page {
