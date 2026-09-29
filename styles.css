@@ -355,8 +355,8 @@ body {
     flex-direction: column;
     /* Three rows, one square apart: pages, social, pay and contact */
     row-gap: 1.5rem;
-    /* Eighteen squares: nine social icons at two squares each */
-    width: 27rem;
+    /* Twelve squares: six social icons at two squares each */
+    width: 18rem;
     max-width: 100%;
 }
 
