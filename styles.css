@@ -335,6 +335,7 @@ body {
 .btn {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     height: 3rem;
     padding: 0 1.5rem;
     box-shadow: inset 1px 1px 0 var(--ink), 1px 1px 0 var(--ink);
@@ -763,5 +764,22 @@ a.contact-handle:hover,
     .site-nav {
         gap: 0.7rem;
         font-size: 0.8rem;
+    }
+}
+
+/* Browsers without round() (before Chrome 125, Firefox 118, Safari 15.4)
+   get the same layout, just not snapped to the grid */
+@supports not (width: round(1px, 1px)) {
+    .hero {
+        min-height: calc(100vw * 2 / 3);
+    }
+
+    .hero-content {
+        padding-top: calc(100vw * 0.6);
+    }
+
+    .hero h1,
+    .page-title {
+        --lh: 1.1em;
     }
 }
