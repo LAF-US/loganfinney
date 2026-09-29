@@ -759,7 +759,8 @@ a.card:hover h4 {
     /* The button block is centered on phones, so it mirrors about the screen's center */
     .cta-buttons {
         width: 18rem;
-        margin: 0 auto;
+        /* Centered on the screen even when the column is narrower than the block */
+        margin: 0 calc(50% - 9rem);
     }
 }
 
