@@ -352,68 +352,47 @@ body {
 
 .cta-buttons {
     display: flex;
-    /* Buttons and icons butt together; each draws its top/left rule inside and
-       right/bottom rule outside, so neighbours share one line */
-    flex-wrap: wrap;
-    row-gap: 0;
-    align-items: center;
+    flex-direction: column;
+    /* Three rows, one square apart: pages, social, pay and contact */
+    row-gap: 1.5rem;
+    /* Eighteen squares: nine social icons at two squares each */
+    width: 27rem;
+    max-width: 100%;
 }
 
-/* Square outlined boxes, as on the old site */
-.btn {
+/* Every row spans the block; its boxes share the length equally and butt together.
+   Each box draws its top/left rule inside and right/bottom rule outside, so neighbours share one line */
+.btn-row {
+    display: flex;
+}
+
+.btn-row > * {
+    flex: 1 1 0;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    /* Three-square buttons: the four together are twelve squares, the same as the six icons */
-    flex-shrink: 0;
-    width: 4.5rem;
     height: 3rem;
+    box-shadow: inset 1px 1px 0 var(--ink), 1px 1px 0 var(--ink);
+    color: var(--ink);
+}
+
+.btn-row > *:hover {
+    background-color: var(--ink);
+    color: var(--bg);
+}
+
+.btn {
     padding: 0;
     text-transform: uppercase;
-    box-shadow: inset 1px 1px 0 var(--ink), 1px 1px 0 var(--ink);
     font-family: var(--font-mono);
     font-size: 1rem;
     font-weight: 700;
-    color: var(--ink);
     text-decoration: none;
-}
-
-.btn:hover {
-    background-color: var(--ink);
-    color: var(--bg);
-}
-
-.social-icons {
-    display: flex;
-    flex-shrink: 0;
-    /* Always its own row, one square below the word buttons */
-    flex-basis: 100%;
-    margin-top: 1.5rem;
-}
-
-.social-icons > * {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 3rem;
-    height: 3rem;
-    box-shadow: inset 1px 1px 0 var(--ink), 1px 1px 0 var(--ink);
-    color: var(--ink);
-}
-
-.social-icons > *:hover {
-    background-color: var(--ink);
-    color: var(--bg);
 }
 
 .social-icons svg {
     width: 1.15rem;
     height: 1.15rem;
-}
-
-/* The Muck Rack mark is wide and short, so it gets a wider box to match the others' height */
-.social-icons .wide {
-    width: 1.75rem;
 }
 
 /* ---------- Page scaffolding ---------- */
@@ -759,9 +738,7 @@ a.card:hover h4 {
 
     /* The button block is centered on phones, so it mirrors about the screen's center */
     .cta-buttons {
-        width: 18rem;
-        /* Centered on the screen even when the column is narrower than the block */
-        margin: 0 calc(50% - 9rem);
+        margin: 0 auto;
     }
 }
 
