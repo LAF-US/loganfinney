@@ -805,3 +805,12 @@ a.contact-handle:hover,
         --lh: 1.1em;
     }
 }
+
+/* Phones narrower than the fifteen-square row: the icons drop to a second row
+   instead of being cut off */
+@media (max-width: 383px) {
+    .cta-buttons {
+        flex-wrap: wrap;
+        row-gap: 1.5rem;
+    }
+}
