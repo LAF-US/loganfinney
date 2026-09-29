@@ -2,10 +2,10 @@
 // Edit this list to change the hero photo rotation
 const HERO_DIR = 'images/hero/';
 const HERO_IMAGES = [
-    '278.jpg',
     '334.jpg',
-    '260.jpg',
-    '177.jpg'
+    '278.jpg',
+    '177.jpg',
+    '260.jpg'
 ];
 
 // Initialize hero image rotation
