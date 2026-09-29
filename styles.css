@@ -84,8 +84,10 @@ body {
         linear-gradient(var(--line) 1px, transparent 1px),
         linear-gradient(90deg, var(--line) 1px, transparent 1px);
     background-size: 1.5rem 1.5rem;
-    /* The pattern starts half a square in from the screen edge */
-    background-position: 0.75rem 0;
+    /* The pattern is anchored to the screen's center line, so the page is
+       mirror-symmetric (a percentage offset is measured against width minus one
+       square, hence the extra half square) */
+    background-position: calc(50% + 0.75rem) 0;
     color: var(--ink);
     /* Every line of text is one grid square tall */
     line-height: 1.5rem;
@@ -94,10 +96,26 @@ body {
     transition: background-color 0.3s, color 0.3s;
 }
 
-/* Everything sits on the 1.5rem graph-paper grid. The gutter is a half square plus
-   one full square, so content edges land on grid lines. On wide screens the content
-   box is centered to the nearest whole square instead of exactly, for the same reason.
-   Rules are drawn with box-shadow so they add no height and land on grid lines */
+/* Everything sits on the 1.5rem graph-paper grid. The content column is centered
+   and an even number of squares wide (at most 48), so its edges land on grid lines
+   and the gutters match. Rules are drawn with box-shadow so they add no height
+   and land on grid lines */
+.header-content,
+.hero-content,
+.page,
+.footer-content {
+    width: min(72rem, calc(100% - 3rem));
+    margin: 0 auto;
+}
+
+@supports (width: round(1px, 1px)) {
+    .header-content,
+    .hero-content,
+    .page,
+    .footer-content {
+        width: min(72rem, round(down, 100% - 3rem, 3rem));
+    }
+}
 
 /* ---------- Baselines ---------- */
 
@@ -166,10 +184,8 @@ body {
 }
 
 .header-content {
-    max-width: 1200px;
     height: 4.5rem;
-    margin: 0 auto;
-    padding: 1.5rem 2.25rem 0;
+    padding-top: 1.5rem;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
@@ -292,11 +308,8 @@ body {
 .hero-content {
     position: relative;
     z-index: 2;
-    max-width: 1200px;
-    width: 100%;
-    margin: 0 auto;
     /* Text starts where the wash reaches full strength */
-    padding: round(down, 60vw, 1.5rem) 2.25rem 3rem;
+    padding: round(down, 60vw, 1.5rem) 0 3rem;
 }
 
 /* Small annotations in the mono face, like notes on a drawing */
@@ -406,9 +419,7 @@ body {
 /* ---------- Page scaffolding ---------- */
 
 .page {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 3rem 2.25rem 1.5rem;
+    padding: 3rem 0 1.5rem;
     counter-reset: section;
 }
 
@@ -656,12 +667,10 @@ a.card:hover h4 {
 .site-footer {
     box-shadow: inset 0 1px 0 var(--ink);
     margin-top: 4.5rem;
-    padding: 1.5rem 2.25rem 3rem;
+    padding: 1.5rem 0 3rem;
 }
 
 .footer-content {
-    max-width: 1128px;
-    margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -721,7 +730,7 @@ a.card:hover h4 {
 @media (max-width: 640px) {
     .header-content {
         height: 3rem;
-        padding: 0 2.25rem;
+        padding: 0;
     }
 
     .logo {
@@ -734,11 +743,17 @@ a.card:hover h4 {
     }
 
     .hero-content {
-        padding: round(down, 60vw, 1.5rem) 2.25rem 1.5rem;
+        padding: round(down, 60vw, 1.5rem) 0 1.5rem;
     }
 
     .page {
-        padding: 1.5rem 2.25rem;
+        padding: 1.5rem 0;
+    }
+
+    /* The button block is centered on phones, so it mirrors about the screen's center */
+    .cta-buttons {
+        width: 18rem;
+        margin: 0 auto;
     }
 }
 
@@ -802,18 +817,5 @@ a.contact-handle:hover,
     .hero h1,
     .page-title {
         --lh: 1.1em;
-    }
-}
-
-/* Wide screens: center the content box to the nearest whole square (see the grid note above) */
-@supports (width: round(1px, 1px)) {
-    .header-content,
-    .hero-content,
-    .page {
-        margin-left: max(0px, round(down, (100% - 1200px) / 2, 1.5rem));
-    }
-
-    .footer-content {
-        margin-left: max(0px, round(down, (100% - 1128px) / 2, 1.5rem));
     }
 }
