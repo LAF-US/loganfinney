@@ -339,6 +339,11 @@ body {
 /* ---------- Buttons & social ---------- */
 
 .cta-buttons {
+    /* The button block sits half a square off the grid, so its edges and seams
+       run through the middle of grid squares rather than along the lines */
+    position: relative;
+    top: 0.75rem;
+    left: 0.75rem;
     display: flex;
     /* Buttons and icons butt together; each draws its top/left rule inside and
        right/bottom rule outside, so neighbours share one line */
