@@ -87,8 +87,61 @@ body {
    Rules are drawn with box-shadow so they add no height and land on grid lines */
 @media (min-width: 1200px) {
     body {
-        background-position: calc(50% - 600px) 0;
+        /* A percentage offset is measured against (width - one square), hence the extra half square */
+        background-position: calc(50% + 0.75rem - 600px) 0;
     }
+}
+
+/* ---------- Baselines ---------- */
+
+/* Text sits on the grid lines like writing on graph paper: each line of type is
+   nudged down so its baseline lands on the line at the bottom of its square.
+   The nudge depends on the typeface's ascent minus descent (--ad, in ems) and
+   the line height (--lh). Rules and boxes stay where they are */
+body {
+    --ad: 0.3975;          /* Verdana */
+}
+
+.hero .lede,
+.page-intro,
+.story-list a,
+.story-list .story-plain,
+.timeline-entry blockquote {
+    --ad: 0.349;           /* Georgia */
+}
+
+.hero .kicker,
+.contact-line,
+.entry-dates,
+.footer-content,
+.card .card-meta,
+.card .card-kicker,
+.site-nav {
+    --ad: 0.2665;          /* Courier New */
+}
+
+.logo,
+.site-nav,
+.hero .kicker,
+.hero .lede,
+.contact-line,
+.page-intro,
+.subsection-title,
+.timeline-entry h3,
+.timeline-entry p,
+.timeline-entry blockquote,
+.entry-dates,
+.story-list a,
+.story-list .story-plain,
+.card h2,
+.card h3,
+.card h4,
+.card p,
+.card .card-meta,
+.card .card-kicker,
+.footer-content p {
+    position: relative;
+    top: calc(var(--lh, 1.5rem) / 2 - var(--ad) * 1em);
 }
 
 /* ---------- Header ---------- */
@@ -109,10 +162,10 @@ body {
     max-width: 1200px;
     height: 4.5rem;
     margin: 0 auto;
-    padding: 0 1.5rem;
+    padding: 1.5rem 1.5rem 0;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     gap: 1.5rem;
 }
 
@@ -243,12 +296,14 @@ body {
     font-family: var(--font-body);
     font-size: clamp(2.2rem, 6vw, 4rem);
     font-weight: 700;
-    line-height: round(up, 1.05em, 1.5rem);
+    --lh: round(up, 1.05em, 1.5rem);
+    line-height: var(--lh);
     letter-spacing: -0.03em;
     text-transform: uppercase;
     max-width: 16ch;
     margin-bottom: 1.5rem;
-    padding-bottom: 1.5rem;
+    padding-top: calc(var(--lh) / 2 - var(--ad) * 1em);
+    padding-bottom: calc(1.5rem - (var(--lh) / 2 - var(--ad) * 1em));
     box-shadow: 0 1px 0 var(--ink);
 }
 
@@ -334,10 +389,12 @@ body {
     font-size: clamp(2.2rem, 5vw, 3.2rem);
     font-weight: 700;
     letter-spacing: -0.03em;
-    line-height: round(up, 1.05em, 1.5rem);
+    --lh: round(up, 1.05em, 1.5rem);
+    line-height: var(--lh);
     text-transform: uppercase;
     margin-bottom: 1.5rem;
-    padding-bottom: 1.5rem;
+    padding-top: calc(var(--lh) / 2 - var(--ad) * 1em);
+    padding-bottom: calc(1.5rem - (var(--lh) / 2 - var(--ad) * 1em));
     box-shadow: 0 1px 0 var(--ink);
 }
 
@@ -356,8 +413,10 @@ body {
     gap: 1.5rem;
     font-family: var(--font-body);
     font-size: 1.5rem;
-    line-height: 3rem;
+    --lh: 3rem;
+    line-height: var(--lh);
     height: 3rem;
+    padding-top: calc(var(--lh) / 2 - var(--ad) * 1em);
     font-weight: 700;
     letter-spacing: -0.02em;
     text-transform: uppercase;
@@ -464,7 +523,8 @@ a.card:hover h4 {
 .story-list a,
 .story-list .story-plain {
     display: block;
-    padding: 0.75rem 0;
+    /* Headline sits on the first line of its two-square row; the rule closes the row */
+    padding: 0 0 1.5rem;
     font-family: var(--font-display);
     font-size: 1.02rem;
 }
