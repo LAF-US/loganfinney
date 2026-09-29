@@ -68,6 +68,12 @@ html {
 body {
     font-family: var(--font-body);
     background-color: var(--bg);
+    /* Graph-paper rule: 1.5rem squares, drawn on the page so they scroll with the content */
+    background-image:
+        linear-gradient(var(--line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 1.5rem 1.5rem;
+    background-position: center top;
     color: var(--ink);
     line-height: 1.65;
     font-size: 1rem;
@@ -309,19 +315,11 @@ body {
 
 /* ---------- Page scaffolding ---------- */
 
-/* Pages sit in a ruled frame, like a sheet in a drawing set */
 .page {
     max-width: 1100px;
     margin: 0 auto;
     padding: 3.5rem 1.5rem 2rem;
     counter-reset: section;
-}
-
-@media (min-width: 1160px) {
-    .page {
-        border-left: 1px solid var(--line);
-        border-right: 1px solid var(--line);
-    }
 }
 
 .page-title {
