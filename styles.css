@@ -339,11 +339,6 @@ body {
 /* ---------- Buttons & social ---------- */
 
 .cta-buttons {
-    /* The button block sits half a square off the grid, so its edges and seams
-       run through the middle of grid squares rather than along the lines */
-    position: relative;
-    top: 0.75rem;
-    left: 0.75rem;
     display: flex;
     /* Buttons and icons butt together; each draws its top/left rule inside and
        right/bottom rule outside, so neighbours share one line */
@@ -357,9 +352,9 @@ body {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    /* Four-square buttons: the three together are twelve squares, the same as the six icons */
+    /* Three-square buttons: the four together are twelve squares, the same as the six icons */
     flex-shrink: 0;
-    width: 6rem;
+    width: 4.5rem;
     height: 3rem;
     padding: 0;
     text-transform: uppercase;
