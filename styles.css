@@ -374,8 +374,10 @@ body {
 .social-icons {
     display: flex;
     flex-shrink: 0;
-    /* Always its own row, under the three word buttons */
+    /* Always its own row, under the three word buttons, shifted one square so
+       each two-square icon is centered on a button seam */
     flex-basis: 100%;
+    margin-left: 1.5rem;
 }
 
 .social-icons a {
