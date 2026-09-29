@@ -386,8 +386,9 @@ body {
 .social-icons {
     display: flex;
     flex-shrink: 0;
-    /* Always its own row, under the three word buttons */
+    /* Always its own row, one square below the word buttons */
     flex-basis: 100%;
+    margin-top: 1.5rem;
 }
 
 .social-icons > * {
