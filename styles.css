@@ -378,7 +378,7 @@ body {
     flex-basis: 100%;
 }
 
-.social-icons a {
+.social-icons > * {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -388,7 +388,7 @@ body {
     color: var(--ink);
 }
 
-.social-icons a:hover {
+.social-icons > *:hover {
     background-color: var(--ink);
     color: var(--bg);
 }
