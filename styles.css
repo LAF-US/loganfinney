@@ -216,21 +216,26 @@ body {
     text-decoration: none;
 }
 
-/* The theme switch is a plain text link naming the other theme */
+/* The theme switch is a bare icon: a moon in light mode, a sun in dark */
 #themeToggle {
     background: none;
     border: 0;
     padding: 0;
     font: inherit;
     color: var(--ink-soft);
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
-    text-decoration-thickness: 1px;
     cursor: pointer;
+    align-self: center;
 }
 
 #themeToggle:hover {
     color: var(--ink);
+}
+
+/* Moon switches to dark, sun switches back to light */
+#themeToggle svg {
+    display: block;
+    width: 1.125rem;
+    height: 1.125rem;
 }
 
 #themeToggle .t-light { display: none; }
