@@ -100,9 +100,9 @@ body {
 }
 
 .logo {
-    font-family: var(--font-display);
+    font-family: var(--font-body);
     font-size: 1.3rem;
-    font-weight: 400;
+    font-weight: 700;
     color: var(--ink);
     text-decoration: none;
     white-space: nowrap;
