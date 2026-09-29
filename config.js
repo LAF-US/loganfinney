@@ -135,10 +135,18 @@ function initThemeToggle() {
     const currentTheme = () => root.getAttribute('data-theme') ||
         (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
 
+    // The visible word names the theme the button switches to; the label says so for screen readers
+    const updateLabel = () => {
+        const next = currentTheme() === 'dark' ? 'light' : 'dark';
+        themeToggle.setAttribute('aria-label', `Switch to ${next} theme`);
+    };
+    updateLabel();
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateLabel);
+
     themeToggle.addEventListener('click', () => {
         const next = currentTheme() === 'dark' ? 'light' : 'dark';
-        // The button's visible word names the theme it switches to, so it needs no pressed state
         root.setAttribute('data-theme', next);
+        updateLabel();
         try {
             localStorage.setItem('theme', next);
         } catch (e) {
