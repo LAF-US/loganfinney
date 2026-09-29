@@ -344,8 +344,9 @@ body {
 
 .cta-buttons {
     display: flex;
-    flex-wrap: wrap;
-    gap: 1.5rem;
+    /* Buttons and icons butt together; each draws its top/left rule inside and
+       right/bottom rule outside, so neighbours share one line */
+    flex-wrap: nowrap;
     align-items: center;
 }
 
@@ -355,6 +356,7 @@ body {
     align-items: center;
     justify-content: center;
     /* Every button is the same four-square width, so the row stays on the grid */
+    flex-shrink: 0;
     width: 6rem;
     height: 3rem;
     padding: 0;
@@ -374,6 +376,7 @@ body {
 
 .social-icons {
     display: flex;
+    flex-shrink: 0;
 }
 
 .social-icons a {
