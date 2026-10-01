@@ -329,8 +329,8 @@ body {
     letter-spacing: -0.03em;
     text-transform: uppercase;
     max-width: 16ch;
-    /* One square above, the two words filling three squares, one square to the rule, one square after it */
-    margin: 1.5rem 0;
+    /* Two squares above, the two words filling three squares, one square to the rule, one square after it */
+    margin: 3rem 0 1.5rem;
     padding-bottom: 1.5rem;
     box-shadow: 0 1px 0 var(--ink);
 }
@@ -906,53 +906,25 @@ a.contact-handle:hover,
     }
 }
 
-/* The photo's caption sits on the right, level with the first word of the headline */
-.masthead {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 1.5rem;
-    /* Keeps the square the caption used to fill above the headline */
-    margin-top: 1.5rem;
+/* The home header is one square taller: the theme switch, then the photo's
+   caption under it, both inside the header's frost so the caption keeps 7:1 */
+.home .header-content {
+    height: 6rem;
 }
 
-.masthead .photo-caption {
-    margin-top: 1.5rem;
-    text-align: right;
-    white-space: nowrap;
+.header-tools {
+    flex-direction: column;
+    align-items: flex-end;
+    height: 3rem;
 }
 
-/* The header copy of the caption only shows on phones */
-.header-caption {
-    display: none;
+.header-tools #themeToggle {
+    height: 1.5rem;
+    align-self: flex-end;
+}
+
+.photo-caption {
     font-family: var(--font-mono);
     font-size: 1rem;
     color: var(--ink-soft);
-}
-
-/* On phones the caption moves into the header, under the theme switch,
-   where the header's frost keeps it at 7:1 over every photo */
-@media (max-width: 640px) {
-    .masthead .photo-caption {
-        display: none;
-    }
-
-    .home .header-content {
-        height: 6rem;
-    }
-
-    .header-tools {
-        flex-direction: column-reverse;
-        align-items: flex-end;
-        height: 3rem;
-    }
-
-    .header-tools .header-caption {
-        display: block;
-    }
-
-    .header-tools #themeToggle {
-        height: 1.5rem;
-        align-self: flex-end;
-    }
 }
