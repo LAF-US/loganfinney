@@ -922,12 +922,15 @@ a.contact-handle:hover,
     white-space: nowrap;
 }
 
-/* On phones the caption moves to the top of the photo, under the theme switch */
+/* On phones the caption moves to the top of the photo, under the theme switch.
+   The photo there is too bright for 7:1, so the caption gets the header's frost */
 @media (max-width: 640px) {
     .masthead .photo-caption {
         position: absolute;
-        top: calc(var(--cap) * 1em - 0.75rem - var(--ad) * 1em);
+        top: 0;
         right: 0;
         margin: 0;
+        padding-left: 0.75rem;
+        background-color: rgba(var(--bg-rgb), 0.9);
     }
 }
