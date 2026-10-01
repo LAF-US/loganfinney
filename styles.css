@@ -408,8 +408,38 @@ body {
 }
 
 .tabs .btn[aria-selected="true"] {
+    background-color: var(--accent);
+    color: var(--on-accent);
+}
+
+/* On the narrowest phones the five tabs are under three squares wide; smaller text keeps STREAM inside its tab */
+@media (max-width: 359px) {
+    .tabs .btn {
+        font-size: 0.75rem;
+    }
+}
+
+/* Icon names: a small label below the icon on hover or keyboard focus, no motion */
+.social-icons > a {
+    position: relative;
+}
+
+.social-icons > a[data-tip]:hover::after,
+.social-icons > a[data-tip]:focus-visible::after {
+    content: attr(data-tip);
+    position: absolute;
+    top: calc(100% + 0.375rem);
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0 0.375rem;
+    line-height: 1.5rem;
+    white-space: nowrap;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
     background-color: var(--ink);
     color: var(--bg);
+    pointer-events: none;
+    z-index: 2;
 }
 
 /* ---------- Page scaffolding ---------- */
