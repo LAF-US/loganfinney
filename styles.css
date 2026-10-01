@@ -755,8 +755,21 @@ a.card:hover h4 {
         row-gap: 1.5rem;
     }
 
+    /* Copyright, then contacts, then the colophon */
+    .footer-content {
+        flex-direction: column;
+    }
+
+    .footer-content > div {
+        display: contents;
+    }
+
+    .footer-content .contact {
+        order: 1;
+    }
+
     .footer-content .colophon {
-        margin-top: 1.5rem;
+        order: 2;
     }
 }
 
@@ -868,9 +881,11 @@ a.contact-handle:hover,
 
 /* ---------- Home layout ---------- */
 
-/* Signal and Email links sit in the header; the theme switch stays at the end */
-.header-contact {
-    gap: 1.5rem;
+/* On the home page the header holds only the theme switch, on the right */
+.header-tools {
+    display: flex;
+    align-items: center;
+    height: 1.5rem;
 }
 
 /* Body text on the left, link box on the right; they stack on narrow screens */
@@ -891,17 +906,28 @@ a.contact-handle:hover,
     }
 }
 
-/* The photo's caption sits on the right where the eyebrow was */
-.photo-caption {
-    text-align: right;
-    min-height: 1.5rem;
+/* The photo's caption sits on the right, level with the first word of the headline */
+.masthead {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1.5rem;
+    /* Keeps the square the caption used to fill above the headline */
+    margin-top: 1.5rem;
 }
 
-/* On wide screens the wash is strong enough one square higher for the caption
-   to keep 7:1 over every hero photo; narrower screens have no room to rise */
-@media (min-width: 1280px) {
-    .photo-caption {
-        margin-top: -1.5rem;
-        margin-bottom: 1.5rem;
+.masthead .photo-caption {
+    margin-top: 1.5rem;
+    text-align: right;
+    white-space: nowrap;
+}
+
+/* On phones the caption moves to the top of the photo, under the theme switch */
+@media (max-width: 640px) {
+    .masthead .photo-caption {
+        position: absolute;
+        top: calc(var(--cap) * 1em - 0.75rem - var(--ad) * 1em);
+        right: 0;
+        margin: 0;
     }
 }
