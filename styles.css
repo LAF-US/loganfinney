@@ -353,10 +353,10 @@ body {
 .cta-buttons {
     display: flex;
     flex-direction: column;
-    /* Three rows, one square apart: pages, social, pay and contact */
-    row-gap: 1.5rem;
-    /* Twelve squares: six social icons at two squares each */
-    width: 18rem;
+    /* A row of tabs over the row of whichever panel is selected */
+    row-gap: 0;
+    /* Fourteen squares: seven icons at two squares each */
+    width: 21rem;
     max-width: 100%;
 }
 
@@ -398,6 +398,18 @@ body {
 /* The Muck Rack mark is wide and short, so it gets a wider box to match the others' height */
 .social-icons .wide {
     width: 1.75rem;
+}
+
+/* Tabs: plain text buttons; the selected one is filled. No motion when switching. */
+.tabs .btn {
+    border: 0;
+    background: none;
+    cursor: pointer;
+}
+
+.tabs .btn[aria-selected="true"] {
+    background-color: var(--ink);
+    color: var(--bg);
 }
 
 /* ---------- Page scaffolding ---------- */
