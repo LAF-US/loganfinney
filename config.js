@@ -19,7 +19,7 @@ const HERO_CAPTIONS = {
 // Initialize hero image rotation
 function initHeroRotation() {
     const layers = document.querySelectorAll('.hero-bg');
-    const caption = document.querySelector('.photo-caption');
+    const captions = document.querySelectorAll('.photo-caption');
 
     // Pages without a hero section (resume, work) load this script too
     if (layers.length < 2 || HERO_IMAGES.length === 0) {
@@ -34,9 +34,9 @@ function initHeroRotation() {
     function show(index, layer) {
         const name = HERO_IMAGES[index];
         layers[layer].style.setProperty('--photo', `url('${HERO_DIR}${name}')`);
-        if (caption) {
-            caption.textContent = HERO_CAPTIONS[name] || '';
-        }
+        captions.forEach((c) => {
+            c.textContent = HERO_CAPTIONS[name] || '';
+        });
     }
 
     // Show the first photo that loads, so a missing file never leaves the hero empty
