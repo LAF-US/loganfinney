@@ -320,9 +320,9 @@ body {
 
 .hero h1 {
     font-family: var(--font-body);
-    font-size: 3.75rem;
+    font-size: 1.75rem;
     font-weight: 700;
-    --lh: 4.5rem;
+    --lh: 3rem;
     line-height: var(--lh);
     letter-spacing: -0.03em;
     text-transform: uppercase;
@@ -786,7 +786,6 @@ a.card:hover h4 {
     }
 
     /* The 3-square h1 is wider than a phone column; it steps down to 2 squares */
-    .hero h1,
     .page-title {
         font-size: 2.5rem;
         --lh: 3rem;
