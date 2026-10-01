@@ -890,7 +890,7 @@ a.contact-handle:hover,
     }
 }
 
-/* The photo's caption sits on the right where the eyebrow was; empty until captions are added */
+/* The photo's caption sits on the right where the eyebrow was */
 .photo-caption {
     text-align: right;
     min-height: 1.5rem;
