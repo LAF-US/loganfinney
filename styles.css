@@ -419,7 +419,6 @@ body {
 
 /* Tabs: unselected ones sit on light grey; the selected one is filled with the accent. No motion when switching. */
 .tabs .btn {
-    font-size: 0.75rem;
     border: 0;
     background: var(--line);
     cursor: pointer;
