@@ -719,10 +719,6 @@ a.card:hover h4 {
     color: var(--ink);
 }
 
-.colophon {
-    flex-basis: 100%;
-}
-
 /* Signal and Email each get their own line */
 .footer-content .contact .fl {
     display: block;
