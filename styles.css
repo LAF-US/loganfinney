@@ -721,6 +721,18 @@ a.card:hover h4 {
 
 .colophon {
     flex-basis: 100%;
+    text-align: center;
+}
+
+/* On phones each footer phrase gets its own line */
+@media (max-width: 640px) {
+    .footer-content .fl {
+        display: block;
+    }
+
+    .footer-content .sep {
+        display: none;
+    }
 }
 
 /* ---------- Accessibility ---------- */
