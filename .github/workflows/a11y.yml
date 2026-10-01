@@ -1,0 +1,28 @@
+name: Accessibility
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  wcag:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build site (same as GitHub Pages)
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./
+          destination: ./_site
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install test tools
+        working-directory: tests
+        run: npm install && npx playwright install --with-deps chromium
+      - name: Serve built site
+        run: (python3 -m http.server 8000 -d _site >/dev/null 2>&1 &) && sleep 2
+      - name: Run WCAG checks
+        working-directory: tests
+        run: npm run a11y
