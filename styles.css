@@ -402,7 +402,7 @@ body {
 
 /* Tabs: unselected ones sit on light grey; the selected one is filled with the accent. No motion when switching. */
 .tabs .btn {
-    font-size: 0.875rem;
+    font-size: 0.75rem;
     border: 0;
     background: var(--line);
     cursor: pointer;
@@ -417,13 +417,6 @@ body {
     font-weight: 700;
     background-color: var(--accent);
     color: var(--on-accent);
-}
-
-/* On the narrowest phones the five tabs are under three squares wide; smaller text keeps STREAM inside its tab */
-@media (max-width: 359px) {
-    .tabs .btn {
-        font-size: 0.75rem;
-    }
 }
 
 /* Icon names: a small label below the icon on hover or keyboard focus, no motion */
