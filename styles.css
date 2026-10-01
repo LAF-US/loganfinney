@@ -937,7 +937,7 @@ a.contact-handle:hover,
         display: none;
     }
 
-    .header-content:has(.header-caption) {
+    .home .header-content {
         height: 6rem;
     }
 
