@@ -1,10 +1,18 @@
 // WCAG check of the built site (axe-core). Fails on any violation.
-// BASE_URL points at the served _site; CHROMIUM_PATH optionally overrides the browser.
+// Checks every .html file in SITE_DIR (the built _site), served at BASE_URL.
+// CHROMIUM_PATH optionally overrides the browser.
+import { readdirSync } from 'node:fs';
+import { join, relative } from 'node:path';
 import { chromium } from 'playwright';
 import { AxeBuilder } from '@axe-core/playwright';
 
 const base = process.env.BASE_URL || 'http://localhost:8000';
-const pages = ['/', '/resume.html', '/work.html'];
+const siteDir = process.env.SITE_DIR || '../_site';
+const pages = readdirSync(siteDir, { recursive: true })
+  .filter((f) => f.endsWith('.html'))
+  .map((f) => '/' + relative(siteDir, join(siteDir, f)).split('\\').join('/'))
+  .sort();
+if (!pages.length) throw new Error(`No .html files found in ${siteDir}`);
 const tags = ['wcag2a', 'wcag2aa', 'wcag2aaa', 'wcag21a', 'wcag21aa', 'wcag22aa'];
 
 const browser = await chromium.launch(
