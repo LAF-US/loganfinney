@@ -155,14 +155,8 @@ function initThemeToggle() {
     });
 }
 
-// Run on page load
-document.addEventListener('DOMContentLoaded', () => {
-    initHeroRotation();
-    initThemeToggle();
-});
-
 // Button-block tabs. Without scripts every panel shows, stacked; with them, one shows at a time.
-(function () {
+function initTabs() {
     const tabs = Array.from(document.querySelectorAll('.tabs [role="tab"]'));
     if (!tabs.length) return;
     function select(tab, focus) {
@@ -186,4 +180,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
     select(tabs[0], false);
-})();
+}
+
+// Run on page load
+document.addEventListener('DOMContentLoaded', () => {
+    initHeroRotation();
+    initThemeToggle();
+    initTabs();
+});
