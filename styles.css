@@ -909,10 +909,12 @@ a.contact-handle:hover,
 /* The photo's caption: small print in a half-frosted box at the bottom right
    of the photo, on the row above the headline where the wash keeps it at 7:1 */
 .photo-caption {
-    width: fit-content;
+    /* Four squares wide, enough for the longest caption, so both edges sit on grid lines */
+    width: 6rem;
     min-height: 1.5rem;
     margin-left: auto;
     padding: 0 0.375rem;
+    text-align: right;
     font-family: var(--font-mono);
     font-size: 0.5rem;
     line-height: 1.5rem;
