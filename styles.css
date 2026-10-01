@@ -381,15 +381,6 @@ body {
     color: var(--bg);
 }
 
-/* The link row under the tabs sits on a light grey so it reads apart from the tabs */
-.tab-panel .btn-row > * {
-    background-color: var(--line);
-}
-
-.tab-panel .btn-row > *:hover {
-    background-color: var(--ink);
-}
-
 .btn {
     padding: 0;
     text-transform: uppercase;
@@ -409,10 +400,10 @@ body {
     width: 1.75rem;
 }
 
-/* Tabs: plain text buttons; the selected one is filled. No motion when switching. */
+/* Tabs: unselected ones sit on light grey; the selected one is filled with the accent. No motion when switching. */
 .tabs .btn {
     border: 0;
-    background: none;
+    background: var(--line);
     cursor: pointer;
 }
 
