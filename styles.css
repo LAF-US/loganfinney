@@ -746,6 +746,15 @@ a.card:hover h4 {
     .footer-content .fl {
         display: block;
     }
+
+    /* A blank line between each group */
+    .footer-content {
+        row-gap: 1.5rem;
+    }
+
+    .footer-content .colophon {
+        margin-top: 1.5rem;
+    }
 }
 
 /* ---------- Accessibility ---------- */
