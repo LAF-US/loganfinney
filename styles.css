@@ -419,6 +419,12 @@ body {
 }
 
 /* On the narrowest phones the five tabs are under three squares wide; smaller text keeps STREAM inside its tab */
+@media (max-width: 640px) {
+    .tabs .btn {
+        font-size: 0.875rem;
+    }
+}
+
 @media (max-width: 359px) {
     .tabs .btn {
         font-size: 0.75rem;
