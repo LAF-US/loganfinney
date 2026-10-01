@@ -164,7 +164,8 @@ function initTabs() {
             const on = t === tab;
             t.setAttribute('aria-selected', on ? 'true' : 'false');
             t.tabIndex = on ? 0 : -1;
-            document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+            const panel = document.getElementById(t.getAttribute('aria-controls'));
+            if (panel) panel.hidden = !on;
         });
         if (focus) tab.focus();
     }
