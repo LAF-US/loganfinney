@@ -381,6 +381,15 @@ body {
     color: var(--bg);
 }
 
+/* Link boxes under the tabs are filled with the page colour so the grid doesn't show through */
+.tab-panel .btn-row > * {
+    background-color: var(--bg);
+}
+
+.tab-panel .btn-row > *:hover {
+    background-color: var(--ink);
+}
+
 .btn {
     padding: 0;
     text-transform: uppercase;
