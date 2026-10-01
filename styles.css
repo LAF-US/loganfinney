@@ -407,6 +407,11 @@ body {
     cursor: pointer;
 }
 
+.tabs .btn:hover {
+    background-color: var(--ink);
+    color: var(--bg);
+}
+
 .tabs .btn[aria-selected="true"] {
     background-color: var(--accent);
     color: var(--on-accent);

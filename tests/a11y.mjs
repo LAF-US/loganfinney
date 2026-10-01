@@ -8,7 +8,13 @@ import { AxeBuilder } from '@axe-core/playwright';
 
 const base = process.env.BASE_URL || 'http://localhost:8000';
 const siteDir = process.env.SITE_DIR || '../_site';
-const pages = readdirSync(siteDir, { recursive: true })
+let files;
+try {
+  files = readdirSync(siteDir, { recursive: true });
+} catch {
+  throw new Error(`Site folder ${siteDir} not found. Build the site first.`);
+}
+const pages = files
   .filter((f) => f.endsWith('.html'))
   .map((f) => '/' + relative(siteDir, join(siteDir, f)).split('\\').join('/'))
   .sort();
@@ -24,7 +30,14 @@ for (const colorScheme of ['light', 'dark']) {
   for (const path of pages) {
     const context = await browser.newContext({ colorScheme });
     const page = await context.newPage();
-    await page.goto(base + path, { waitUntil: 'networkidle' });
+    const response = await page.goto(base + path, { waitUntil: 'networkidle' }).catch((e) => e);
+    if (!(response && typeof response.status === 'function' && response.status() === 200)) {
+      const why = response instanceof Error ? response.message : `HTTP ${response?.status?.()}`;
+      console.log(`${colorScheme} ${path}: failed to load (${why})`);
+      failures++;
+      await context.close();
+      continue;
+    }
     const { violations } = await new AxeBuilder({ page }).withTags(tags).analyze();
     console.log(`${colorScheme} ${path}: ${violations.length} violation(s)`);
     for (const v of violations) {
