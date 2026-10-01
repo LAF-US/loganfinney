@@ -386,7 +386,7 @@ body {
     text-transform: uppercase;
     font-family: var(--font-mono);
     font-size: 1rem;
-    font-weight: 700;
+    font-weight: 400;
     text-decoration: none;
 }
 
@@ -413,6 +413,7 @@ body {
 }
 
 .tabs .btn[aria-selected="true"] {
+    font-weight: 700;
     background-color: var(--accent);
     color: var(--on-accent);
 }
