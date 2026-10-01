@@ -861,3 +861,48 @@ a.contact-handle:hover,
     }
 
 }
+
+/* ---------- Home layout ---------- */
+
+/* Contact handles sit in the header; the theme switch stays at the end */
+.header-contact {
+    gap: 1.5rem;
+}
+
+/* Body text on the left, link box on the right; they stack on narrow screens */
+.hero-body {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 0 3rem;
+}
+
+.hero-body .lede {
+    flex: 0 1 auto;
+}
+
+@media (min-width: 641px) {
+    .hero-body .cta-buttons {
+        margin-left: auto;
+    }
+}
+
+/* On phones the header grows to fit the handles, one per line */
+@media (max-width: 640px) {
+    .header-content:has(.header-contact) {
+        height: auto;
+        padding-bottom: 1.5rem;
+    }
+
+    .header-contact {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0;
+    }
+
+    .header-contact #themeToggle {
+        height: 1.5rem;
+        align-self: flex-start;
+        margin: 0;
+    }
+}
