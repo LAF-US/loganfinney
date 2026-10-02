@@ -28,6 +28,8 @@ jobs:
       - name: Install pa11y-ci (exact versions from tests/package-lock.json)
         working-directory: tests
         run: npm ci --ignore-scripts
+      - name: Check the runner has Chrome
+        run: test -x /usr/bin/google-chrome || { echo "::error::Google Chrome is missing from the runner image at /usr/bin/google-chrome"; exit 1; }
       - name: Run WCAG checks (pa11y-ci, settings in tests/.pa11yci.json)
         working-directory: tests
         env:
