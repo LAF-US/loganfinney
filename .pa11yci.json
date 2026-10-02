@@ -5,7 +5,10 @@
     ],
     "standard": "WCAG2AA",
     "rules": [
-      "color-contrast-enhanced"
+      "color-contrast-enhanced",
+      "identical-links-same-purpose",
+      "meta-refresh-no-exceptions",
+      "target-size"
     ],
     "levelCapWhenNeedsReview": "warning",
     "chromeLaunchConfig": {
