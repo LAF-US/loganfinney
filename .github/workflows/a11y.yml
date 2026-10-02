@@ -18,16 +18,9 @@ jobs:
         with:
           source: ./
           destination: ./_site
-      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
-        with:
-          node-version: 22
-      - name: Install test tools
-        working-directory: tests
-        run: npm ci && npx playwright install --with-deps chromium
       - name: Serve built site
         run: |
           (python3 -m http.server 8000 -d _site >/dev/null 2>&1 &)
           timeout 30 bash -c 'until curl -sf http://localhost:8000/ >/dev/null; do sleep 0.5; done'
-      - name: Run WCAG checks
-        working-directory: tests
-        run: npm run a11y
+      - name: Run WCAG checks (pa11y-ci, settings in .pa11yci.json)
+        run: npx --yes pa11y-ci@4.1.1
