@@ -2,15 +2,24 @@
 // Edit this list to change the hero photo rotation
 const HERO_DIR = 'images/hero/';
 const HERO_IMAGES = [
-    '278.jpg',
     '334.jpg',
-    '260.jpg',
-    '177.jpg'
+    '278.jpg',
+    'anderson-ranch.jpg',
+    '345.jpg'
 ];
+
+// Caption shown with each photo, by file name. Leave a photo out to show no caption.
+const HERO_CAPTIONS = {
+    '334.jpg': 'Priest Lake',
+    '278.jpg': 'State Capitol',
+    'anderson-ranch.jpg': 'Anderson Ranch',
+    '345.jpg': 'Schweitzer'
+};
 
 // Initialize hero image rotation
 function initHeroRotation() {
     const layers = document.querySelectorAll('.hero-bg');
+    const captions = document.querySelectorAll('.photo-caption');
 
     // Pages without a hero section (resume, work) load this script too
     if (layers.length < 2 || HERO_IMAGES.length === 0) {
@@ -25,6 +34,9 @@ function initHeroRotation() {
     function show(index, layer) {
         const name = HERO_IMAGES[index];
         layers[layer].style.setProperty('--photo', `url('${HERO_DIR}${name}')`);
+        captions.forEach((c) => {
+            c.textContent = HERO_CAPTIONS[name] || '';
+        });
     }
 
     // Show the first photo that loads, so a missing file never leaves the hero empty
@@ -134,13 +146,19 @@ function initThemeToggle() {
     const root = document.documentElement;
     const currentTheme = () => root.getAttribute('data-theme') ||
         (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-    const syncPressed = () => themeToggle.setAttribute('aria-pressed', String(currentTheme() === 'dark'));
-    syncPressed();
+
+    // The visible word names the theme the button switches to; the label says so for screen readers
+    const updateLabel = () => {
+        const next = currentTheme() === 'dark' ? 'light' : 'dark';
+        themeToggle.setAttribute('aria-label', `Switch to ${next} theme`);
+    };
+    updateLabel();
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateLabel);
 
     themeToggle.addEventListener('click', () => {
         const next = currentTheme() === 'dark' ? 'light' : 'dark';
         root.setAttribute('data-theme', next);
-        syncPressed();
+        updateLabel();
         try {
             localStorage.setItem('theme', next);
         } catch (e) {
@@ -149,8 +167,37 @@ function initThemeToggle() {
     });
 }
 
+// Button-block tabs. Without scripts every panel shows, stacked; with them, one shows at a time.
+function initTabs() {
+    const tabs = Array.from(document.querySelectorAll('.tabs [role="tab"]'));
+    if (!tabs.length) return;
+    function select(tab, focus) {
+        tabs.forEach(function (t) {
+            const on = t === tab;
+            t.setAttribute('aria-selected', on ? 'true' : 'false');
+            t.tabIndex = on ? 0 : -1;
+            const panel = document.getElementById(t.getAttribute('aria-controls'));
+            if (panel) panel.hidden = !on;
+        });
+        if (focus) tab.focus();
+    }
+    tabs.forEach(function (tab, i) {
+        tab.addEventListener('click', function () { select(tab, false); });
+        tab.addEventListener('keydown', function (e) {
+            let next = null;
+            if (e.key === 'ArrowRight') next = tabs[(i + 1) % tabs.length];
+            else if (e.key === 'ArrowLeft') next = tabs[(i - 1 + tabs.length) % tabs.length];
+            else if (e.key === 'Home') next = tabs[0];
+            else if (e.key === 'End') next = tabs[tabs.length - 1];
+            if (next) { e.preventDefault(); select(next, true); }
+        });
+    });
+    select(tabs[0], false);
+}
+
 // Run on page load
 document.addEventListener('DOMContentLoaded', () => {
     initHeroRotation();
     initThemeToggle();
+    initTabs();
 });
