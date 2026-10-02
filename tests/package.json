@@ -1,0 +1,10 @@
+{
+  "name": "loganfinney-a11y",
+  "private": true,
+  "scripts": {
+    "test": "pa11y-ci"
+  },
+  "devDependencies": {
+    "pa11y-ci": "4.1.1"
+  }
+}
