@@ -211,7 +211,7 @@ body {
     align-items: baseline;
     gap: 1.4rem;
     font-family: var(--font-mono);
-    font-size: 1rem;
+    font-size: 0.875rem;
 }
 
 .site-nav a {
@@ -290,10 +290,7 @@ body {
        It is a frost that softens the photo's edges: it fades out from the
        header at the top, stays clear through the middle, and eases in to
        full strength near the bottom, where the text starts */
-    background-image:
-        linear-gradient(to bottom, rgb(var(--bg-rgb)) 4.5rem, transparent 6rem),
-        linear-gradient(to bottom, transparent 30%, var(--hero-wash) 90%),
-        var(--photo, none);
+    background-image: linear-gradient(to bottom, rgb(var(--bg-rgb)), transparent 28%, transparent 30%, var(--hero-wash) 90%), var(--photo, none);
     background-size: 100% auto;
     background-position: top center;
     background-repeat: no-repeat;
@@ -321,7 +318,7 @@ body {
 /* Small annotations in the mono face, like notes on a drawing */
 .hero .kicker {
     font-family: var(--font-mono);
-    font-size: 1rem;
+    font-size: 0.875rem;
     color: var(--ink-soft);
 }
 
@@ -409,7 +406,7 @@ body {
     padding: 0;
     text-transform: uppercase;
     font-family: var(--font-mono);
-    font-size: 1rem;
+    font-size: 0.875rem;
     font-weight: 400;
     text-decoration: none;
 }
@@ -515,7 +512,7 @@ body {
 .section-title::before {
     content: counter(section, decimal-leading-zero);
     font-family: var(--font-mono);
-    font-size: 1rem;
+    font-size: 0.875rem;
     font-weight: 700;
     color: var(--ink-soft);
 }
@@ -587,7 +584,7 @@ a.card:hover h4 {
 .card .card-kicker {
     display: block;
     font-family: var(--font-mono);
-    font-size: 1rem;
+    font-size: 0.875rem;
     color: var(--ink-soft);
 }
 
@@ -656,7 +653,7 @@ a.card:hover h4 {
     grid-column: 1;
     grid-row: 1 / span 20;
     font-family: var(--font-mono);
-    font-size: 1rem;
+    font-size: 0.875rem;
     font-weight: 700;
     color: var(--ink-soft);
 }
@@ -728,7 +725,7 @@ a.card:hover h4 {
     gap: 0 1.5rem;
     color: var(--ink-faint);
     font-family: var(--font-mono);
-    font-size: 1rem;
+    font-size: 0.875rem;
 }
 
 .footer-content a {
@@ -848,7 +845,7 @@ a.card:hover h4 {
     flex-wrap: wrap;
     gap: 0 1.5rem;
     font-family: var(--font-mono);
-    font-size: 1rem;
+    font-size: 0.875rem;
     color: var(--ink-soft);
 }
 
@@ -884,32 +881,10 @@ a.contact-handle:hover,
 
 /* ---------- Home layout ---------- */
 
-/* On the home page the header is four squares tall and lies over the top of the
-   photo: a blank square, the title and theme switch, the caption under the switch,
-   then a blank square. The photo's top gradient fades out by the header's end */
-.home .site-header {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    background: none;
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
-}
-
-.home .header-content {
-    height: 6rem;
-}
-
 .header-tools {
     display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-}
-
-.header-tools #themeToggle {
+    align-items: center;
     height: 1.5rem;
-    align-self: flex-end;
 }
 
 /* Body text on the left, link box on the right; they stack on narrow screens */
@@ -930,8 +905,15 @@ a.contact-handle:hover,
     }
 }
 
-/* The photo's caption: small print in a half-frosted box under the theme switch */
+/* The photo's caption: small print in a half-frosted box at the bottom right
+   of the photo, on the row above the headline where the wash keeps it at 7:1 */
 .photo-caption {
+    /* Bottom right of the photo, but never below the bottom of the screen, so it
+       shows without scrolling. The box behind it keeps the text readable wherever it lands */
+    position: absolute;
+    right: 0;
+    top: round(down, min(60vw, 100svh - 4.5rem) - 1.5rem, 1.5rem);
+    margin: 0;
     /* Four squares wide, enough for the longest caption, so both edges sit on grid lines */
     width: 6rem;
     min-height: 1.5rem;
@@ -940,7 +922,7 @@ a.contact-handle:hover,
     font-family: var(--font-mono);
     font-size: 0.5rem;
     line-height: 1.5rem;
-    color: var(--ink-soft);
+    color: var(--ink);
     background-color: rgba(var(--bg-rgb), 0.5);
 }
 
