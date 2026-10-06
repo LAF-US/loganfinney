@@ -273,29 +273,27 @@ body {
     position: relative;
     /* Start at the top of the page, behind the header */
     margin-top: -4.5rem;
-    /* At least as tall as the full-width 3:2 photo, so its fade stays in view */
-    min-height: round(up, 100vw * 2 / 3, 1.5rem);
     display: flex;
     align-items: flex-start;
     overflow: hidden;
 }
 
-/* The photo spans the full width at its own 3:2 shape, anchored to the top of
-   the page so it scrolls away with it, and dissolves into the page at the bottom */
+/* The photo is a set band of 20 grid squares across the full width, cropped to
+   fill it, anchored to the top of the page, and dissolves into the page at the bottom */
 .hero-bg {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    aspect-ratio: 3 / 2;
+    height: 30rem;
     /* The wash sits in the same layer as the photo so both fade out together.
        The photo starts at the top of the page, behind the header. The frost is
        solid behind the header, fades out over the two squares under it, stays
        clear through most of the photo, then eases in to full strength near the
        bottom, where the text starts */
     background-image: linear-gradient(to bottom, rgb(var(--bg-rgb)) 4.5rem, transparent 7.5rem, transparent 70%, var(--hero-wash) 90%), var(--photo, none);
-    background-size: 100% auto;
-    background-position: top center;
+    background-size: cover;
+    background-position: center;
     background-repeat: no-repeat;
     -webkit-mask-image: linear-gradient(to bottom, #000 80%, transparent);
     mask-image: linear-gradient(to bottom, #000 80%, transparent);
@@ -314,8 +312,8 @@ body {
 .hero-content {
     position: relative;
     z-index: 2;
-    /* Text starts where the wash reaches full strength */
-    padding: round(down, 60vw, 1.5rem) 0 3rem;
+    /* Text starts on square 18, where the wash reaches full strength */
+    padding: 27rem 0 3rem;
 }
 
 /* Small annotations in the mono face, like notes on a drawing */
@@ -828,7 +826,7 @@ a.card:hover h4 {
     }
 
     .hero-content {
-        padding: round(down, 60vw, 1.5rem) 0 1.5rem;
+        padding-bottom: 1.5rem;
     }
 
     .page {
@@ -869,19 +867,6 @@ a.contact-handle:hover,
     color: var(--ink);
 }
 
-/* Browsers without round() (before Chrome 125, Firefox 118, Safari 15.4)
-   get the same layout, just not snapped to the grid */
-@supports not (width: round(1px, 1px)) {
-    .hero {
-        min-height: calc(100vw * 2 / 3);
-    }
-
-    .hero-content {
-        padding-top: calc(100vw * 0.6);
-    }
-
-}
-
 /* ---------- Home layout ---------- */
 
 .header-tools {
@@ -911,12 +896,10 @@ a.contact-handle:hover,
 /* The photo's caption: small print in a half-frosted box at the bottom right
    of the photo, on the row above the headline where the wash keeps it at 7:1 */
 .photo-caption {
-    /* Bottom right of the photo, but never below the bottom of the screen, so it
-       shows without scrolling. The box behind it keeps the text readable wherever it lands */
+    /* Two squares above the headline, at the right edge */
     position: absolute;
     right: 0;
-    top: calc(min(60vw, 100vh) - 3rem);
-    top: round(down, min(60vw, 100svh) - 3rem, 1.5rem);
+    top: 24rem;
     margin: 0;
     /* Three squares wide, enough for the longest caption, so both edges sit on grid lines */
     width: 4.5rem;
