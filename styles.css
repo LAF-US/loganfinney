@@ -271,6 +271,8 @@ body {
 
 .hero {
     position: relative;
+    /* Start at the top of the page, behind the header */
+    margin-top: -4.5rem;
     /* At least as tall as the full-width 3:2 photo, so its fade stays in view */
     min-height: round(up, 100vw * 2 / 3, 1.5rem);
     display: flex;
@@ -287,10 +289,11 @@ body {
     width: 100%;
     aspect-ratio: 3 / 2;
     /* The wash sits in the same layer as the photo so both fade out together.
-       It is a frost that softens the photo's edges: it fades out from the
-       header at the top, stays clear through the middle, and eases in to
-       full strength near the bottom, where the text starts */
-    background-image: linear-gradient(to bottom, rgb(var(--bg-rgb)), transparent 28%, transparent 30%, var(--hero-wash) 90%), var(--photo, none);
+       The photo starts at the top of the page, behind the header. The frost is
+       solid behind the header, fades out over the two squares under it, stays
+       clear through most of the photo, then eases in to full strength near the
+       bottom, where the text starts */
+    background-image: linear-gradient(to bottom, rgb(var(--bg-rgb)) 4.5rem, transparent 7.5rem, transparent 70%, var(--hero-wash) 90%), var(--photo, none);
     background-size: 100% auto;
     background-position: top center;
     background-repeat: no-repeat;
@@ -912,8 +915,8 @@ a.contact-handle:hover,
        shows without scrolling. The box behind it keeps the text readable wherever it lands */
     position: absolute;
     right: 0;
-    top: calc(min(60vw, 100vh - 4.5rem) - 4.5rem);
-    top: round(down, min(60vw, 100svh - 4.5rem) - 4.5rem, 1.5rem);
+    top: calc(min(60vw, 100vh) - 4.5rem);
+    top: round(down, min(60vw, 100svh) - 4.5rem, 1.5rem);
     margin: 0;
     /* Three squares wide, enough for the longest caption, so both edges sit on grid lines */
     width: 4.5rem;
