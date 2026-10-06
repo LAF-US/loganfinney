@@ -160,7 +160,7 @@ function initThemeToggle() {
         root.setAttribute('data-theme', next);
         updateLabel();
         try {
-            localStorage.setItem('theme', next);
+            sessionStorage.setItem('theme', next);
         } catch (e) {
             // Ignore storage failures; the toggle still works for this page view.
         }
