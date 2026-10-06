@@ -912,7 +912,7 @@ a.contact-handle:hover,
     font-size: 0.5rem;
     line-height: 1.5rem;
     color: var(--ink);
-    background-color: rgba(var(--bg-rgb), 0.5);
+    background-color: rgba(var(--bg-rgb), 0.75);
 }
 
 .photo-caption:empty {
