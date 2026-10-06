@@ -2,4 +2,3 @@ include:
   - ".well-known"
 exclude:
   - tests
-  - selects
