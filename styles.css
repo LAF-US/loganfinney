@@ -313,6 +313,7 @@ body {
     position: relative;
     z-index: 2;
     /* Text starts on the first grid row below the photo */
+    padding: calc(100vw * 2 / 3) 0 3rem;
     padding: round(up, 100vw * 2 / 3, 1.5rem) 0 3rem;
 }
 
