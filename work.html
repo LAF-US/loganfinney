@@ -1,3 +1,5 @@
+---
+---
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -44,11 +46,11 @@
     <main id="main-content" class="page">
         <div class="hero-head">
             <h1 class="page-title">Folio</h1>
-            <p class="contact-line hero-contact"><span class="fl">Email <a class="contact-handle" href="mailto:loganfinney@proton.me">loganfinney@proton.me</a></span><span class="fl">Signal <a class="contact-handle" rel="noopener noreferrer" href="https://signal.me/#eu/oBgA3Z4JO0BiXt--nvJGDDwAKT8Zp-DS5Y60BVvvlw7bVK5eV1lMNoBt1WZoZEeY" aria-label="Message Logan on Signal (username loganfinney.27)">loganfinney.27</a></span><span class="fl">WhatsApp <a class="contact-handle" rel="noopener noreferrer" href="https://wa.me/loganfinney" aria-label="Message Logan on WhatsApp (username loganfinney)">loganfinney</a></span></p>
+            {% include contact.html %}
         </div>
         <p class="page-intro">Selected news writing, video and audio. For an automatically updated archive of Logan's latest stories, visit <a rel="noopener noreferrer" href="https://authory.com/LoganFinney">his portfolio on Authory</a>.</p>
 
-        <h2 class="section-title"><span>News Writing</span></h2>
+        <h2 class="section-title"><span>Writing</span></h2>
 
         <h3 class="subsection-title">Miscellaneous Stories</h3>
         <ul class="story-list">
@@ -230,11 +232,6 @@
         </div>
     </main>
 
-    <footer class="site-footer">
-        <div class="footer-content">
-            <p><span class="fl">&copy; 2026 Logan Finney.</span> <span class="fl">All rights reserved.</span></p>
-            <p class="colophon"><span class="fl">The world is quiet here&#xFF0E;</span><span class="fl">Esto Perpetua!</span></p>
-        </div>
-    </footer>
+    {% include footer.html %}
 </body>
 </html>

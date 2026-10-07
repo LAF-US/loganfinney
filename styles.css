@@ -521,6 +521,10 @@ body {
     text-transform: uppercase;
     margin: 3rem 0 0;
     box-shadow: inset 0 1px 0 var(--ink);
+    /* A word too long for the column breaks (with a hyphen where the browser
+       can) instead of running off the page */
+    hyphens: auto;
+    overflow-wrap: break-word;
 }
 
 /* The words and number sit centered in their squares; a title that wraps on a
@@ -531,15 +535,12 @@ body {
     top: calc((var(--cap) / 2 - var(--ad)) * var(--fs));
 }
 
-.section-title + .subsection-title {
-    margin-top: 0;
+.section-title > span {
+    min-width: 0;
 }
 
-/* Smaller on phones so the longest word still fits the column */
-@media (max-width: 640px) {
-    .section-title {
-        --fs: 1.75rem;
-    }
+.section-title + .subsection-title {
+    margin-top: 0;
 }
 
 .section-title::before {
