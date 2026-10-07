@@ -343,8 +343,8 @@ body {
     line-height: 2.25rem;
 }
 
-/* Each word hangs its capitals from a grid line: the small word takes one
-   square, the large word the next two */
+/* The two words fill three squares: the small word's capitals hang from the
+   top line, the large word sits on the bottom line */
 .hero h1 .h1-a {
     line-height: 1.5rem;
 }
@@ -353,7 +353,7 @@ body {
     font-size: 2.186rem;
     line-height: 3rem;
     position: relative;
-    top: 0.875rem;
+    top: 0.375rem;
 }
 
 .hero .lede {
