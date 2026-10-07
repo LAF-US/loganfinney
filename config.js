@@ -20,6 +20,37 @@ const HERO_CAPTIONS = {
     'blackfoot.jpg': 'Blackfoot'
 };
 
+// Shuffle the photo order once per visit (Fisher-Yates), so every photo shows
+// once per cycle. The order is kept for the rest of the visit and reshuffled
+// on the next one.
+function shuffleHeroImages() {
+    const key = 'heroOrder';
+    let saved = null;
+    try {
+        saved = JSON.parse(sessionStorage.getItem(key));
+    } catch (e) {
+        saved = null;
+    }
+    const sameSet = Array.isArray(saved)
+        && saved.length === HERO_IMAGES.length
+        && saved.every((name) => HERO_IMAGES.includes(name));
+    let order = HERO_IMAGES.slice();
+    if (sameSet) {
+        order = saved;
+    } else {
+        for (let i = order.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [order[i], order[j]] = [order[j], order[i]];
+        }
+        try {
+            sessionStorage.setItem(key, JSON.stringify(order));
+        } catch (e) {
+            // Storage unavailable: the order still holds for this page view
+        }
+    }
+    HERO_IMAGES.splice(0, HERO_IMAGES.length, ...order);
+}
+
 // Initialize hero image rotation
 function initHeroRotation() {
     const layers = document.querySelectorAll('.hero-bg');
@@ -29,6 +60,8 @@ function initHeroRotation() {
     if (layers.length < 2 || HERO_IMAGES.length === 0) {
         return;
     }
+
+    shuffleHeroImages();
 
     let current = 0;
     let front = 0;
@@ -126,13 +159,13 @@ function initHeroRotation() {
         img.src = HERO_DIR + HERO_IMAGES[next];
     }
 
-    // Rotate every 7 seconds, stopping or resuming if the motion preference changes
+    // Rotate every 5 seconds, stopping or resuming if the motion preference changes
     function updateRotation() {
         if (reducedMotion.matches) {
             clearInterval(timer);
             timer = null;
         } else if (timer === null) {
-            timer = setInterval(rotate, 7000);
+            timer = setInterval(rotate, 5000);
         }
     }
 
