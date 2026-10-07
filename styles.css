@@ -491,8 +491,9 @@ body {
     line-height: var(--lh);
     text-transform: uppercase;
     margin-bottom: 1.5rem;
-    padding-top: calc(1.5rem + (var(--cap) / 2 - var(--ad)) * 1em);
-    padding-bottom: calc((var(--ad) - var(--cap) / 2) * 1em);
+    /* At this size the centering nudge is about 1px, so it is left out and the
+       padding stays a whole square, keeping the rule on the grid */
+    padding-top: 1.5rem;
     box-shadow: 0 1px 0 var(--ink);
 }
 
