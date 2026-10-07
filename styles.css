@@ -273,23 +273,9 @@ body {
     position: relative;
     /* Start at the top of the page, behind the header */
     margin-top: -4.5rem;
+    display: flex;
+    align-items: flex-start;
     overflow: hidden;
-}
-
-/* The photo is an ordinary block, full width and 3:2. The text follows it */
-.hero-photo {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 3 / 2;
-}
-
-/* The caption keeps to the content column, over the photo */
-.hero-caption-col {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    padding: 0;
 }
 
 /* The whole photo, uncropped, at full width, anchored to the top of the page,
@@ -299,7 +285,7 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    aspect-ratio: 3 / 2;
     /* The wash sits in the same layer as the photo so both fade out together.
        The photo starts at the top of the page, behind the header. The frost is
        solid behind the header, fades out over the two squares under it, stays
@@ -326,7 +312,9 @@ body {
 .hero-content {
     position: relative;
     z-index: 2;
-    padding: 0 0 3rem;
+    /* Text starts on the first grid row below the photo */
+    padding: calc(100vw * 2 / 3) 0 3rem;
+    padding: round(up, 100vw * 2 / 3, 1.5rem) 0 3rem;
 }
 
 /* Small annotations in the mono face, like notes on a drawing */
