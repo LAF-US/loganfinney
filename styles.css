@@ -889,6 +889,12 @@ a.contact-handle:hover,
 
 /* ---------- Home layout ---------- */
 
+.header-tools {
+    display: flex;
+    align-items: center;
+    height: 1.5rem;
+}
+
 /* The headline on the left, the contact lines on the right, level with it */
 .hero-head {
     display: flex;
