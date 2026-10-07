@@ -6,7 +6,8 @@ const HERO_IMAGES = [
     '278.jpg',
     'anderson-ranch.jpg',
     '345.jpg',
-    'coeur-dalene.jpg'
+    'coeur-dalene.jpg',
+    'blackfoot.jpg'
 ];
 
 // Caption shown with each photo, by file name. Leave a photo out to show no caption.
@@ -15,7 +16,8 @@ const HERO_CAPTIONS = {
     '278.jpg': 'State Capitol',
     'anderson-ranch.jpg': 'Anderson Ranch',
     '345.jpg': 'Schweitzer',
-    'coeur-dalene.jpg': "Coeur d'Alene"
+    'coeur-dalene.jpg': "Coeur d'Alene",
+    'blackfoot.jpg': 'Blackfoot'
 };
 
 // Initialize hero image rotation
