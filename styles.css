@@ -742,9 +742,6 @@ a.card:hover h4 {
 }
 
 /* Signal and Email each get their own line */
-.footer-content .contact .fl {
-    display: block;
-}
 
 /* On phones each footer phrase gets its own line */
 @media (max-width: 640px) {
@@ -757,21 +754,9 @@ a.card:hover h4 {
         row-gap: 1.5rem;
     }
 
-    /* Copyright, then contacts, then the colophon */
+    /* Copyright, then the colophon */
     .footer-content {
         flex-direction: column;
-    }
-
-    .footer-content > div {
-        display: contents;
-    }
-
-    .footer-content .contact {
-        order: 1;
-    }
-
-    .footer-content .colophon {
-        order: 2;
     }
 }
 
@@ -874,6 +859,33 @@ a.contact-handle:hover,
     display: flex;
     align-items: center;
     height: 1.5rem;
+}
+
+/* The headline on the left, the contact lines on the right, level with it */
+.hero-head {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0 3rem;
+}
+
+/* The headline keeps its full width, so its rule stays the same length */
+.hero-head h1 {
+    flex: 0 1 16ch;
+}
+
+/* One contact per line, starting on the headline's first line */
+.hero-contact {
+    flex-direction: column;
+    margin-top: 1.5rem;
+}
+
+/* On phones the contact lines drop below the headline's rule, with one blank line on each side */
+@media (max-width: 640px) {
+    .hero-contact {
+        margin: 0 0 1.5rem;
+    }
 }
 
 /* Body text on the left, link box on the right; they stack on narrow screens */
