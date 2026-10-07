@@ -31,23 +31,10 @@
 </head>
 <body>
     <a class="skip-link" href="#main-content">Skip to main content</a>
-    <header class="site-header">
-        <div class="header-content">
-            <a class="logo" href="index.html">Logan Finney</a>
-            <nav class="site-nav" aria-label="Site">
-                <a href="index.html">About</a>
-                <a href="resume.html">Resume</a>
-                <a href="work.html" aria-current="page">Folio</a>
-                <button id="themeToggle" aria-label="Switch theme"><span class="t-dark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span><span class="t-light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></span></button>
-            </nav>
-        </div>
-    </header>
+    {% include header.html %}
 
     <main id="main-content" class="page">
-        <div class="hero-head">
-            <h1 class="page-title">Folio</h1>
-            {% include contact.html %}
-        </div>
+        <h1 class="page-title">Folio</h1>
         <p class="page-intro">Selected news writing, video and audio. For an automatically updated archive of Logan's latest stories, visit <a rel="noopener noreferrer" href="https://authory.com/LoganFinney">his portfolio on Authory</a>.</p>
 
         <h2 class="section-title"><span>Writing</span></h2>
