@@ -33,6 +33,7 @@ function shuffleHeroImages() {
     }
     const sameSet = Array.isArray(saved)
         && saved.length === HERO_IMAGES.length
+        && new Set(saved).size === HERO_IMAGES.length
         && saved.every((name) => HERO_IMAGES.includes(name));
     let order = HERO_IMAGES.slice();
     if (sameSet) {
