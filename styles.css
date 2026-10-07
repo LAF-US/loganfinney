@@ -511,16 +511,35 @@ body {
     align-items: baseline;
     gap: 1.5rem;
     font-family: var(--font-body);
-    font-size: 2.5rem;
+    --fs: 2.5rem;
+    font-size: var(--fs);
     --lh: 3rem;
     line-height: var(--lh);
-    height: 3rem;
-    padding-top: calc(1.5rem + (var(--cap) / 2 - var(--ad)) * 1em);
+    padding-top: 1.5rem;
     font-weight: 700;
     letter-spacing: -0.02em;
     text-transform: uppercase;
-    margin: 3rem 0 1.5rem;
+    margin: 3rem 0 0;
     box-shadow: inset 0 1px 0 var(--ink);
+}
+
+/* The words and number sit centered in their squares; a title that wraps on a
+   narrow screen takes another whole row instead of overlapping what follows */
+.section-title > span,
+.section-title::before {
+    position: relative;
+    top: calc((var(--cap) / 2 - var(--ad)) * var(--fs));
+}
+
+.section-title + .subsection-title {
+    margin-top: 0;
+}
+
+/* Smaller on phones so the longest word still fits the column */
+@media (max-width: 640px) {
+    .section-title {
+        --fs: 1.75rem;
+    }
 }
 
 .section-title::before {
@@ -529,6 +548,8 @@ body {
     font-size: 0.875rem;
     font-weight: 700;
     color: var(--ink-soft);
+    /* No line box of its own, so the small number never adds height */
+    line-height: 0;
 }
 
 .subsection-title {
