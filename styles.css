@@ -786,6 +786,8 @@ a.card:hover h4 {
     gap: 0 1.5rem;
     font-family: var(--font-mono);
     font-size: 0.875rem;
+    /* Labels and handles both bold */
+    font-weight: 700;
     color: var(--ink-soft);
 }
 
@@ -795,10 +797,6 @@ a.contact-handle {
     text-decoration: underline;
     text-underline-offset: 0.2em;
     text-decoration-thickness: 1px;
-}
-
-.contact-handle {
-    font-weight: 700;
 }
 
 a.contact-handle:hover,
