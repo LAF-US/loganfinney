@@ -786,13 +786,14 @@ a.card:hover h4 {
     gap: 0 1.5rem;
     font-family: var(--font-mono);
     font-size: 0.875rem;
-    /* Labels and handles both bold */
+    /* Bold labels; the handles beside them stay regular */
     font-weight: 700;
     color: var(--ink-soft);
 }
 
 .contact-line a,
 a.contact-handle {
+    font-weight: 400;
     color: var(--accent-ink);
     text-decoration: underline;
     text-underline-offset: 0.2em;
