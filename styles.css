@@ -237,9 +237,11 @@ body {
 
 /* ---------- Hero (home) ---------- */
 
-/* No rule between the masthead and the photo on the home page */
+/* No rule between the masthead and the photo on the home page, and the
+   header's own frost fades out over its last square, like the photo's */
 .home .site-header {
     box-shadow: none;
+    background: linear-gradient(to bottom, rgba(var(--bg-rgb), 0.9) 3rem, rgba(var(--bg-rgb), 0) 4.5rem);
 }
 
 
@@ -262,10 +264,10 @@ body {
     aspect-ratio: 3 / 2;
     /* The wash sits in the same layer as the photo so both fade out together.
        The photo starts at the top of the page, behind the header. The frost is
-       solid behind the header, fades out over the two squares under it, stays
-       clear through most of the photo, then eases in to full strength near the
-       bottom, where the text starts */
-    background-image: linear-gradient(to bottom, rgb(var(--bg-rgb)) 4.5rem, transparent 7.5rem, transparent 70%, var(--hero-wash) 90%), var(--photo, none);
+       solid behind the site title, fades out over the header's last square and
+       ends where the header ends, stays clear through most of the photo, then
+       eases in to full strength near the bottom, where the text starts */
+    background-image: linear-gradient(to bottom, rgb(var(--bg-rgb)) 3rem, transparent 4.5rem, transparent 70%, var(--hero-wash) 90%), var(--photo, none);
     background-size: 100% auto;
     background-position: top center;
     background-repeat: no-repeat;
