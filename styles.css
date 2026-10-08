@@ -237,12 +237,9 @@ body {
 
 /* ---------- Hero (home) ---------- */
 
-/* On the home page the header is the photo's top gradient: no rule under it,
-   the frost at full strength behind the site title, fading out over the
-   header's last square and ending where the header ends */
+/* No rule between the header and the photo on the home page */
 .home .site-header {
     box-shadow: none;
-    background: linear-gradient(to bottom, rgba(var(--bg-rgb), 0.9) 3rem, rgba(var(--bg-rgb), 0) 4.5rem);
 }
 
 
@@ -263,11 +260,13 @@ body {
     left: 0;
     width: 100%;
     aspect-ratio: 3 / 2;
-    /* The wash sits in the same layer as the photo so both fade out together.
-       The photo starts at the top of the page and reads through the header's
-       frost. Below the header it stays clear through most of the photo, then
-       the wash eases in to full strength near the bottom, where the text starts */
-    background-image: linear-gradient(to bottom, transparent 70%, var(--hero-wash) 90%), var(--photo, none);
+    /* The photo overlay sits in the same layer as the photo so both fade out
+       together. The photo starts at the top of the page, behind the header.
+       The overlay's top gradient starts at the top of the photo and fades out
+       by the header's bottom edge; the photo is unobscured below that until
+       the bottom gradient eases in to full strength near the bottom, where the
+       text starts */
+    background-image: linear-gradient(to bottom, rgb(var(--bg-rgb)), transparent 4.5rem, transparent 70%, var(--hero-wash) 90%), var(--photo, none);
     background-size: 100% auto;
     background-position: top center;
     background-repeat: no-repeat;
