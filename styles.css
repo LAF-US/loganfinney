@@ -728,6 +728,11 @@ a.card:hover h4 {
     display: inline-block;
 }
 
+/* The colophon's first phrase is set in the page color: there, but quiet */
+.colophon .quiet {
+    color: var(--bg);
+}
+
 /* ---------- Accessibility ---------- */
 
 .skip-link {
