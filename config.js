@@ -233,17 +233,9 @@ function initTabs() {
     select(tabs[0], false);
 }
 
-// Give each icon name its length, so the stylesheet can size the label to whole squares
-function initTips() {
-    document.querySelectorAll('[data-tip]').forEach((a) => {
-        a.style.setProperty('--n', a.dataset.tip.length);
-    });
-}
-
 // Run on page load
 document.addEventListener('DOMContentLoaded', () => {
     initHeroRotation();
     initThemeToggle();
     initTabs();
-    initTips();
 });
