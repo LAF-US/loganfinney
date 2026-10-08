@@ -690,6 +690,11 @@ a.card:hover h4 {
     max-width: 68ch;
 }
 
+/* A paragraph after a list gets the same blank grid line */
+.timeline-entry .placings + p {
+    margin-top: 1.5rem;
+}
+
 .timeline-entry .story-list {
     columns: 1;
 }
