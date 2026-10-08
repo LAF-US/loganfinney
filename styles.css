@@ -245,14 +245,12 @@ body {
 
 .hero {
     position: relative;
-    /* Start at the top of the page, behind the header */
-    margin-top: -4.5rem;
     display: flex;
     align-items: flex-start;
     overflow: hidden;
 }
 
-/* The whole photo, uncropped, at full width, anchored to the top of the page,
+/* The whole photo, uncropped, at full width, directly under the header,
    dissolving into the page at the bottom */
 .hero-bg {
     position: absolute;
@@ -261,12 +259,12 @@ body {
     width: 100%;
     aspect-ratio: 3 / 2;
     /* The photo overlay sits in the same layer as the photo so both fade out
-       together. The photo starts at the top of the page, behind the header.
-       The overlay's top gradient starts at the top of the photo and fades out
-       by the header's bottom edge; the photo is unobscured below that until
-       the bottom gradient eases in to full strength near the bottom, where the
-       text starts */
-    background-image: linear-gradient(to bottom, rgb(var(--bg-rgb)), transparent 4.5rem, transparent 70%, var(--hero-wash) 90%), var(--photo, none);
+       together. The photo starts under the header. The overlay's top gradient
+       fades out from the top of the photo over its first 28%; the photo is
+       unobscured below that until the bottom gradient eases in to full
+       strength near the bottom, where the text starts. Both gradients are set
+       in shares of the photo's height, so they look the same at every width */
+    background-image: linear-gradient(to bottom, rgb(var(--bg-rgb)), transparent 28%, transparent 70%, var(--hero-wash) 90%), var(--photo, none);
     background-size: 100% auto;
     background-position: top center;
     background-repeat: no-repeat;
