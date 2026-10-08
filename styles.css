@@ -19,15 +19,10 @@
 :root {
     --bg: #faf9f7;
     --bg-rgb: 250, 249, 247;
-    --bg-elevated: #ffffff;
-    --bg-elevated-rgb: 255, 255, 255;
     --ink: #1c1b1a;
     --ink-soft: #4a4641;
-    --ink-faint: #595550;
     --line: #e7e5e4;
-    --accent: #245a41;
-    --accent-ink: #1f4f39;
-    --on-accent: #ffffff;
+    --accent: #1f4f39;
     --hero-wash: rgba(250, 249, 247, 0.92);
     --font-display: 'Site Serif', Georgia, serif;
     --font-body: 'Site Sans', Verdana, sans-serif;
@@ -37,15 +32,10 @@
 [data-theme="dark"] {
     --bg: #131211;
     --bg-rgb: 19, 18, 17;
-    --bg-elevated: #1d1b1a;
-    --bg-elevated-rgb: 29, 27, 26;
     --ink: #f4f2f0;
-    --ink-soft: #b8b2ac;
-    --ink-faint: #b0aaa5;
+    --ink-soft: #bab5af;
     --line: #2d2a28;
-    --accent: #6fbf98;
-    --accent-ink: #9ad4b6;
-    --on-accent: #131211;
+    --accent: #9ad4b6;
     --hero-wash: rgba(0, 0, 0, 0.87);
 }
 
@@ -53,15 +43,10 @@
     :root:not([data-theme="light"]) {
         --bg: #131211;
         --bg-rgb: 19, 18, 17;
-        --bg-elevated: #1d1b1a;
-        --bg-elevated-rgb: 29, 27, 26;
         --ink: #f4f2f0;
-        --ink-soft: #b8b2ac;
-        --ink-faint: #b0aaa5;
+        --ink-soft: #bab5af;
         --line: #2d2a28;
-        --accent: #6fbf98;
-        --accent-ink: #9ad4b6;
-        --on-accent: #131211;
+        --accent: #9ad4b6;
         --hero-wash: rgba(0, 0, 0, 0.87);
             }
 }
@@ -424,7 +409,7 @@ body {
 .tabs .btn[aria-selected="true"] {
     font-weight: 700;
     background-color: var(--accent);
-    color: var(--on-accent);
+    color: var(--bg);
 }
 
 /* Icon names: a small label on hover or keyboard focus, on the middle square
@@ -539,7 +524,7 @@ body {
 }
 
 .page a:not(.btn):not(.card):not(.story-list a) {
-    color: var(--accent-ink);
+    color: var(--accent);
     text-decoration: underline;
     text-underline-offset: 0.2em;
     text-decoration-thickness: 1px;
@@ -566,10 +551,6 @@ body {
     color: inherit;
 }
 
-a.card:hover {
-    background-color: var(--bg-elevated);
-}
-
 a.card:hover h2,
 a.card:hover h3,
 a.card:hover h4 {
@@ -584,7 +565,7 @@ a.card:hover h4 {
     font-family: var(--font-body);
     font-size: 1rem;
     font-weight: 700;
-    color: var(--accent-ink);
+    color: var(--accent);
 }
 
 .card p {
@@ -628,7 +609,7 @@ a.card:hover h4 {
 }
 
 .story-list a {
-    color: var(--accent-ink);
+    color: var(--accent);
     text-decoration: none;
 }
 
@@ -725,7 +706,7 @@ a.card:hover h4 {
     justify-content: space-between;
     /* Three squares between the copyright and the colophon when they stack */
     gap: 4.5rem 1.5rem;
-    color: var(--ink-faint);
+    color: var(--ink-soft);
     font-family: var(--font-mono);
     font-size: 0.875rem;
 }
@@ -796,7 +777,7 @@ a.card:hover h4 {
 .contact-line a,
 a.contact-handle {
     font-weight: 400;
-    color: var(--accent-ink);
+    color: var(--accent);
     text-decoration: underline;
     text-underline-offset: 0.2em;
     text-decoration-thickness: 1px;
