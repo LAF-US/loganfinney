@@ -147,6 +147,7 @@ body {
 .subsection-title,
 .timeline-entry h3,
 .timeline-entry p,
+.timeline-entry .placings li,
 .timeline-entry blockquote,
 .entry-dates,
 .story-list a,
@@ -680,6 +681,13 @@ a.card:hover h4 {
 /* One blank grid line between paragraphs */
 .timeline-entry p + p {
     margin-top: 1.5rem;
+}
+
+/* Award placings: one line each, no gaps, no bullets */
+.timeline-entry .placings {
+    list-style: none;
+    color: var(--ink-soft);
+    max-width: 68ch;
 }
 
 .timeline-entry .story-list {
