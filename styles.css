@@ -909,17 +909,21 @@ a.contact-handle:hover,
     flex: 0 1 16ch;
 }
 
-/* One contact per line, starting on the headline's first line */
-.hero-contact {
-    flex-direction: column;
+/* The link box starts on the headline's first line */
+.hero-head .cta-buttons {
     margin-top: 1.5rem;
 }
 
-/* On phones the contact lines drop below the headline's rule, with one blank line on each side */
+/* On phones the link box drops below the headline's rule, with one blank line on each side */
 @media (max-width: 640px) {
-    .hero-contact {
-        margin: 0 0 1.5rem;
+    .hero-head .cta-buttons {
+        margin: 0 auto 1.5rem;
     }
+}
+
+/* One contact per line, beside the body text */
+.hero-contact {
+    flex-direction: column;
 }
 
 /* Body text on the left, link box on the right; they stack on narrow screens */
@@ -935,7 +939,7 @@ a.contact-handle:hover,
 }
 
 @media (min-width: 641px) {
-    .hero-body .cta-buttons {
+    .hero-body .hero-contact {
         margin-left: auto;
     }
 }
