@@ -287,8 +287,8 @@ body {
     position: relative;
     z-index: 2;
     /* Text starts on the first grid row below the photo */
-    padding: calc(100vw * 2 / 3) 0 1.5rem;
-    padding: round(up, 100vw * 2 / 3, 1.5rem) 0 1.5rem;
+    padding: calc(100vw * 2 / 3) 0 0;
+    padding: round(up, 100vw * 2 / 3, 1.5rem) 0 0;
 }
 
 /* Small annotations in the mono face, like notes on a drawing */
@@ -451,7 +451,7 @@ body {
 /* ---------- Page scaffolding ---------- */
 
 .page {
-    padding: 3rem 0 1.5rem;
+    padding: 3rem 0 0;
     counter-reset: section;
 }
 
@@ -501,7 +501,7 @@ body {
 }
 
 /* The words and number sit centered in their squares; a title that wraps on a
-   narrow screen takes another whole row instead of overlapping what follows */
+   column too narrow for it takes another whole row instead of overlapping what follows */
 .section-title > span,
 .section-title::before {
     position: relative;
@@ -711,15 +711,17 @@ a.card:hover h4 {
 
 .site-footer {
     box-shadow: inset 0 1px 0 var(--ink);
+    /* Two squares above the rule and two below it */
     margin-top: 3rem;
-    padding: 1.5rem 0;
+    padding: 3rem 0 1.5rem;
 }
 
 .footer-content {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    gap: 0 1.5rem;
+    /* Two squares between the copyright and the colophon when they stack */
+    gap: 3rem 1.5rem;
     color: var(--ink-faint);
     font-family: var(--font-mono);
     font-size: 0.875rem;
@@ -808,13 +810,16 @@ a.contact-handle:hover,
     height: 1.5rem;
 }
 
-/* The headline on the left, the contact lines on the right, level with it */
+/* The headline on the left, the link box on the right, level with it */
 .hero-head {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: flex-start;
-    gap: 0 3rem;
+    /* With the link box's top margin, two squares under the rule when it wraps */
+    gap: 1.5rem 3rem;
+    /* Two squares below, room for an icon's name under the link box */
+    padding-bottom: 3rem;
 }
 
 /* The headline keeps its full width, so its rule stays the same length */
@@ -823,13 +828,7 @@ a.contact-handle:hover,
     margin-bottom: 0;
 }
 
-/* One square below the headline's rule, or below the link box when it wraps */
-.hero-head {
-    padding-bottom: 1.5rem;
-}
-
-/* The link box starts on the headline's first line, or one square below the
-   headline's rule when it wraps under it */
+/* The link box starts on the headline's first line */
 .hero-head .cta-buttons {
     margin-top: 1.5rem;
 }
@@ -839,14 +838,14 @@ a.contact-handle:hover,
     flex-direction: column;
 }
 
-/* Body text on the left, link box on the right; they stack on narrow screens */
+/* Body text on the left, contact lines on the right; they stack when there isn't room for both */
 .hero-body {
     display: flex;
     flex-wrap: wrap;
     align-items: flex-start;
     justify-content: space-between;
-    /* One blank square between rows only when the contacts wrap below the text */
-    gap: 1.5rem 3rem;
+    /* Two squares between rows only when the contacts wrap below the text */
+    gap: 3rem 3rem;
 }
 
 .hero-body .lede {
