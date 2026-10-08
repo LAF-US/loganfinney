@@ -145,6 +145,7 @@ body {
 .contact-line,
 .page-intro,
 .subsection-title,
+.section-note,
 .timeline-entry h3,
 .timeline-entry p,
 .timeline-entry .placings li,
@@ -638,14 +639,21 @@ a.card:hover h4 {
 }
 
 .timeline-entry {
-    /* Dates on the left, the entry beside them; the entry drops below the dates
-       when there isn't room for both */
+    padding: 1.5rem 0;
+    box-shadow: 0 1px 0 var(--line);
+}
+
+/* Each row: dates on the left, the entry beside them; the entry drops below
+   the dates when there isn't room for both. An organization heads its rows */
+.timeline-entry .entry-row {
     display: flex;
     flex-wrap: wrap;
     align-items: flex-start;
     column-gap: 1.5rem;
-    padding: 1.5rem 0;
-    box-shadow: 0 1px 0 var(--line);
+}
+
+.timeline-entry .entry-row + .entry-row:not(.entry-head + .entry-row) {
+    margin-top: 1.5rem;
 }
 
 .timeline-entry .entry-body {
@@ -688,6 +696,12 @@ a.card:hover h4 {
     list-style: none;
     color: var(--ink-soft);
     max-width: 68ch;
+}
+
+/* A line of context under a section title, set like the page intro */
+.section-note {
+    color: var(--ink-soft);
+    padding-bottom: 1.5rem;
 }
 
 /* A role under an employer reads in full ink, like the entry title */
