@@ -739,8 +739,11 @@ a.card:hover h4 {
     color: var(--ink);
 }
 
-/* Signal and Email each get their own line */
-
+/* Each footer phrase stays whole: a line that doesn't fit breaks between
+   phrases, never inside one */
+.footer-content .fl {
+    display: inline-block;
+}
 
 /* ---------- Accessibility ---------- */
 
