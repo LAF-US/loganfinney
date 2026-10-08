@@ -82,6 +82,11 @@ body {
     transition: background-color 0.3s, color 0.3s;
 }
 
+/* Paragraphs never end on a lone word: the browser evens out the last lines */
+p {
+    text-wrap: pretty;
+}
+
 /* Everything is sized in whole 1.5rem squares. The content column is centered
    and an even number of squares wide (at most 48), so its edges land on grid
    lines. Rules are drawn with box-shadow so they add no height */
