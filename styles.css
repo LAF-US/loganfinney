@@ -101,6 +101,7 @@ body {
    lines. Rules are drawn with box-shadow so they add no height */
 .header-content,
 .hero-content,
+.photo-frame-column,
 .page,
 .footer-content {
     width: min(72rem, calc(100% - 3rem));
@@ -110,6 +111,7 @@ body {
 @supports (width: round(1px, 1px)) {
     .header-content,
     .hero-content,
+    .photo-frame-column,
     .page,
     .footer-content {
         width: min(72rem, round(down, 100% - 3rem, 3rem));
@@ -247,7 +249,8 @@ body {
     position: relative;
     display: flex;
     align-items: flex-start;
-    overflow: hidden;
+    /* Crops like hidden, but lets the caption stick to the bottom of the screen */
+    overflow: clip;
 }
 
 /* The whole photo, uncropped, at full width, directly under the header,
@@ -855,16 +858,35 @@ a.contact-handle:hover,
 }
 
 
-/* The photo's caption: small print in a half-frosted box at the bottom right
-   of the photo, on the row above the headline where the wash keeps it at 7:1 */
-.photo-caption {
-    /* Bottom right of the photo, but never below the bottom of the screen, so it
-       shows without scrolling. The box behind it keeps the text readable wherever it lands */
+/* The photo's frame, the same box as the photo, with the content column inside */
+.photo-frame {
     position: absolute;
-    right: 0;
-    top: calc(min(60vw, 100vh - 4.5rem) - 3rem);
-    top: round(down, min(60vw, 100svh - 4.5rem) - 3rem, 1.5rem);
-    margin: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    z-index: 3;
+    pointer-events: none;
+}
+
+.photo-frame-column {
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+/* The photo's caption: small print in a half-frosted box at the bottom right
+   of the photo, one square up. When that corner is below the bottom of the
+   screen, it waits at the bottom right of the screen instead, so it shows
+   when the page opens. The box keeps the text readable wherever it lands */
+.photo-caption {
+    position: sticky;
+    bottom: 1.5rem;
+    margin: 0 0 1.5rem;
+    pointer-events: auto;
     /* Three squares wide, enough for the longest caption, so both edges sit on grid lines */
     width: 4.5rem;
     min-height: 1.5rem;
