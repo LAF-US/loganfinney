@@ -141,14 +141,12 @@ body {
 .entry-dates,
 .footer-content,
 .card .card-meta,
-.card .card-kicker,
-.site-nav {
+.card .card-kicker {
     --ad: 0.266;           /* Cousine */
     --cap: 0.659;
 }
 
 .logo,
-.site-nav,
 .hero .kicker,
 .hero .lede,
 .contact-line,
@@ -206,30 +204,6 @@ body {
     white-space: nowrap;
 }
 
-.site-nav {
-    display: flex;
-    align-items: baseline;
-    gap: 1.4rem;
-    font-family: var(--font-mono);
-    font-size: 0.875rem;
-}
-
-.site-nav a {
-    color: var(--ink-soft);
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
-    text-decoration-thickness: 1px;
-}
-
-.site-nav a:hover {
-    color: var(--ink);
-}
-
-.site-nav a[aria-current="page"] {
-    color: var(--ink);
-    font-weight: 700;
-    text-decoration: none;
-}
 
 /* The theme switch is a bare icon: a moon in light mode, a sun in dark */
 #themeToggle {
@@ -673,20 +647,23 @@ a.card:hover h4 {
 }
 
 .timeline-entry {
-    display: grid;
-    grid-template-columns: 13.5rem 1fr;
+    /* Dates on the left, the entry beside them; the entry drops below the dates
+       when there isn't room for both */
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
     column-gap: 1.5rem;
     padding: 1.5rem 0;
     box-shadow: 0 1px 0 var(--line);
 }
 
-.timeline-entry > * {
-    grid-column: 2;
+.timeline-entry .entry-body {
+    flex: 1 1 30ch;
+    min-width: 0;
 }
 
 .timeline-entry .entry-dates {
-    grid-column: 1;
-    grid-row: 1 / span 20;
+    flex: 0 0 13.5rem;
     font-family: var(--font-mono);
     font-size: 0.875rem;
     font-weight: 700;
@@ -729,21 +706,6 @@ a.card:hover h4 {
     max-width: 64ch;
 }
 
-@media (max-width: 720px) {
-    .timeline-entry {
-        grid-template-columns: 1fr;
-    }
-
-    .timeline-entry .entry-dates {
-        grid-column: 1;
-        grid-row: auto;
-        order: -1;
-    }
-
-    .timeline-entry > * {
-        grid-column: 1;
-    }
-}
 
 /* ---------- Footer ---------- */
 
@@ -776,22 +738,6 @@ a.card:hover h4 {
 
 /* Signal and Email each get their own line */
 
-/* On phones each footer phrase gets its own line */
-@media (max-width: 640px) {
-    .footer-content .fl {
-        display: block;
-    }
-
-    /* A blank line between each group */
-    .footer-content {
-        row-gap: 1.5rem;
-    }
-
-    /* Copyright, then the colophon */
-    .footer-content {
-        flex-direction: column;
-    }
-}
 
 /* ---------- Accessibility ---------- */
 
@@ -825,34 +771,6 @@ a.card:hover h4 {
 
 /* ---------- Responsive ---------- */
 
-@media (max-width: 640px) {
-    /* Logo and nav don't fit one phone line at full size, so the nav takes the
-       next line: header is still three squares (one above, logo, nav) */
-    .header-content {
-        flex-wrap: wrap;
-        gap: 0;
-    }
-
-    .site-nav {
-        width: 100%;
-        gap: 1.5rem;
-    }
-
-    /* The 3-square h1 is wider than a phone column; it steps down to 2 squares */
-    .page-title {
-        font-size: 2.5rem;
-        --lh: 3rem;
-    }
-
-    .page {
-        padding: 1.5rem 0;
-    }
-
-    /* The button block is centered on phones, so it mirrors about the screen's center */
-    .cta-buttons {
-        margin: 0 auto;
-    }
-}
 
 /* ---------- Contact ---------- */
 
@@ -902,18 +820,18 @@ a.contact-handle:hover,
 /* The headline keeps its full width, so its rule stays the same length */
 .hero-head h1 {
     flex: 0 1 16ch;
+    margin-bottom: 0;
 }
 
-/* The link box starts on the headline's first line */
+/* One square below the headline's rule, or below the link box when it wraps */
+.hero-head {
+    padding-bottom: 1.5rem;
+}
+
+/* The link box starts on the headline's first line, or one square below the
+   headline's rule when it wraps under it */
 .hero-head .cta-buttons {
     margin-top: 1.5rem;
-}
-
-/* On phones the link box drops below the headline's rule, with one blank line on each side */
-@media (max-width: 640px) {
-    .hero-head .cta-buttons {
-        margin: 0 auto 1.5rem;
-    }
 }
 
 /* One contact per line, beside the body text */
@@ -926,6 +844,7 @@ a.contact-handle:hover,
     display: flex;
     flex-wrap: wrap;
     align-items: flex-start;
+    justify-content: space-between;
     /* One blank square between rows only when the contacts wrap below the text */
     gap: 1.5rem 3rem;
 }
@@ -934,11 +853,6 @@ a.contact-handle:hover,
     flex: 0 1 auto;
 }
 
-@media (min-width: 641px) {
-    .hero-body .hero-contact {
-        margin-left: auto;
-    }
-}
 
 /* The photo's caption: small print in a half-frosted box at the bottom right
    of the photo, on the row above the headline where the wash keeps it at 7:1 */
