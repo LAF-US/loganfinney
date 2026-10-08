@@ -15,6 +15,7 @@
 @font-face { font-family: 'Site Serif'; src: url('fonts/gelasio-italic.woff2') format('woff2'); font-weight: 400 700; font-style: italic; font-display: swap; }
 @font-face { font-family: 'Site Mono'; src: url('fonts/cousine.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
 @font-face { font-family: 'Site Mono'; src: url('fonts/cousine-bold.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Site Mono'; src: url('fonts/cousine-italic.woff2') format('woff2'); font-weight: 400; font-style: italic; font-display: swap; }
 
 :root {
     --bg: #faf9f7;
@@ -726,6 +727,11 @@ a.card:hover h4 {
    phrases, never inside one */
 .footer-content .fl {
     display: inline-block;
+}
+
+/* The colophon is set in italic */
+.colophon {
+    font-style: italic;
 }
 
 /* The colophon's first phrase is set in the page color: there, but quiet */
