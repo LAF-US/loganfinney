@@ -690,6 +690,11 @@ a.card:hover h4 {
     max-width: 68ch;
 }
 
+/* A role under an employer reads in full ink, like the entry title */
+.timeline-entry .role {
+    color: var(--ink);
+}
+
 /* A paragraph after a list gets the same blank grid line */
 .timeline-entry .placings + p {
     margin-top: 1.5rem;
