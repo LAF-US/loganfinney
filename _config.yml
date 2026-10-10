@@ -1,2 +1,17 @@
 include:
   - ".well-known"
+exclude:
+  - tests
+# resume.json (JSON Resume) at the site root is both the site's data (site.data.resume) and the published /resume.json
+data_dir: .
+defaults:
+  - scope:
+      path: ""
+    values:
+      image:
+        path: /images/hero/278.jpg
+        width: 1024
+        height: 683
+        alt: A rainbow flag reading Love trumps hate held up at the Idaho State Capitol
+plugins:
+  - jekyll-redirect-from

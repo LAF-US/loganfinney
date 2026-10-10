@@ -1,112 +1,110 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Logan Finney is an award-winning Idaho journalist covering state government and politics for Idaho Reports at Idaho Public Television.">
-    <title>Logan Finney — Multimedia Journalist</title>
-    <link rel="canonical" href="https://loganfinney.com/">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Logan Finney — Multimedia Journalist">
-    <meta property="og:description" content="Award-winning Idaho journalist covering state government and politics for Idaho Reports at Idaho Public Television.">
-    <meta property="og:url" content="https://loganfinney.com/">
-    <meta property="og:image" content="https://loganfinney.com/images/hero/278.jpg">
-    <meta property="og:image:width" content="1024">
-    <meta property="og:image:height" content="683">
-    <meta property="og:image:alt" content="A rainbow flag reading Love trumps hate held up at the Idaho State Capitol">
-    <meta name="twitter:card" content="summary_large_image">
-    <script>
-        // Runs before the stylesheet applies so a stored theme never flashes the wrong colors
-        try {
-            var t = localStorage.getItem('theme');
-            if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t);
-        } catch (e) {}
-    </script>
-    <link rel="stylesheet" href="styles.css">
-    <script src="config.js" defer></script>
-</head>
-<body>
-    <a class="skip-link" href="#main-content">Skip to main content</a>
-    <header class="site-header">
-        <div class="header-content">
-            <a class="logo" href="index.html">Logan Finney</a>
-            <nav class="site-nav" aria-label="Site">
-                <a href="index.html" aria-current="page">Home</a>
-                <a href="resume.html">Resume</a>
-                <a href="work.html">Work</a>
-                <button id="themeToggle" aria-label="Dark mode" aria-pressed="false">
-                    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-                    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
-                </button>
-            </nav>
-        </div>
-    </header>
+---
+layout: default
+body_class: home
+# Link tabs, in order; the first is selected on load. Profile tabs name networks from basics.profiles in resume.json.
+tabs:
+  - id: meet
+    label: Meet
+    buttons:
+      - label: Resume
+        url: "resume.html"
+      - label: Folio
+        url: "resume.html#folio"
+      - label: Latest
+        url: "https://thegemstone.org"
+        external: true
+  - id: post
+    label: Post
+    profiles:
+      - "Facebook"
+      - "Instagram"
+      - "Threads"
+      - "Bluesky"
+      - "X"
+      - "Mastodon"
+      - "LinkedIn"
+  - id: view
+    label: View
+    profiles:
+      - "Twitch"
+      - "TikTok"
+      - "Vimeo"
+      - "YouTube"
+      - "Flickr"
+      - "SoundCloud"
+      - "Spotify"
+  - id: find
+    label: Find
+    profiles:
+      - "IMDb"
+      - "Muck Rack"
+      - "Authory"
+      - "Linktree"
+      - "Letterboxd"
+      - "Goodreads"
+      - "GitHub"
+  - id: tip
+    label: Tip
+    support: true
+    profiles:
+      - "PayPal"
+      - "Cash App"
+      - "Venmo"
+      - "Ko-fi"
+      - "Buy Me a Coffee"
+      - "Patreon"
+      - "Stripe"
 
-    <main id="main-content">
+---
         <section class="hero">
             <!-- Rotating hero photography -->
             <div class="hero-bg active"></div>
             <div class="hero-bg"></div>
+            <!-- The photo's frame; the caption sits in its bottom right corner -->
+            <div class="photo-frame">
+                <div class="photo-frame-column">
+                    <p class="photo-caption"></p>
+                </div>
+            </div>
 
             <div class="hero-content">
-                <p class="kicker">Idaho Reports &middot; Idaho Public Television</p>
-                <h1>Idaho Multimedia Journalist</h1>
-                <p class="lede">Logan Finney is an award-winning professional journalist who specializes in covering politics and government. An Idahoan by birth, he grew up hunting, hiking, and skiing in the panhandle mountains and remains forever fascinated with the state's history, culture, and people. He covers Idaho state government and politics for <em>Idaho Reports</em> as a producer and reporter at Idaho Public Television.</p>
-                <p class="tagline">The world is quiet here.</p>
 
-                <div class="cta-buttons">
-                    <a href="work.html" class="btn btn-primary">See the work</a>
-                    <a href="resume.html" class="btn btn-ghost">Resume</a>
+                <div class="hero-head">
+                    {%- assign label = site.data.resume.basics.label | split: " " %}
+                    <h1><span class="h1-a">{{ label | first }}</span> <span class="h1-b">{{ label | last }}</span></h1>
+                    <div class="cta-buttons">
+                            <div class="btn-row tabs" role="tablist" aria-label="Links">
+                            {%- for tab in page.tabs %}
+                                <button type="button" class="btn" role="tab" id="tab-{{ tab.id }}" aria-controls="panel-{{ tab.id }}" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}">{{ tab.label }}</button>
+                            {%- endfor %}
+                            </div>
+                            {%- for tab in page.tabs %}
+                            <div class="tab-panel" role="tabpanel" id="panel-{{ tab.id }}" aria-labelledby="tab-{{ tab.id }}">
+                                {%- if tab.buttons %}
+                                <div class="btn-row">
+                                    {%- for b in tab.buttons %}
+                                    <a href="{{ b.url }}"{% if b.external %} rel="noopener noreferrer"{% endif %} class="btn">{{ b.label }}</a>
+                                    {%- endfor %}
+                                </div>
+                                {%- endif %}
+                                {%- if tab.profiles %}
+                                <div class="btn-row social-icons">
+                                {%- for network in tab.profiles %}
+                                {%- assign p = site.data.resume.basics.profiles | where: "network", network | first %}
+                                {%- assign icon = network | downcase | replace: " ", "-" %}
+                                <a rel="noopener noreferrer" href="{{ p.url }}" data-tip="{{ network }}" aria-label="{% if tab.support %}Support {% endif %}Logan on {{ network }}">{% capture svg %}{% include icons/{{ icon }}.svg %}{% endcapture %}{{ svg | strip }}</a>
+                                {%- endfor %}
+                                </div>
+                                {%- endif %}
+                            </div>
+                            {%- endfor %}
+                        </div>
+                </div>
+                <div class="hero-body">
+                <p class="lede">{% include bio.html %}</p>
+
+                {% include contact.html %}
                 </div>
 
-                <p class="contact-line">
-                    <span>Signal <a class="contact-handle" rel="noopener noreferrer" href="https://signal.me/#eu/oBgA3Z4JO0BiXt--nvJGDDwAKT8Zp-DS5Y60BVvvlw7bVK5eV1lMNoBt1WZoZEeY" aria-label="Message Logan on Signal (username loganfinney.27)">loganfinney.27</a></span>
-                    <span>Email <a href="mailto:loganfinney@proton.me">loganfinney@proton.me</a></span>
-                </p>
-
-                <div class="social-icons">
-                    <a href="mailto:loganfinney@proton.me" title="Email (Proton)" aria-label="Email Logan at loganfinney@proton.me">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
-                    </a>
-                    <a rel="noopener noreferrer" href="https://bsky.app/profile/loganfinney.com" title="Bluesky" aria-label="Logan on Bluesky">
-                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 1.565.139 1.908 0 3.08 0 3.768c0 .69.378 5.65.624 6.479.815 2.736 3.713 3.66 6.383 3.364.136-.02.275-.039.415-.056-.138.022-.276.04-.415.056-3.912.58-7.387 2.005-2.83 7.078 5.013 5.19 6.87-1.113 7.823-4.308.953 3.195 2.05 9.271 7.733 4.308 4.267-4.308 1.172-6.498-2.74-7.078a8.741 8.741 0 0 1-.415-.056c.14.017.279.036.415.056 2.67.297 5.568-.628 6.383-3.364.246-.828.624-5.79.624-6.478 0-.69-.139-1.861-.902-2.206-.659-.298-1.664-.62-4.3 1.24C16.046 4.748 13.087 8.687 12 10.8Z"/></svg>
-                    </a>
-                    <a rel="noopener noreferrer" href="https://authory.com/LoganFinney" title="Portfolio on Authory" aria-label="Logan's portfolio on Authory">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-4 0V7"/><path d="M12 6h6M12 10h6M12 14h6M12 18h4"/></svg>
-                    </a>
-                </div>
             </div>
         </section>
-
-        <section class="page" aria-label="Highlights">
-            <div class="card-grid">
-                <a class="card" href="work.html">
-                    <span class="card-kicker">Reporting</span>
-                    <h2>Statehouse &amp; politics coverage</h2>
-                    <p>Legislative sessions, redistricting, campaigns, and public policy for <em>Idaho Reports</em>.</p>
-                    <span class="card-meta">Explore the work &rarr;</span>
-                </a>
-                <a class="card" rel="noopener noreferrer" href="https://authory.com/LoganFinney">
-                    <span class="card-kicker">Portfolio</span>
-                    <h2>Latest stories on Authory</h2>
-                    <p>An automatically updated archive of Logan's most recent published stories.</p>
-                    <span class="card-meta">authory.com/LoganFinney &rarr;</span>
-                </a>
-                <a class="card" href="resume.html">
-                    <span class="card-kicker">Background</span>
-                    <h2>Experience &amp; education</h2>
-                    <p>From the Sandpoint High <em>Cedar Post</em> to producing statewide public television.</p>
-                    <span class="card-meta">Read the resume &rarr;</span>
-                </a>
-            </div>
-        </section>
-    </main>
-
-    <footer class="site-footer">
-        <div class="footer-content">
-            <p>&copy; 2026 Logan Finney. All rights reserved.</p>
-            <p>Signal <a class="contact-handle" rel="noopener noreferrer" href="https://signal.me/#eu/oBgA3Z4JO0BiXt--nvJGDDwAKT8Zp-DS5Y60BVvvlw7bVK5eV1lMNoBt1WZoZEeY" aria-label="Message Logan on Signal (username loganfinney.27)">loganfinney.27</a> &middot; <a href="mailto:loganfinney@proton.me">loganfinney@proton.me</a></p>
-        </div>
-    </footer>
-</body>
-</html>

@@ -1,0 +1,37 @@
+name: Accessibility
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  wcag:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Build site (same as GitHub Pages)
+        uses: actions/jekyll-build-pages@44a6e6beabd48582f863aeeb6cb2151cc1716697 # v1.0.13
+        with:
+          source: ./
+          destination: ./_site
+      - name: Serve built site
+        run: |
+          (python3 -m http.server 8000 -d _site >/dev/null 2>&1 &)
+          timeout 30 bash -c 'until curl -sf http://localhost:8000/ >/dev/null; do sleep 0.5; done'
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22
+      - name: Install pa11y-ci (exact versions from tests/package-lock.json)
+        working-directory: tests
+        run: npm ci --ignore-scripts
+      - name: Check the runner has Chrome
+        run: test -x /usr/bin/google-chrome || { echo "::error::Google Chrome is missing from the runner image at /usr/bin/google-chrome"; exit 1; }
+      - name: Run WCAG checks (pa11y-ci, settings in tests/.pa11yci.json)
+        working-directory: tests
+        env:
+          PUPPETEER_EXECUTABLE_PATH: /usr/bin/google-chrome
+        run: npm test

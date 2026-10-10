@@ -1,0 +1,9 @@
+{%- comment -%} A date range: one date when start and end match, "–present" when there is no end {%- endcomment -%}
+{%- assign range_start = include.start -%}
+{%- assign range_end = include.end -%}
+{%- include date.html date=range_start -%}
+{%- if range_end == nil -%}
+&ndash;present
+{%- elsif range_end != range_start -%}
+&ndash;{% include date.html date=range_end %}
+{%- endif -%}

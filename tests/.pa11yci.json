@@ -1,0 +1,33 @@
+{
+  "defaults": {
+    "runners": [
+      "axe"
+    ],
+    "standard": "WCAG2AA",
+    "rules": [
+      "color-contrast-enhanced",
+      "identical-links-same-purpose",
+      "meta-refresh-no-exceptions",
+      "target-size"
+    ],
+    "levelCapWhenNeedsReview": "warning"
+  },
+  "urls": [
+    "http://localhost:8000/index.html",
+    "http://localhost:8000/resume.html",
+    {
+      "url": "http://localhost:8000/index.html",
+      "actions": [
+        "click element #themeToggle"
+      ],
+      "wait": 1000
+    },
+    {
+      "url": "http://localhost:8000/resume.html",
+      "actions": [
+        "click element #themeToggle"
+      ],
+      "wait": 1000
+    }
+  ]
+}
