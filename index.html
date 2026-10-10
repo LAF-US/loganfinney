@@ -1,6 +1,60 @@
 ---
 layout: default
 body_class: home
+# Link tabs, in order; the first is selected on load. Profile tabs name networks from basics.profiles in resume.json.
+tabs:
+  - id: meet
+    label: Meet
+    buttons:
+      - label: Resume
+        url: "resume.html"
+      - label: Folio
+        url: "resume.html#folio"
+      - label: Latest
+        url: "https://thegemstone.org"
+        external: true
+  - id: post
+    label: Post
+    profiles:
+      - "Facebook"
+      - "Instagram"
+      - "Threads"
+      - "Bluesky"
+      - "X"
+      - "Mastodon"
+      - "LinkedIn"
+  - id: view
+    label: View
+    profiles:
+      - "Twitch"
+      - "TikTok"
+      - "Vimeo"
+      - "YouTube"
+      - "Flickr"
+      - "SoundCloud"
+      - "Spotify"
+  - id: find
+    label: Find
+    profiles:
+      - "IMDb"
+      - "Muck Rack"
+      - "Authory"
+      - "Linktree"
+      - "Letterboxd"
+      - "Goodreads"
+      - "GitHub"
+  - id: tip
+    label: Tip
+    support: true
+    profiles:
+      - "PayPal"
+      - "Cash App"
+      - "Venmo"
+      - "Ko-fi"
+      - "Buy Me a Coffee"
+      - "Patreon"
+      - "Stripe"
+
 ---
         <section class="hero">
             <!-- Rotating hero photography -->
@@ -20,11 +74,11 @@ body_class: home
                     <h1><span class="h1-a">{{ label | first }}</span> <span class="h1-b">{{ label | last }}</span></h1>
                     <div class="cta-buttons">
                             <div class="btn-row tabs" role="tablist" aria-label="Links">
-                            {%- for tab in site.data.links.tabs %}
+                            {%- for tab in page.tabs %}
                                 <button type="button" class="btn" role="tab" id="tab-{{ tab.id }}" aria-controls="panel-{{ tab.id }}" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}">{{ tab.label }}</button>
                             {%- endfor %}
                             </div>
-                            {%- for tab in site.data.links.tabs %}
+                            {%- for tab in page.tabs %}
                             <div class="tab-panel" role="tabpanel" id="panel-{{ tab.id }}" aria-labelledby="tab-{{ tab.id }}">
                                 {%- if tab.buttons %}
                                 <div class="btn-row">

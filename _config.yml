@@ -2,7 +2,8 @@ include:
   - ".well-known"
 exclude:
   - tests
-# Name, title, bio, email, site URL and profile links live in _data/resume.json (JSON Resume basics)
+# resume.json (JSON Resume) at the site root is both the site's data (site.data.resume) and the published /resume.json
+data_dir: .
 defaults:
   - scope:
       path: ""
