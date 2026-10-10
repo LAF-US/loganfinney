@@ -8,14 +8,14 @@
 /* Typefaces are served from /fonts so every visitor sees the same type.
    All three are free to host: DejaVu Sans (Bitstream Vera licence),
    Gelasio and Cousine (SIL Open Font License). Licences sit beside the files */
-@font-face { font-family: 'Site Sans'; src: url('fonts/dejavu-sans.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
-@font-face { font-family: 'Site Sans'; src: url('fonts/dejavu-sans-oblique.woff2') format('woff2'); font-weight: 400; font-style: italic; font-display: swap; }
-@font-face { font-family: 'Site Sans'; src: url('fonts/dejavu-sans-bold.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: swap; }
-@font-face { font-family: 'Site Serif'; src: url('fonts/gelasio.woff2') format('woff2'); font-weight: 400 700; font-style: normal; font-display: swap; }
-@font-face { font-family: 'Site Serif'; src: url('fonts/gelasio-italic.woff2') format('woff2'); font-weight: 400 700; font-style: italic; font-display: swap; }
-@font-face { font-family: 'Site Mono'; src: url('fonts/cousine.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
-@font-face { font-family: 'Site Mono'; src: url('fonts/cousine-bold.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: swap; }
-@font-face { font-family: 'Site Mono'; src: url('fonts/cousine-italic.woff2') format('woff2'); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: "Site Sans"; src: url("fonts/dejavu-sans.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Site Sans"; src: url("fonts/dejavu-sans-oblique.woff2") format("woff2"); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: "Site Sans"; src: url("fonts/dejavu-sans-bold.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "Site Serif"; src: url("fonts/gelasio.woff2") format("woff2"); font-weight: 400 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "Site Serif"; src: url("fonts/gelasio-italic.woff2") format("woff2"); font-weight: 400 700; font-style: italic; font-display: swap; }
+@font-face { font-family: "Site Mono"; src: url("fonts/cousine.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Site Mono"; src: url("fonts/cousine-bold.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "Site Mono"; src: url("fonts/cousine-italic.woff2") format("woff2"); font-weight: 400; font-style: italic; font-display: swap; }
 
 :root {
     --bg: #faf9f7;
@@ -25,9 +25,9 @@
     --line: #e7e5e4;
     --accent: #1f4f39;
     --hero-wash: rgba(250, 249, 247, 0.92);
-    --font-display: 'Site Serif', Georgia, serif;
-    --font-body: 'Site Sans', Verdana, sans-serif;
-    --font-mono: 'Site Mono', 'Courier New', monospace;
+    --font-display: "Site Serif", Georgia, serif;
+    --font-body: "Site Sans", Verdana, sans-serif;
+    --font-mono: "Site Mono", "Courier New", monospace;
 }
 
 [data-theme="dark"] {
@@ -122,43 +122,28 @@ body {
 
 .hero .lede,
 .page-intro,
-.story-list a,
-.story-list .story-plain,
 .timeline-entry blockquote {
     --ad: 0.293;           /* Gelasio */
     --cap: 0.693;
 }
 
-.hero .kicker,
 .contact-line,
 .entry-dates,
-.footer-content,
-.card .card-meta,
-.card .card-kicker {
+.footer-content{
     --ad: 0.266;           /* Cousine */
     --cap: 0.659;
 }
 
 .logo,
-.hero .kicker,
 .hero .lede,
 .contact-line,
 .page-intro,
-.subsection-title,
-.section-note,
 .timeline-entry h3,
+.timeline-entry h4,
 .timeline-entry p,
 .timeline-entry .placings li,
 .timeline-entry blockquote,
 .entry-dates,
-.story-list a,
-.story-list .story-plain,
-.card h2,
-.card h3,
-.card h4,
-.card p,
-.card .card-meta,
-.card .card-kicker,
 .footer-content p {
     position: relative;
     top: calc((var(--cap) / 2 - var(--ad)) * 1em);
@@ -199,7 +184,6 @@ body {
     white-space: nowrap;
 }
 
-
 /* The theme switch is a bare icon: a moon in light mode, a sun in dark */
 #themeToggle {
     background: none;
@@ -236,7 +220,6 @@ body {
 .home .site-header {
     box-shadow: none;
 }
-
 
 .hero {
     position: relative;
@@ -286,13 +269,6 @@ body {
     padding: round(up, 100vw * 2 / 3, 1.5rem) 0 0;
 }
 
-/* Small annotations in the mono face, like notes on a drawing */
-.hero .kicker {
-    font-family: var(--font-mono);
-    font-size: 0.875rem;
-    color: var(--ink-soft);
-}
-
 .hero h1 {
     font-family: var(--font-body);
     font-size: 1.75rem;
@@ -332,13 +308,6 @@ body {
     font-size: 1rem;
     color: var(--ink);
     max-width: 58ch;
-}
-
-.hero .tagline {
-    font-family: var(--font-display);
-    font-style: italic;
-    color: var(--ink-soft);
-    margin-bottom: 2rem;
 }
 
 /* ---------- Buttons & social ---------- */
@@ -508,10 +477,6 @@ body {
     min-width: 0;
 }
 
-.section-title + .subsection-title {
-    margin-top: 0;
-}
-
 .section-title::before {
     content: counter(section, decimal-leading-zero);
     font-family: var(--font-mono);
@@ -522,113 +487,15 @@ body {
     line-height: 0;
 }
 
-.subsection-title {
-    margin: 1.5rem 0 0;
-    font-family: var(--font-body);
-    font-size: 1.25rem;
-    text-transform: uppercase;
-    font-weight: 700;
+.page a:not(.btn) {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: 1px;
+}
+
+.page a:not(.btn):hover {
     color: var(--ink);
-}
-
-.page a:not(.btn):not(.card):not(.story-list a) {
-    color: var(--accent);
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
-    text-decoration-thickness: 1px;
-}
-
-.page a:not(.btn):not(.card):not(.story-list a):hover {
-    color: var(--ink);
-}
-
-/* ---------- Entries (formerly cards) ---------- */
-
-/* Entries sit side by side in ruled cells; no boxes, shadows or rounding */
-.card-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(24rem, 100%), 1fr));
-    box-shadow: inset 1px 1px 0 var(--line);
-}
-
-.card {
-    display: block;
-    padding: 1.5rem;
-    box-shadow: 1px 1px 0 var(--line);
-    text-decoration: none;
-    color: inherit;
-}
-
-a.card:hover h2,
-a.card:hover h3,
-a.card:hover h4 {
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
-    text-decoration-thickness: 1px;
-}
-
-.card h2,
-.card h3,
-.card h4 {
-    font-family: var(--font-body);
-    font-size: 1rem;
-    font-weight: 700;
-    color: var(--accent);
-}
-
-.card p {
-    font-size: 1rem;
-    color: var(--ink-soft);
-}
-
-.card .card-meta,
-.card .card-kicker {
-    display: block;
-    font-family: var(--font-mono);
-    font-size: 0.875rem;
-    color: var(--ink-soft);
-}
-
-.card .card-meta {
-    margin-top: 1.5rem;
-}
-
-/* Story lists read as a ledger: one headline per ruled line */
-.story-list {
-    list-style: none;
-    columns: 2 320px;
-    column-gap: 3rem;
-    column-rule: 1px solid var(--line);
-    box-shadow: inset 0 1px 0 var(--line);
-}
-
-.story-list li {
-    break-inside: avoid;
-    box-shadow: inset 0 -1px 0 var(--line);
-}
-
-.story-list a,
-.story-list .story-plain {
-    display: block;
-    /* Headline sits on the first line of its two-square row; the rule closes the row */
-    padding: 0 0 1.5rem;
-    font-family: var(--font-display);
-    font-size: 1rem;
-}
-
-.story-list a {
-    color: var(--accent);
-    text-decoration: none;
-}
-
-.story-list a:hover {
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
-    text-decoration-thickness: 1px;
-}
-
-.story-list .story-plain {
-    color: var(--ink-soft);
 }
 
 /* ---------- Resume ledger ---------- */
@@ -676,11 +543,6 @@ a.card:hover h4 {
     font-weight: 700;
 }
 
-.timeline-entry .entry-org {
-    font-weight: 400;
-    color: var(--ink-soft);
-}
-
 .timeline-entry p {
     color: var(--ink-soft);
     max-width: 68ch;
@@ -698,24 +560,18 @@ a.card:hover h4 {
     max-width: 68ch;
 }
 
-/* A line of context under a section title, set like the page intro */
-.section-note {
-    color: var(--ink-soft);
-    padding-bottom: 1.5rem;
-}
-
-/* A role under an employer reads in full ink, like the entry title */
+/* A title under an entry heading (a role, an award, a degree, a work):
+   body size in full ink, like the entry heading but not set in capitals */
 .timeline-entry .role {
+    font-size: 1rem;
+    text-transform: none;
     color: var(--ink);
+    max-width: 68ch;
 }
 
 /* A paragraph after a list gets the same blank grid line */
 .timeline-entry .placings + p {
     margin-top: 1.5rem;
-}
-
-.timeline-entry .story-list {
-    columns: 1;
 }
 
 .timeline-entry blockquote {
@@ -727,7 +583,6 @@ a.card:hover h4 {
     font-style: italic;
     max-width: 64ch;
 }
-
 
 /* ---------- Footer ---------- */
 
@@ -808,7 +663,6 @@ a.card:hover h4 {
 
 /* ---------- Responsive ---------- */
 
-
 /* ---------- Contact ---------- */
 
 .contact-line {
@@ -885,7 +739,6 @@ a.contact-handle:hover,
 .hero-body .lede {
     flex: 0 1 auto;
 }
-
 
 /* The photo's frame, the same box as the photo, with the content column inside */
 .photo-frame {

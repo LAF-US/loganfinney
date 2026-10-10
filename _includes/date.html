@@ -1,0 +1,9 @@
+{%- comment -%} Formats a JSON Resume date (YYYY, YYYY-MM or YYYY-MM-DD) as "May 2025" or "2020" {%- endcomment -%}
+{%- assign months = "January,February,March,April,May,June,July,August,September,October,November,December" | split: "," -%}
+{%- assign year = include.date | slice: 0, 4 -%}
+{%- if include.date.size > 4 -%}
+{%- assign month = include.date | slice: 5, 2 | plus: 0 | minus: 1 -%}
+{{ months[month] }}&nbsp;{{ year }}
+{%- else -%}
+{{ year }}
+{%- endif -%}

@@ -1,0 +1,26 @@
+{%- comment -%} Page metadata from JSON Resume basics (_data/resume.json); the description is the summary's first sentence {%- endcomment -%}
+{%- assign basics = site.data.resume.basics -%}
+{%- assign description = basics.summary | split: ". " | first | append: "." -%}
+{%- assign url = page.url | replace: "/index.html", "/" | prepend: basics.url -%}
+{%- assign image = page.image.path | prepend: basics.url -%}
+{%- if page.title -%}{%- assign headline = page.title -%}{%- else -%}{%- assign headline = basics.name -%}{%- endif %}
+    <title>{% if page.title %}{{ page.title }} | {{ basics.name }}{% else %}{{ basics.name }} | {{ basics.label }}{% endif %}</title>
+    <meta property="og:title" content="{{ headline }}">
+    <meta property="og:locale" content="en_US">
+    <meta name="description" content="{{ description }}">
+    <meta property="og:description" content="{{ description }}">
+    <link rel="canonical" href="{{ url }}">
+    <meta property="og:url" content="{{ url }}">
+    <meta property="og:site_name" content="{{ basics.name }}">
+    <meta property="og:image" content="{{ image }}">
+    <meta property="og:image:height" content="{{ page.image.height }}">
+    <meta property="og:image:width" content="{{ page.image.width }}">
+    <meta property="og:image:alt" content="{{ page.image.alt }}">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="twitter:image" content="{{ image }}">
+    <meta name="twitter:image:alt" content="{{ page.image.alt }}">
+    <meta property="twitter:title" content="{{ headline }}">
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":{% if page.title %}"WebPage"{% else %}"WebSite"{% endif %},"description":{{ description | jsonify }},"headline":{{ headline | jsonify }},"image":{"width":{{ page.image.width }},"height":{{ page.image.height }},"alt":{{ page.image.alt | jsonify }},"url":{{ image | jsonify }},"@type":"imageObject"},{% unless page.title %}"name":{{ basics.name | jsonify }},{% endunless %}"url":{{ url | jsonify }}}
+    </script>

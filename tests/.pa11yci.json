@@ -15,7 +15,6 @@
   "urls": [
     "http://localhost:8000/index.html",
     "http://localhost:8000/resume.html",
-    "http://localhost:8000/work.html",
     {
       "url": "http://localhost:8000/index.html",
       "actions": [
@@ -25,13 +24,6 @@
     },
     {
       "url": "http://localhost:8000/resume.html",
-      "actions": [
-        "click element #themeToggle"
-      ],
-      "wait": 1000
-    },
-    {
-      "url": "http://localhost:8000/work.html",
       "actions": [
         "click element #themeToggle"
       ],
