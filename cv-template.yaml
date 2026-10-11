@@ -1,0 +1,92 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/rendercv/rendercv/refs/tags/v2.8/schema.json
+#
+# Blank CV in the RenderCV format (v2.8). Fill in, delete what you don't use.
+#
+# Rules from the RenderCV schema:
+# - Text fields accept Markdown: *italic*, **bold**, [text](https://link).
+# - Dates: YYYY, YYYY-MM, or YYYY-MM-DD. Use `date` for one point in time,
+#   or `start_date` + `end_date` for a span. `end_date: present` for ongoing.
+# - Section titles are yours to name. Each section holds ONE entry type,
+#   and RenderCV detects the type from the fields you use.
+# - Fields marked (required) must be present for that entry type.
+
+cv:
+  name:                     # your name
+  headline:                 # one line under the name
+  location:
+  email:
+  phone:                    # international format, e.g. +1 208 555 0100
+  website:                  # one URL, or a list of URLs
+
+  # Built-in networks (RenderCV builds the link from the username):
+  # LinkedIn, GitHub, GitLab, IMDB, Instagram, ORCID, Mastodon (@user@domain),
+  # StackOverflow, ResearchGate, YouTube, Google Scholar, Telegram, WhatsApp,
+  # Leetcode, X, Bluesky, Reddit
+  social_networks:
+    - network:
+      username:
+
+  # Any other link: shown text, URL, and a Font Awesome icon name
+  custom_connections:
+    - placeholder:
+      url:
+      fontawesome_icon:
+
+  sections:
+
+    # TEXT ENTRY: a plain paragraph
+    Summary:
+      -
+
+    # EXPERIENCE ENTRY: company (required), position (required)
+    Experience:
+      - company:
+        position:
+        location:
+        start_date:
+        end_date:
+        summary:
+        highlights:
+          -
+
+    # EDUCATION ENTRY: institution (required), area (required)
+    Education:
+      - institution:
+        area:                 # field of study
+        degree:
+        location:
+        start_date:
+        end_date:
+        summary:
+        highlights:
+          -
+
+    # NORMAL ENTRY: name (required); good for awards, appearances,
+    # memberships, conferences, service, selected work
+    Honors and Awards:
+      - name:
+        date:
+        location:
+        summary:
+        highlights:
+          -
+
+    # PUBLICATION ENTRY: title (required), authors (required)
+    Publications:
+      - title:
+        authors:
+          -                   # **Bold** your own name
+        journal:              # outlet or venue
+        date:
+        url:
+        doi:
+        summary:
+
+    # ONE-LINE ENTRY: label (required), details (required)
+    Skills:
+      - label:
+        details:
+
+    # BULLET ENTRY: bullet (required)
+    # NUMBERED ENTRY: number (required)
+    # REVERSED NUMBERED ENTRY: reversed_number (required)
