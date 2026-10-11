@@ -1,4 +1,4 @@
-{%- comment -%} Formats a JSON Resume date (YYYY, YYYY-MM or YYYY-MM-DD) as "May 2025" or "2020" {%- endcomment -%}
+{%- comment -%} Formats a RenderCV date (YYYY, YYYY-MM or YYYY-MM-DD) as "May 2025" or "2020" {%- endcomment -%}
 {%- assign months = "January,February,March,April,May,June,July,August,September,October,November,December" | split: "," -%}
 {%- assign year = include.date | slice: 0, 4 -%}
 {%- if include.date.size > 4 -%}

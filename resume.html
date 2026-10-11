@@ -1,147 +1,51 @@
 ---
 layout: default
-title: Resume
+title: CV
 main_class: page
 redirect_from: /work.html
 ---
-        <h1 class="page-title">Resume</h1>
-        <p class="page-intro">{% include bio.html %}</p>
-
-        {%- assign resume = site.data.resume %}
-        <h2 class="section-title"><span>Experi&shy;ence</span></h2>
+        {%- assign cv = site.data.cv.cv %}
+        <h1 class="page-title">CV</h1>
+        {%- for section in cv.sections %}
+        {%- assign title = section[0] %}
+        <h2 class="section-title" id="{{ title | slugify }}"><span>{{ title }}</span></h2>
         <div class="timeline">
-        {%- assign employers = resume.work | group_by: "name" %}
-        {%- for employer in employers %}
+        {%- for entry in section[1] %}
+        {%- assign kind = entry | jsonify | slice: 0 %}
+        {%- if kind == '"' %}
+            <p>{% include md.html text=entry %}</p>
+        {%- else %}
+            {%- assign heading = entry.company | default: entry.institution | default: entry.name | default: entry.title | default: entry.label %}
+            {%- assign role = entry.position | default: entry.degree %}
             <div class="timeline-entry">
-                <div class="entry-row entry-head">
-                    <span class="entry-dates"></span>
-                    <div class="entry-body">
-                        <h3>{% include md.html text=employer.name %}</h3>
-                    </div>
-                </div>
-            {%- for job in employer.items %}
                 <div class="entry-row">
-                    <span class="entry-dates">{% include date-range.html start=job.startDate end=job.endDate %}</span>
+                    <span class="entry-dates">{% if entry.date %}{% include date.html date=entry.date %}{% elsif entry.start_date %}{% include date-range.html start=entry.start_date end=entry.end_date %}{% endif %}</span>
                     <div class="entry-body">
-                        <h4 class="role">{% include md.html text=job.position %}</h4>
-                        <ul class="placings">
-                            {%- for item in job.highlights %}
-                            <li>{% include md.html text=item %}</li>
-                            {%- endfor %}
-                        </ul>
-                    </div>
-                </div>
-            {%- endfor %}
-            </div>
-        {%- endfor %}
-        </div>
-
-        <h2 class="section-title"><span>Recog&shy;nition</span></h2>
-        <div class="timeline">
-        {%- assign awarders = resume.awards | group_by: "awarder" %}
-        {%- for awarder in awarders %}
-            <div class="timeline-entry">
-                <div class="entry-row entry-head">
-                    <span class="entry-dates"></span>
-                    <div class="entry-body">
-                        <h3>{{ awarder.name }}</h3>
-                    </div>
-                </div>
-            {%- assign contests = awarder.items | group_by_exp: "a", "a.title | append: a.date" %}
-            {%- for contest in contests %}
-                {%- assign first = contest.items | first %}
-                <div class="entry-row">
-                    <span class="entry-dates">{% if first.date %}{% include date.html date=first.date %}{% endif %}</span>
-                    <div class="entry-body">
-                        <h4 class="role">{% include md.html text=first.title %}</h4>
-                        {%- assign placings = contest.items | where_exp: "a", "a.summary" %}
-                        {%- if placings.size > 0 %}
-                        <ul class="placings">
-                            {%- for award in placings %}
-                            <li>{% include md.html text=award.summary %}</li>
-                            {%- endfor %}
-                        </ul>
+                        <h3>{% if entry.title and entry.url %}<a rel="noopener noreferrer" href="{{ entry.url }}">{% include md.html text=heading %}</a>{% else %}{% include md.html text=heading %}{% endif %}</h3>
+                        {%- if role %}
+                        <h4 class="role">{% include md.html text=role %}</h4>
                         {%- endif %}
-                    </div>
-                </div>
-            {%- endfor %}
-            </div>
-        {%- endfor %}
-        </div>
-
-        <h2 class="section-title"><span>Member&shy;ships</span></h2>
-        <div class="timeline">
-        {%- for membership in resume.volunteer %}
-            <div class="timeline-entry">
-                <div class="entry-row">
-                    <span class="entry-dates">{% if membership.startDate %}{% include date-range.html start=membership.startDate end=membership.endDate %}{% endif %}</span>
-                    <div class="entry-body">
-                        <h3>{% include md.html text=membership.organization %}</h3>
-                        {%- if membership.position %}
-                        <h4 class="role">{% include md.html text=membership.position %}</h4>
+                        {%- if entry.authors %}
+                        <p>{% for author in entry.authors %}{% include md.html text=author %}{% unless forloop.last %}, {% endunless %}{% endfor %}</p>
                         {%- endif %}
-                        {%- if membership.highlights %}
+                        {%- assign fields = "area,journal,summary,details" | split: "," %}
+                        {%- for field in fields %}
+                        {%- assign value = entry[field] %}
+                        {%- if value %}
+                        <p>{% include md.html text=value %}</p>
+                        {%- endif %}
+                        {%- endfor %}
+                        {%- if entry.highlights %}
                         <ul class="placings">
-                            {%- for item in membership.highlights %}
-                            <li>{% include md.html text=item %}</li>
+                            {%- for highlight in entry.highlights %}
+                            <li>{% include md.html text=highlight %}</li>
                             {%- endfor %}
                         </ul>
                         {%- endif %}
                     </div>
                 </div>
             </div>
+        {%- endif %}
         {%- endfor %}
         </div>
-
-        <h2 class="section-title"><span>Edu&shy;cation</span></h2>
-        <div class="timeline">
-        {%- assign schools = resume.education | group_by: "institution" %}
-        {%- for school in schools %}
-            <div class="timeline-entry">
-                <div class="entry-row entry-head">
-                    <span class="entry-dates"></span>
-                    <div class="entry-body">
-                        <h3>{{ school.name }}</h3>
-                    </div>
-                </div>
-            {%- for study in school.items %}
-                <div class="entry-row">
-                    <span class="entry-dates">{% include date-range.html start=study.startDate end=study.endDate %}</span>
-                    <div class="entry-body">
-                        <h4 class="role">{{ study.studyType | append: " " | append: study.area | strip }}</h4>
-                        {%- if study.courses %}
-                        <ul class="placings">
-                            {%- for course in study.courses %}
-                            <li>{% include md.html text=course %}</li>
-                            {%- endfor %}
-                        </ul>
-                        {%- endif %}
-                    </div>
-                </div>
-            {%- endfor %}
-            </div>
         {%- endfor %}
-        </div>
-
-        <h2 class="section-title" id="folio"><span>Folio</span></h2>
-        <div class="timeline">
-        {%- assign none = "" | split: "" %}
-        {%- for project in resume.projects %}
-            {%- assign roles = project.roles | default: none %}
-            {%- assign keywords = project.keywords | default: none %}
-            {%- assign facts = none | push: project.entity | concat: roles | concat: keywords | compact | join: " · " %}
-            <div class="timeline-entry">
-                <div class="entry-row">
-                    <span class="entry-dates">{% include date-range.html start=project.startDate end=project.endDate %}</span>
-                    <div class="entry-body">
-                        <h3><a rel="noopener noreferrer" href="{{ project.url }}">{% include md.html text=project.name %}</a></h3>
-                        {%- if facts != "" %}
-                        <ul class="placings">
-                            <li>{% include md.html text=facts %}</li>
-                        </ul>
-                        {%- endif %}
-                    </div>
-                </div>
-            </div>
-        {%- endfor %}
-        </div>

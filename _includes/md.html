@@ -1,2 +1,2 @@
-{%- comment -%} Renders an inline Markdown string from a JSON Resume field {%- endcomment -%}
+{%- comment -%} Renders an inline Markdown string from a RenderCV field {%- endcomment -%}
 {{- include.text | markdownify | remove: "<p>" | remove: "</p>" | strip | replace: '<a href=', '<a rel="noopener noreferrer" href=' -}}

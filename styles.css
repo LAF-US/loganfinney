@@ -276,31 +276,11 @@ body {
     letter-spacing: -0.03em;
     text-transform: uppercase;
     max-width: 16ch;
-    /* One square above, the two words filling three squares, one square to the rule, one square after it */
+    /* Each line fills two squares; one square above, one square to the rule, one square after it */
+    line-height: 3rem;
     margin: 1.5rem 0;
     padding-bottom: 1.5rem;
     box-shadow: 0 1px 0 var(--ink);
-}
-
-/* Stacked masthead: each word on its own line, the shorter one sized up to the same width */
-.hero h1 span {
-    display: block;
-    line-height: 2.25rem;
-}
-
-/* The two words fill three squares: the small word centered in the first,
-   the large word centered in the next two */
-.hero h1 .h1-a {
-    line-height: 1.5rem;
-    position: relative;
-    top: 0.125rem;
-}
-
-.hero h1 .h1-b {
-    font-size: 2.186rem;
-    line-height: 3rem;
-    position: relative;
-    top: 0.0625rem;
 }
 
 .hero .lede {
