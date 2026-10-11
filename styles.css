@@ -25,6 +25,12 @@
     --line: #e7e5e4;
     --accent: #1f4f39;
     --hero-wash: rgba(250, 249, 247, 0.92);
+    /* Cedar and moss, the site's greens in both themes (the fire in fire.js
+       burns through them, darkest to palest) */
+    --cedar-deep: #1f4f39;
+    --cedar: #245a41;
+    --moss: #6fbf98;
+    --moss-pale: #9ad4b6;
     --font-display: "Site Serif", Georgia, serif;
     --font-body: "Site Sans", Verdana, sans-serif;
     --font-mono: "Site Mono", "Courier New", monospace;
@@ -447,6 +453,41 @@ body {
     /* Three squares above the rule, three below it, and three under the text */
     margin-top: 3rlh;
     padding: 3rlh 0;
+}
+
+/* The fire (fire.js) stands on the footer rule and rises into the CV above
+   it, across the full width of the page. Its squares are the grid's squares:
+   the canvas is a whole, even number of squares wide, centered like the grid,
+   and sits behind the page's text. It takes up no space, so the layout is the
+   same with or without it, and it never shows when the reader asks for
+   reduced motion */
+.site-footer {
+    position: relative;
+}
+
+.footer-fire-band {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 100%;
+    /* FIRE_ROWS squares tall, as in fire.js */
+    height: 40rlh;
+    overflow: hidden;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.footer-fire {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .footer-fire-band {
+        display: none;
+    }
 }
 
 .footer-content {
