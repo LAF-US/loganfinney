@@ -1,13 +1,9 @@
----
-layout: default
-title: CV
-main_class: page
-redirect_from: /work.html
----
+{%- comment -%} The CV: every section of cv.yaml (RenderCV) except Summary, which the page already shows as the bio {%- endcomment -%}
+
         {%- assign cv = site.data.cv.cv %}
-        <h1 class="page-title">CV</h1>
         {%- for section in cv.sections %}
         {%- assign title = section[0] %}
+        {%- if title == "Summary" %}{% continue %}{% endif %}
         <h2 class="section-title" id="{{ title | slugify }}"><span>{{ title }}</span></h2>
         <div class="timeline">
         {%- for entry in section[1] %}

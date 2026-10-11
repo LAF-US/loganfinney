@@ -60,6 +60,8 @@
 
 html {
     scroll-behavior: smooth;
+    /* Links to a section (#cv, #folio) stop below the header, which stays on screen */
+    scroll-padding-top: 3rlh;
     /* One grid square (1rlh) is one line of body text. It is set relative to
        the text size, so when a reader's device enlarges text the squares and
        every spacing measured in them grow with it */

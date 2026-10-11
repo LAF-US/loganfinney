@@ -57,7 +57,7 @@ function initHeroRotation() {
     const layers = document.querySelectorAll('.hero-bg');
     const captions = document.querySelectorAll('.photo-caption');
 
-    // Pages without a hero section (resume, work) load this script too
+    // Nothing to rotate without the hero layers and photos
     if (layers.length < 2 || HERO_IMAGES.length === 0) {
         return;
     }
