@@ -28,7 +28,7 @@ function shuffleHeroImages() {
     let saved = null;
     try {
         saved = JSON.parse(sessionStorage.getItem(key));
-    } catch (e) {
+    } catch {
         saved = null;
     }
     const sameSet = Array.isArray(saved)
@@ -45,7 +45,7 @@ function shuffleHeroImages() {
         }
         try {
             sessionStorage.setItem(key, JSON.stringify(order));
-        } catch (e) {
+        } catch {
             // Storage unavailable: the order still holds for this page view
         }
     }
@@ -199,7 +199,7 @@ function initThemeToggle() {
         updateLabel();
         try {
             sessionStorage.setItem('theme', next);
-        } catch (e) {
+        } catch {
             // Ignore storage failures; the toggle still works for this page view.
         }
     });
