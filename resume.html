@@ -12,15 +12,15 @@ redirect_from: /work.html
         <div class="timeline">
         {%- for entry in section[1] %}
         {%- assign kind = entry | jsonify | slice: 0 %}
-        {%- if kind == '"' %}
-            <p>{% include md.html text=entry %}</p>
-        {%- else %}
-            {%- assign heading = entry.company | default: entry.institution | default: entry.name | default: entry.title | default: entry.label %}
-            {%- assign role = entry.position | default: entry.degree %}
             <div class="timeline-entry">
                 <div class="entry-row">
                     <span class="entry-dates">{% if entry.date %}{% include date.html date=entry.date %}{% elsif entry.start_date %}{% include date-range.html start=entry.start_date end=entry.end_date %}{% endif %}</span>
                     <div class="entry-body">
+                        {%- if kind == '"' %}
+                        <p>{% include md.html text=entry %}</p>
+                        {%- else %}
+                        {%- assign heading = entry.company | default: entry.institution | default: entry.name | default: entry.title | default: entry.label %}
+                        {%- assign role = entry.position | default: entry.degree %}
                         <h3>{% if entry.title and entry.url %}<a rel="noopener noreferrer" href="{{ entry.url }}">{% include md.html text=heading %}</a>{% else %}{% include md.html text=heading %}{% endif %}</h3>
                         {%- if role %}
                         <h4 class="role">{% include md.html text=role %}</h4>
@@ -42,10 +42,10 @@ redirect_from: /work.html
                             {%- endfor %}
                         </ul>
                         {%- endif %}
+                        {%- endif %}
                     </div>
                 </div>
             </div>
-        {%- endif %}
         {%- endfor %}
         </div>
         {%- endfor %}
