@@ -81,7 +81,7 @@ function initHeroRotation() {
     function showFirst(index) {
         const img = new Image();
         let settled = false;
-        // A photo that fails, or doesn't answer within 10 seconds, hands off to the next one
+        // A photo that fails, or doesn't answer within 5 seconds, hands off to the next one
         const tryNext = () => {
             if (settled) {
                 return;
@@ -91,7 +91,7 @@ function initHeroRotation() {
                 showFirst(index + 1);
             }
         };
-        const timedOut = setTimeout(tryNext, 10000);
+        const timedOut = setTimeout(tryNext, 5000);
         img.onload = () => {
             clearTimeout(timedOut);
             if (settled) {
