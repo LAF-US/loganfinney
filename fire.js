@@ -1,10 +1,11 @@
 // The footer fire: the PlayStation Doom fire effect, after Filipe Deschamps's
 // doom-fire-algorithm (https://github.com/filipedeschamps/doom-fire-algorithm).
 // The spread rule and the fire's size are his; this file draws it in the page's
-// grid squares and theme colors at 35% opacity, fainter still in the squares
-// that hold text. It lights the first time the footer scrolls into view and
-// keeps burning, lights again from nothing when the theme switches, and never
-// runs when the reader has asked for reduced motion.
+// grid squares and theme colors, faintly enough that text over it keeps its
+// contrast (the opacity is set in styles.css). It lights the first time the
+// footer scrolls into view and keeps burning, lights again from nothing when
+// the theme switches, and never runs when the reader has asked for reduced
+// motion.
 //
 // MIT License
 //
@@ -40,11 +41,6 @@ const FIRE_ROWS = 40;
 // (cold) through deep cedar, cedar and moss to pale moss (hottest), brightening
 // as Doom's fire does, in either theme
 const FIRE_COLORS = ['--bg', '--cedar-deep', '--cedar', '--moss', '--moss-pale'];
-
-// The fire is drawn at 35% opacity, and 25 points fainter than that (10%)
-// in the squares that hold text
-const FIRE_OPACITY = 0.35;
-const TEXT_OPACITY = FIRE_OPACITY - 0.25;
 
 // One step of the fire every 50 milliseconds (20 a second), as in the original
 const FIRE_STEP_MS = 50;
@@ -98,8 +94,6 @@ function initFooterFire() {
     let square = 0;
     let scale = 1;
     let pixels = new Uint8Array(0);
-    // Squares with text in them, where the fire is drawn fainter (1 = text)
-    let covered = new Uint8Array(0);
     let timer = null;
     let lit = false;
 
@@ -129,44 +123,10 @@ function initFooterFire() {
         canvas.width = Math.round(columns * square * scale);
         canvas.height = Math.round(FIRE_ROWS * square * scale);
         pixels = new Uint8Array(columns * FIRE_ROWS);
-        findText();
         if (timer !== null) {
             light();
         } else {
             update();
-        }
-    }
-
-    // Mark every square that any line of text touches, so the fire burns
-    // fainter behind the words. A line that only grazes a square (less than a
-    // quarter of it) leaves it alone
-    function findText() {
-        covered = new Uint8Array(columns * FIRE_ROWS);
-        if (columns === 0) {
-            return;
-        }
-        const box = canvas.getBoundingClientRect();
-        const graze = square / 4;
-        const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
-        const range = document.createRange();
-        for (let node = walker.nextNode(); node; node = walker.nextNode()) {
-            if (!node.data.trim()) {
-                continue;
-            }
-            range.selectNodeContents(node);
-            for (const rect of range.getClientRects()) {
-                if (rect.bottom <= box.top || rect.top >= box.bottom
-                    || rect.right <= box.left || rect.left >= box.right) {
-                    continue;
-                }
-                const top = Math.max(0, Math.floor((rect.top - box.top + graze) / square));
-                const bottom = Math.min(FIRE_ROWS - 1, Math.floor((rect.bottom - box.top - graze) / square));
-                const left = Math.max(0, Math.floor((rect.left - box.left) / square));
-                const right = Math.min(columns - 1, Math.ceil((rect.right - box.left) / square) - 1);
-                for (let row = top; row <= bottom; row++) {
-                    covered.fill(1, row * columns + left, row * columns + right + 1);
-                }
-            }
         }
     }
 
@@ -207,7 +167,6 @@ function initFooterFire() {
             if (heat === 0) {
                 continue;
             }
-            context.globalAlpha = covered[i] ? TEXT_OPACITY : FIRE_OPACITY;
             context.fillStyle = palette[heat];
             const x = Math.round((i % columns) * size);
             const y = Math.round(Math.floor(i / columns) * size);
@@ -261,9 +220,6 @@ function initFooterFire() {
 
     resize();
     new ResizeObserver(resize).observe(canvas.parentElement);
-    // Text moves when the page reflows or the web fonts arrive
-    new ResizeObserver(findText).observe(document.body);
-    document.fonts.ready.then(findText);
     // The first time the footer comes into view, the fire lights for good
     const observer = new IntersectionObserver((entries) => {
         if (entries.some((entry) => entry.isIntersecting)) {

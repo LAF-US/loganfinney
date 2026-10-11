@@ -460,7 +460,8 @@ body {
    the canvas is a whole, even number of squares wide, centered like the grid,
    and sits behind the page's text. It takes up no space, so the layout is the
    same with or without it, and it never shows when the reader asks for
-   reduced motion */
+   reduced motion. At 12% opacity every text color keeps 7:1 contrast over
+   the fire's strongest square in both themes (13% is the most that does) */
 .site-footer {
     position: relative;
 }
@@ -474,6 +475,7 @@ body {
     height: 40rlh;
     overflow: hidden;
     z-index: -1;
+    opacity: 0.12;
     pointer-events: none;
 }
 
