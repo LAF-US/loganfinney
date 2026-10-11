@@ -118,7 +118,7 @@ function initHeroRotation() {
     let timer = null;
     let loading = false;
 
-    // Load the next photo first so the crossfade never reveals a blank layer.
+    // Load the next photo first so the switch never reveals a blank layer.
     // Only one load runs at a time, and a photo that fails to load is skipped.
     function rotate() {
         if (!ready || loading) {

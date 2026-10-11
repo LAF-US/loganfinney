@@ -59,7 +59,6 @@
 }
 
 html {
-    scroll-behavior: smooth;
     /* Links to a section (#cv, #folio) stop below the header, which stays on screen */
     scroll-padding-top: 3rlh;
     /* One grid square (1rlh) is one line of body text. It is set relative to
@@ -85,7 +84,6 @@ body {
     line-height: 1.5rem;
     font-size: 1rem;
     -webkit-font-smoothing: antialiased;
-    transition: background-color 0.3s, color 0.3s;
 }
 
 /* Paragraphs never end on a lone word: the browser evens out the last lines */
@@ -243,8 +241,9 @@ body {
     left: 0;
     width: 100%;
     aspect-ratio: 3 / 2;
-    /* The photo overlay sits in the same layer as the photo so both fade out
-       together. The photo starts under the header. The overlay's top gradient
+    /* The photo overlay sits in the same layer as the photo so both change
+       together; a new photo replaces the last one at once, with no fade.
+       The photo starts under the header. The overlay's top gradient
        fades out from the top of the photo over its first 28%; the photo is
        unobscured below that until the bottom gradient eases in to full
        strength near the bottom, where the text starts. Both gradients are set
@@ -256,7 +255,6 @@ body {
     -webkit-mask-image: linear-gradient(to bottom, #000 80%, transparent);
     mask-image: linear-gradient(to bottom, #000 80%, transparent);
     opacity: 0;
-    transition: opacity 1.2s ease-in-out;
 }
 
 .hero-bg.active {
@@ -616,15 +614,6 @@ body {
 :focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 2px;
-}
-
-@media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-    }
 }
 
 /* ---------- Responsive ---------- */
