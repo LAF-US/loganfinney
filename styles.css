@@ -60,20 +60,24 @@
 
 html {
     scroll-behavior: smooth;
+    /* One grid square (1rlh) is one line of body text. It is set relative to
+       the text size, so when a reader's device enlarges text the squares and
+       every spacing measured in them grow with it */
+    line-height: 1.5;
 }
 
 body {
     font-family: var(--font-body);
     background-color: var(--bg);
-    /* Graph-paper rule: 1.5rem squares, drawn on the page so they scroll with the content */
+    /* Graph-paper rule: squares one line of text tall (1rlh), drawn on the page so they scroll with the content */
     background-image:
         linear-gradient(var(--line) 1px, transparent 1px),
         linear-gradient(90deg, var(--line) 1px, transparent 1px);
-    background-size: 1.5rem 1.5rem;
+    background-size: 1rlh 1rlh;
     /* The pattern is centered on the screen with a grid line down the middle, so
        an even-width block centered on the page lands on grid lines (a percentage
        offset is measured against width minus one square, hence the half square) */
-    background-position: calc(50% + 0.75rem) 0;
+    background-position: calc(50% + 0.5rlh) 0;
     color: var(--ink);
     /* Every line of text is one grid square tall */
     line-height: 1.5rem;
@@ -87,7 +91,7 @@ p {
     text-wrap: pretty;
 }
 
-/* Everything is sized in whole 1.5rem squares. The content column is centered
+/* Everything is sized in whole squares (rlh units). The content column is centered
    and an even number of squares wide (at most 48), so its edges land on grid
    lines. Rules are drawn with box-shadow so they add no height */
 .header-content,
@@ -95,7 +99,7 @@ p {
 .photo-frame-column,
 .page,
 .footer-content {
-    width: min(72rem, calc(100% - 3rem));
+    width: min(48rlh, calc(100% - 2rlh));
     margin: 0 auto;
 }
 
@@ -105,7 +109,7 @@ p {
     .photo-frame-column,
     .page,
     .footer-content {
-        width: min(72rem, round(down, 100% - 3rem, 3rem));
+        width: min(48rlh, round(down, 100% - 2rlh, 2rlh));
     }
 }
 
@@ -165,12 +169,12 @@ body {
 }
 
 .header-content {
-    height: 4.5rem;
-    padding-top: 1.5rem;
+    height: 3rlh;
+    padding-top: 1rlh;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    gap: 1.5rem;
+    gap: 1rlh;
 }
 
 .logo {
@@ -266,7 +270,7 @@ body {
     z-index: 2;
     /* Text starts on the first grid row below the photo */
     padding: calc(100vw * 2 / 3) 0 0;
-    padding: round(up, 100vw * 2 / 3, 1.5rem) 0 0;
+    padding: round(up, 100vw * 2 / 3, 1rlh) 0 0;
 }
 
 .hero h1 {
@@ -278,8 +282,8 @@ body {
     max-width: 16ch;
     /* Each line fills two squares; one square above, one square to the rule, one square after it */
     line-height: 3rem;
-    margin: 1.5rem 0;
-    padding-bottom: 1.5rem;
+    margin: 1rlh 0;
+    padding-bottom: 1rlh;
     box-shadow: 0 1px 0 var(--ink);
 }
 
@@ -298,7 +302,7 @@ body {
     /* A row of tabs over the row of whichever panel is selected */
     row-gap: 0;
     /* Fourteen squares: seven icons at two squares each */
-    width: 21rem;
+    width: 14rlh;
     max-width: 100%;
 }
 
@@ -313,7 +317,7 @@ body {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    height: 3rem;
+    height: 2rlh;
     box-shadow: inset 1px 1px 0 var(--ink), 1px 1px 0 var(--ink);
     color: var(--ink);
 }
@@ -379,10 +383,10 @@ body {
 .social-icons > a[data-tip]:focus-visible::after {
     content: attr(data-tip);
     position: absolute;
-    top: calc(100% + 1.5rem);
+    top: calc(100% + 1rlh);
     left: 50%;
     transform: translateX(-50%);
-    padding: 0 0.375rem;
+    padding: 0 0.25rlh;
     line-height: 1.5rem;
     white-space: nowrap;
     font-family: var(--font-mono);
@@ -396,7 +400,7 @@ body {
 /* ---------- Page scaffolding ---------- */
 
 .page {
-    padding: 3rem 0 0;
+    padding: 2rlh 0 0;
     counter-reset: section;
 }
 
@@ -408,10 +412,10 @@ body {
     --lh: 4.5rem;
     line-height: var(--lh);
     text-transform: uppercase;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rlh;
     /* At this size the centering nudge is about 1px, so it is left out and the
        padding stays a whole square, keeping the rule on the grid */
-    padding-top: 1.5rem;
+    padding-top: 1rlh;
     box-shadow: 0 1px 0 var(--ink);
 }
 
@@ -427,17 +431,17 @@ body {
     counter-increment: section;
     display: flex;
     align-items: baseline;
-    gap: 1.5rem;
+    gap: 1rlh;
     font-family: var(--font-body);
     --fs: 2.5rem;
     font-size: var(--fs);
     --lh: 3rem;
     line-height: var(--lh);
-    padding-top: 1.5rem;
+    padding-top: 1rlh;
     font-weight: 700;
     letter-spacing: -0.02em;
     text-transform: uppercase;
-    margin: 3rem 0 0;
+    margin: 2rlh 0 0;
     box-shadow: inset 0 1px 0 var(--ink);
     /* A word too long for the column breaks (with a hyphen where the browser
        can) instead of running off the page */
@@ -486,7 +490,7 @@ body {
 }
 
 .timeline-entry {
-    padding: 1.5rem 0;
+    padding: 1rlh 0;
     box-shadow: 0 1px 0 var(--line);
 }
 
@@ -496,11 +500,11 @@ body {
     display: flex;
     flex-wrap: wrap;
     align-items: flex-start;
-    column-gap: 1.5rem;
+    column-gap: 1rlh;
 }
 
 .timeline-entry .entry-row + .entry-row:not(.entry-head + .entry-row) {
-    margin-top: 1.5rem;
+    margin-top: 1rlh;
 }
 
 .timeline-entry .entry-body {
@@ -509,7 +513,7 @@ body {
 }
 
 .timeline-entry .entry-dates {
-    flex: 0 0 13.5rem;
+    flex: 0 0 9rlh;
     font-family: var(--font-mono);
     font-size: 0.875rem;
     font-weight: 700;
@@ -530,7 +534,7 @@ body {
 
 /* One blank grid line between paragraphs */
 .timeline-entry p + p {
-    margin-top: 1.5rem;
+    margin-top: 1rlh;
 }
 
 /* Award placings: one line each, no gaps, no bullets */
@@ -551,12 +555,12 @@ body {
 
 /* A paragraph after a list gets the same blank grid line */
 .timeline-entry .placings + p {
-    margin-top: 1.5rem;
+    margin-top: 1rlh;
 }
 
 .timeline-entry blockquote {
-    margin: 1.5rem 0;
-    padding-left: 1.5rem;
+    margin: 1rlh 0;
+    padding-left: 1rlh;
     box-shadow: inset 1px 0 0 var(--ink);
     color: var(--ink-soft);
     font-family: var(--font-display);
@@ -569,8 +573,8 @@ body {
 .site-footer {
     box-shadow: inset 0 1px 0 var(--ink);
     /* Three squares above the rule, three below it, and three under the text */
-    margin-top: 4.5rem;
-    padding: 4.5rem 0;
+    margin-top: 3rlh;
+    padding: 3rlh 0;
 }
 
 .footer-content {
@@ -578,7 +582,7 @@ body {
     flex-wrap: wrap;
     justify-content: space-between;
     /* Three squares between the copyright and the colophon when they stack */
-    gap: 4.5rem 1.5rem;
+    gap: 3rlh 1rlh;
     color: var(--ink-soft);
     font-family: var(--font-mono);
     font-size: 0.875rem;
@@ -648,7 +652,7 @@ body {
 .contact-line {
     display: flex;
     flex-wrap: wrap;
-    gap: 0 1.5rem;
+    gap: 0 1rlh;
     font-family: var(--font-mono);
     font-size: 0.875rem;
     /* Bold labels; the handles beside them stay regular */
@@ -675,7 +679,7 @@ a.contact-handle:hover,
 .header-tools {
     display: flex;
     align-items: center;
-    height: 1.5rem;
+    height: 1rlh;
 }
 
 /* The headline on the left, the link box on the right, level with it */
@@ -685,9 +689,9 @@ a.contact-handle:hover,
     justify-content: space-between;
     align-items: flex-start;
     /* With the link box's top margin, three squares under the rule when it wraps */
-    gap: 3rem 3rem;
+    gap: 2rlh 2rlh;
     /* Three squares below; an icon's name shows on the middle one */
-    padding-bottom: 4.5rem;
+    padding-bottom: 3rlh;
 }
 
 /* The headline keeps its full width, so its rule stays the same length */
@@ -698,7 +702,7 @@ a.contact-handle:hover,
 
 /* The link box starts on the headline's first line */
 .hero-head .cta-buttons {
-    margin-top: 1.5rem;
+    margin-top: 1rlh;
 }
 
 /* One contact per line, beside the body text */
@@ -713,7 +717,7 @@ a.contact-handle:hover,
     align-items: flex-start;
     justify-content: space-between;
     /* Three squares between rows only when the contacts wrap below the text */
-    gap: 4.5rem 3rem;
+    gap: 3rlh 2rlh;
 }
 
 .hero-body .lede {
@@ -746,12 +750,12 @@ a.contact-handle:hover,
    when the page opens. The box keeps the text readable wherever it lands */
 .photo-caption {
     position: sticky;
-    bottom: 1.5rem;
-    margin: 0 0 1.5rem;
+    bottom: 1rlh;
+    margin: 0 0 1rlh;
     pointer-events: auto;
     /* Three squares wide, enough for the longest caption, so both edges sit on grid lines */
-    width: 4.5rem;
-    min-height: 1.5rem;
+    width: 3rlh;
+    min-height: 1rlh;
     padding: 0;
     text-align: center;
     font-family: var(--font-mono);
