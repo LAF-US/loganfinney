@@ -10,60 +10,6 @@ redirect_from:
   - /resume/
   - /work.html
   - /work/
-# Link tabs, in order; the first is selected on load. Profile tabs name links from custom_connections in cv.yaml.
-tabs:
-  - id: meet
-    label: Meet
-    buttons:
-      - label: CV
-        url: "#cv"
-      - label: Folio
-        url: "#folio"
-      - label: Latest
-        url: "https://thegemstone.org"
-        external: true
-  - id: post
-    label: Post
-    profiles:
-      - "Facebook"
-      - "Instagram"
-      - "Threads"
-      - "Bluesky"
-      - "X"
-      - "Mastodon"
-      - "LinkedIn"
-  - id: view
-    label: View
-    profiles:
-      - "Twitch"
-      - "TikTok"
-      - "Vimeo"
-      - "YouTube"
-      - "Flickr"
-      - "SoundCloud"
-      - "Spotify"
-  - id: find
-    label: Find
-    profiles:
-      - "IMDb"
-      - "Muck Rack"
-      - "Authory"
-      - "Linktree"
-      - "Letterboxd"
-      - "Goodreads"
-      - "GitHub"
-  - id: tip
-    label: Tip
-    support: true
-    profiles:
-      - "PayPal"
-      - "Cash App"
-      - "Venmo"
-      - "Ko-fi"
-      - "Buy Me a Coffee"
-      - "Patreon"
-      - "Stripe"
-
 ---
         <section class="hero">
             <!-- Rotating hero photography -->
@@ -77,43 +23,14 @@ tabs:
             </div>
 
             <div class="hero-content">
-
-                <div class="hero-head">
-                    <h1>{{ site.data.cv.cv.headline }}</h1>
-                    <div class="cta-buttons">
-                            <div class="btn-row tabs" role="tablist" aria-label="Links">
-                            {%- for tab in page.tabs %}
-                                <button type="button" class="btn" role="tab" id="tab-{{ tab.id }}" aria-controls="panel-{{ tab.id }}" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}">{{ tab.label }}</button>
-                            {%- endfor %}
-                            </div>
-                            {%- for tab in page.tabs %}
-                            <div class="tab-panel" role="tabpanel" id="panel-{{ tab.id }}" aria-labelledby="tab-{{ tab.id }}">
-                                {%- if tab.buttons %}
-                                <div class="btn-row">
-                                    {%- for b in tab.buttons %}
-                                    <a href="{{ b.url }}"{% if b.external %} rel="noopener noreferrer"{% endif %} class="btn">{{ b.label }}</a>
-                                    {%- endfor %}
-                                </div>
-                                {%- endif %}
-                                {%- if tab.profiles %}
-                                <div class="btn-row social-icons">
-                                {%- for network in tab.profiles %}
-                                {%- assign p = site.data.cv.cv.custom_connections | where: "placeholder", network | first %}
-                                {%- assign icon = network | downcase | replace: " ", "-" %}
-                                <a rel="noopener noreferrer" href="{{ p.url }}" data-tip="{{ network }}" aria-label="{% if tab.support %}Support {% endif %}Logan on {{ network }}">{% capture svg %}{% include icons/{{ icon }}.svg %}{% endcapture %}{{ svg | strip }}</a>
-                                {%- endfor %}
-                                </div>
-                                {%- endif %}
-                            </div>
-                            {%- endfor %}
-                        </div>
-                </div>
-                <div class="hero-body">
-                <p class="lede">{% include bio.html %}</p>
-
+                <h1>{{ site.data.cv.cv.headline }}</h1>
                 {% include contact.html %}
-                </div>
-
+                {%- comment -%} Profile links from custom_connections in cv.yaml, in file order {%- endcomment %}
+                <p class="connections">
+                {%- for c in site.data.cv.cv.custom_connections %}
+                    <a rel="noopener noreferrer" href="{{ c.url }}">{{ c.placeholder }}</a>{% unless forloop.last %}&nbsp;·{% endunless %}
+                {%- endfor %}
+                </p>
             </div>
         </section>
 

@@ -124,7 +124,6 @@ body {
     --cap: 0.729;
 }
 
-.hero .lede,
 .page-intro,
 .timeline-entry blockquote {
     --ad: 0.293;           /* Gelasio */
@@ -132,6 +131,7 @@ body {
 }
 
 .contact-line,
+.connections,
 .entry-dates,
 .footer-content{
     --ad: 0.266;           /* Cousine */
@@ -139,8 +139,8 @@ body {
 }
 
 .logo,
-.hero .lede,
 .contact-line,
+.connections,
 .page-intro,
 .timeline-entry h3,
 .timeline-entry h4,
@@ -287,116 +287,6 @@ body {
     box-shadow: 0 1px 0 var(--ink);
 }
 
-.hero .lede {
-    font-family: var(--font-display);
-    font-size: 1rem;
-    color: var(--ink);
-    max-width: 58ch;
-}
-
-/* ---------- Buttons & social ---------- */
-
-.cta-buttons {
-    display: flex;
-    flex-direction: column;
-    /* A row of tabs over the row of whichever panel is selected */
-    row-gap: 0;
-    /* Fourteen squares: seven icons at two squares each */
-    width: 14rlh;
-    max-width: 100%;
-}
-
-/* Every row spans the block; its boxes share the length equally and butt together.
-   Each box draws its top/left rule inside and right/bottom rule outside, so neighbours share one line */
-.btn-row {
-    display: flex;
-}
-
-.btn-row > * {
-    flex: 1 1 0;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    height: 2rlh;
-    box-shadow: inset 1px 1px 0 var(--ink), 1px 1px 0 var(--ink);
-    color: var(--ink);
-}
-
-.btn-row > *:hover {
-    background-color: var(--ink);
-    color: var(--bg);
-}
-
-/* Link boxes under the tabs are filled with the page colour so the grid doesn't show through */
-.tab-panel .btn-row > * {
-    background-color: var(--bg);
-}
-
-.tab-panel .btn-row > *:hover {
-    background-color: var(--ink);
-}
-
-.btn {
-    padding: 0;
-    text-transform: uppercase;
-    font-family: var(--font-mono);
-    font-size: 0.875rem;
-    font-weight: 400;
-    text-decoration: none;
-}
-
-.social-icons svg {
-    width: 1.15rem;
-    height: 1.15rem;
-}
-
-/* The Muck Rack mark is wide and short, so it gets a wider box to match the others' height */
-.social-icons .wide {
-    width: 1.75rem;
-}
-
-/* Tabs: unselected ones sit on light grey; the selected one is filled with the accent. No motion when switching. */
-.tabs .btn {
-    border: 0;
-    background: var(--line);
-    cursor: pointer;
-}
-
-.tabs .btn:hover {
-    background-color: var(--ink);
-    color: var(--bg);
-}
-
-.tabs .btn[aria-selected="true"] {
-    font-weight: 700;
-    background-color: var(--accent);
-    color: var(--bg);
-}
-
-/* Icon names: a small label on hover or keyboard focus, on the middle square
-   of the three-square gap under the icons. No motion */
-.social-icons > a {
-    position: relative;
-}
-
-.social-icons > a[data-tip]:hover::after,
-.social-icons > a[data-tip]:focus-visible::after {
-    content: attr(data-tip);
-    position: absolute;
-    top: calc(100% + 1rlh);
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 0 0.25rlh;
-    line-height: 1.5rem;
-    white-space: nowrap;
-    font-family: var(--font-mono);
-    font-size: 0.875rem;
-    background-color: var(--ink);
-    color: var(--bg);
-    pointer-events: none;
-    z-index: 2;
-}
-
 /* ---------- Page scaffolding ---------- */
 
 .page {
@@ -451,14 +341,16 @@ body {
     top: calc((var(--cap) / 2 - var(--ad)) * var(--fs));
 }
 
-.page a:not(.btn) {
+.page a,
+.connections a {
     color: var(--accent);
     text-decoration: underline;
     text-underline-offset: 0.2em;
     text-decoration-thickness: 1px;
 }
 
-.page a:not(.btn):hover {
+.page a:hover,
+.connections a:hover {
     color: var(--ink);
 }
 
@@ -653,46 +545,23 @@ a.contact-handle:hover,
     height: 1rlh;
 }
 
-/* The headline on the left, the link box on the right, level with it */
-.hero-head {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: flex-start;
-    /* With the link box's top margin, three squares under the rule when it wraps */
-    gap: 2rlh 2rlh;
-    /* Three squares below; an icon's name shows on the middle one */
-    padding-bottom: 3rlh;
-}
-
-/* The headline keeps its full width, so its rule stays the same length */
-.hero-head h1 {
-    flex: 0 1 16ch;
-    margin-bottom: 0;
-}
-
-/* The link box starts on the headline's first line */
-.hero-head .cta-buttons {
-    margin-top: 1rlh;
-}
-
-/* One contact per line, beside the body text */
+/* One contact per line under the headline */
 .hero-contact {
     flex-direction: column;
 }
 
-/* Body text on the left, contact lines on the right; they stack when there isn't room for both */
-.hero-body {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    justify-content: space-between;
-    /* Three squares between rows only when the contacts wrap below the text */
-    gap: 3rlh 2rlh;
+/* Profile links: one run of names separated by middle dots, a square below the contacts */
+.connections {
+    margin-top: 1rlh;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    color: var(--ink-soft);
+    max-width: 68ch;
 }
 
-.hero-body .lede {
-    flex: 0 1 auto;
+/* A name never breaks across lines, and a line never starts with a dot */
+.connections a {
+    white-space: nowrap;
 }
 
 /* The photo's frame, the same box as the photo, with the content column inside */

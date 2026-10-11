@@ -1,9 +1,8 @@
-{%- comment -%} The CV: every section of cv.yaml (RenderCV) except Summary, which the page already shows as the bio {%- endcomment -%}
+{%- comment -%} The CV: every section of cv.yaml (RenderCV), in file order {%- endcomment -%}
 
         {%- assign cv = site.data.cv.cv %}
         {%- for section in cv.sections %}
         {%- assign title = section[0] %}
-        {%- if title == "Summary" %}{% continue %}{% endif %}
         <h2 class="section-title" id="{{ title | slugify }}"><span>{{ title }}</span></h2>
         <div class="timeline">
         {%- for entry in section[1] %}
