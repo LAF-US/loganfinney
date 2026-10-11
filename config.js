@@ -7,7 +7,12 @@ const HERO_IMAGES = [
     'anderson-ranch.jpg',
     '345.jpg',
     'coeur-dalene.jpg',
-    'blackfoot.jpg'
+    'blackfoot.jpg',
+    '134.jpg',
+    '185.jpg',
+    '331.jpg',
+    '78.jpg',
+    '260.jpg'
 ];
 
 // Caption shown with each photo, by file name. Leave a photo out to show no caption.
@@ -17,7 +22,12 @@ const HERO_CAPTIONS = {
     'anderson-ranch.jpg': 'Anderson Ranch',
     '345.jpg': 'Schweitzer',
     'coeur-dalene.jpg': "Coeur d'Alene",
-    'blackfoot.jpg': 'Blackfoot'
+    'blackfoot.jpg': 'Blackfoot',
+    '134.jpg': 'Shoshone Falls',
+    '185.jpg': 'Owyhee Reservoir',
+    '331.jpg': 'South Fork Payette',
+    '78.jpg': 'Bruneau River',
+    '260.jpg': 'State Capitol'
 };
 
 // Shuffle the photo order once per visit (Fisher-Yates), so every photo shows

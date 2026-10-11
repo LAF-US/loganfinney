@@ -593,8 +593,8 @@ a.contact-handle:hover,
     bottom: 1rlh;
     margin: 0 0 1rlh;
     pointer-events: auto;
-    /* Three squares wide, enough for the longest caption, so both edges sit on grid lines */
-    width: 3rlh;
+    /* Four squares wide, enough for the longest caption (South Fork Payette), so both edges sit on grid lines */
+    width: 4rlh;
     min-height: 1rlh;
     padding: 0;
     text-align: center;
