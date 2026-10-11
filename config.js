@@ -170,13 +170,13 @@ function initHeroRotation() {
         img.src = HERO_DIR + HERO_IMAGES[next];
     }
 
-    // Rotate every 5 seconds, stopping or resuming if the motion preference changes
+    // Rotate every 7 seconds, stopping or resuming if the motion preference changes
     function updateRotation() {
         if (reducedMotion.matches) {
             clearInterval(timer);
             timer = null;
         } else if (timer === null) {
-            timer = setInterval(rotate, 5000);
+            timer = setInterval(rotate, 7000);
         }
     }
 
