@@ -133,6 +133,7 @@ body {
 .connections,
 .rendercv h2,
 .rendercv p,
+.hero-bio p,
 .footer-content p {
     position: relative;
     top: calc((var(--cap) / 2 - var(--ad)) * 1em);
@@ -509,6 +510,22 @@ a.contact-handle:hover,
     margin-left: auto;
     padding-top: 1rlh;
     box-shadow: inset 0 1px 0 var(--ink);
+}
+
+/* The bio (the site description in _config.yml) on its own line under the
+   headline and contacts, on the left, under a rule as wide as the contacts' rule */
+.hero-bio {
+    flex-basis: 100%;
+}
+
+.hero-bio p {
+    width: fit-content;
+    max-width: 68ch;
+    padding-top: 1rlh;
+    /* The contacts' rule is as wide as the contact box: its longest line,
+       "Signal signal.me/loganfinney.27", is 31 Cousine characters (0.6em each) at 0.875rem */
+    background: linear-gradient(var(--ink), var(--ink)) top left / min(calc(31 * 0.6 * 0.875rem), 100%) 1px no-repeat;
+    color: var(--ink-soft);
 }
 
 /* Profile links: one run of names separated by middle dots, a square below the contacts */

@@ -2,32 +2,32 @@
 // Edit this list to change the hero photo rotation
 const HERO_DIR = 'images/hero/';
 const HERO_IMAGES = [
-    '334.jpg',
-    '278.jpg',
+    'priest-lake.jpg',
+    'state-capitol-pride.jpg',
     'anderson-ranch.jpg',
-    '345.jpg',
+    'schweitzer.jpg',
     'coeur-dalene.jpg',
     'blackfoot.jpg',
-    '134.jpg',
-    '185.jpg',
-    '331.jpg',
-    '78.jpg',
-    '260.jpg'
+    'shoshone-falls.jpg',
+    'owyhee-reservoir.jpg',
+    'south-fork-payette.jpg',
+    'bruneau-river.jpg',
+    'state-capitol-protest.jpg'
 ];
 
 // Caption shown with each photo, by file name. Leave a photo out to show no caption.
 const HERO_CAPTIONS = {
-    '334.jpg': 'Priest Lake',
-    '278.jpg': 'State Capitol',
+    'priest-lake.jpg': 'Priest Lake',
+    'state-capitol-pride.jpg': 'State Capitol',
     'anderson-ranch.jpg': 'Anderson Ranch',
-    '345.jpg': 'Schweitzer',
+    'schweitzer.jpg': 'Schweitzer',
     'coeur-dalene.jpg': "Coeur d'Alene",
     'blackfoot.jpg': 'Blackfoot',
-    '134.jpg': 'Shoshone Falls',
-    '185.jpg': 'Owyhee Reservoir',
-    '331.jpg': 'South Fork Payette',
-    '78.jpg': 'Bruneau River',
-    '260.jpg': 'State Capitol'
+    'shoshone-falls.jpg': 'Shoshone Falls',
+    'owyhee-reservoir.jpg': 'Owyhee Reservoir',
+    'south-fork-payette.jpg': 'South Fork Payette',
+    'bruneau-river.jpg': 'Bruneau River',
+    'state-capitol-protest.jpg': 'State Capitol'
 };
 
 // Shuffle the photo order once per visit (Fisher-Yates), so every photo shows
