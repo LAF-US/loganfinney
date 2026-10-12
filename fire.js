@@ -1,11 +1,10 @@
 // The footer fire: the PlayStation Doom fire effect, after Filipe Deschamps's
 // doom-fire-algorithm (https://github.com/filipedeschamps/doom-fire-algorithm).
 // The spread rule and the fire's size are his; this file draws it in the page's
-// grid squares and theme colors, faintly enough that text over it keeps its
-// contrast (the opacity is set in styles.css). It lights the first time the
-// footer scrolls into view and keeps burning, lights again from nothing when
-// the theme switches, and never runs when the reader has asked for reduced
-// motion.
+// grid squares and the site's colors, filling the footer behind its text. It
+// lights the first time the footer scrolls into view and keeps burning, lights
+// again from nothing when the theme switches, and never runs when the reader
+// has asked for reduced motion.
 //
 // MIT License
 //
@@ -30,51 +29,84 @@
 // SOFTWARE.
 
 // As in Doom, heat runs from 0 (out) to 36 (the source row): 37 colors. Each
-// row above cools by 0 to 2 steps, so the flames reach about 36 squares up
+// row above cools by 0 to 2 steps
 const FIRE_HEAT = 36;
 
-// The fire is 40 squares tall, as in the original, drawn in the page's own grid
-// squares and standing on the footer rule. The band in styles.css matches it
-const FIRE_ROWS = 40;
+// The fire is as tall as its heat reaches: the source row and the 36 above it,
+// 37 squares in all, from the footer rule to the foot of the page. The footer
+// in styles.css matches it
+const FIRE_ROWS = FIRE_HEAT + 1;
 
-// A green fire in the site's cedar and moss: its heat runs from the page color
-// (cold) through deep cedar, cedar and moss to pale moss (hottest), brightening
-// as Doom's fire does, in either theme
-const FIRE_COLORS = ['--bg', '--cedar-deep', '--cedar', '--moss', '--moss-pale'];
+// The fire's colors, built the way Doom's 37 are: Doom's palette is four key
+// colors blended in straight lines between them (black at heat 0, red-orange
+// at 12, dark yellow at 32, white at 36), so it brightens out of the
+// background, shifts hue at a steady lightness, then flashes to white. Here
+// the keys are the site's colors (styles.css): the page color, a blue, a green
+// and the text color. "far" takes the family's shade farther from the page
+// color (dark on a light page, light on a dark one), so the fire follows the
+// palette and each theme. To swap in other key colors, change the names here
+const FIRE_KEYS = [
+    [0, '--bg'],
+    [12, 'far', '--blue-light', '--blue-dark'],
+    [32, 'far', '--green-light', '--green-dark'],
+    [36, '--ink'],
+];
 
 // One step of the fire every 50 milliseconds (20 a second), as in the original
 const FIRE_STEP_MS = 50;
 
-// Read a CSS color (#rrggbb or rgb()) as red, green, blue
-function parseColor(value) {
-    const probe = document.createElement('canvas').getContext('2d');
-    probe.fillStyle = value.trim();
-    const hex = probe.fillStyle;
-    if (hex.startsWith('#')) {
-        return [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
+// Read a theme color as red, green, blue. The colors are written as
+// light-dark(), which only the browser can resolve, so each is read back from
+// a hidden element that uses it
+let probe = null;
+function readColor(name) {
+    if (!probe) {
+        probe = document.createElement('span');
+        probe.hidden = true;
+        document.body.append(probe);
     }
-    return hex.match(/\d+/g).slice(0, 3).map(Number);
+    probe.style.color = `var(${name})`;
+    return getComputedStyle(probe).color.match(/[\d.]+/g).slice(0, 3).map(Number);
 }
 
-// The 37 fire colors for the current theme: FIRE_COLORS spaced evenly from
-// cold to hottest, blended in between. They are worked out again only when
-// the theme's colors change
+// Relative luminance (WCAG), to tell which shade is farther from the page color
+function luminance(rgb) {
+    const [r, g, b] = rgb.map((v) => {
+        const c = v / 255;
+        return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+    });
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+}
+
+// The 37 fire colors for the current theme: each key color at its heat, and
+// the heats between two keys blended evenly from one to the next. They are
+// worked out again only when the theme's colors change
 let paletteKey = '';
 let paletteCache = [];
 function firePalette() {
-    const body = getComputedStyle(document.body);
-    const values = FIRE_COLORS.map((name) => body.getPropertyValue(name).trim());
-    const key = values.join();
+    const page = readColor('--bg');
+    const keys = FIRE_KEYS.map(([heat, ...names]) => [heat, ...names.map(
+        (name) => (name.startsWith('--') ? readColor(name) : name),
+    )]);
+    const key = [page, ...keys.flat()].join();
     if (key === paletteKey) {
         return paletteCache;
     }
-    const colors = values.map(parseColor);
+    const distance = (rgb) => Math.abs(luminance(rgb) - luminance(page));
+    const stops = keys.map(([heat, first, ...shades]) => {
+        if (first !== 'far' && first !== 'near') {
+            return [heat, first];
+        }
+        shades.sort((a, b) => distance(a) - distance(b));
+        return [heat, first === 'near' ? shades[0] : shades[1]];
+    });
     const palette = [];
     for (let heat = 0; heat <= FIRE_HEAT; heat++) {
-        const at = (heat / FIRE_HEAT) * (colors.length - 1);
-        const from = Math.min(Math.floor(at), colors.length - 2);
-        const t = at - from;
-        palette.push(colors[from].map((c, k) => Math.round(c + (colors[from + 1][k] - c) * t)));
+        const next = stops.findIndex(([at]) => at >= heat);
+        const [toHeat, to] = stops[next];
+        const [fromHeat, from] = stops[Math.max(next - 1, 0)];
+        const t = toHeat === fromHeat ? 1 : (heat - fromHeat) / (toHeat - fromHeat);
+        palette.push(from.map((c, k) => Math.round(c + (to[k] - c) * t)));
     }
     paletteKey = key;
     paletteCache = palette.map((rgb) => `rgb(${rgb.join(',')})`);

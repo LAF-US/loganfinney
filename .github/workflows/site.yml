@@ -1,0 +1,86 @@
+name: Site
+
+# Builds loganfinney.com and publishes it to GitHub Pages (Settings → Pages →
+# Source: GitHub Actions). Nothing is committed: each run renders cv.yaml with
+# RenderCV, builds the site with Jekyll, checks it against WCAG, and publishes
+# the result. If any step fails, nothing is published and the live site keeps
+# its last good version.
+#
+# Runs on every push to main, every day (RenderCV's durations, like
+# "10 months", count up to the day it runs, so they stay current), and by hand
+# from the Actions tab. Pull requests run every step except publishing.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: "17 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# One publish at a time; a newer run waits rather than cancelling one that has
+# started
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.13"
+      - name: Install RenderCV
+        run: pip install "rendercv[full]==2.8"
+      - name: Render the CV (HTML only)
+        run: rendercv render cv.yaml -nopdf -nopng -notyp -o "$RUNNER_TEMP/rendercv"
+      - name: Put RenderCV's HTML on the site
+        run: python3 scripts/rendercv-include.py "$RUNNER_TEMP/rendercv/Logan_Finney_CV.html"
+      - name: Build site (same as GitHub Pages)
+        uses: actions/jekyll-build-pages@44a6e6beabd48582f863aeeb6cb2151cc1716697 # v1.0.13
+        with:
+          source: ./
+          destination: ./_site
+      - name: Serve built site
+        run: |
+          (python3 -m http.server 8000 -d _site >/dev/null 2>&1 &)
+          timeout 30 bash -c 'until curl -sf http://localhost:8000/ >/dev/null; do sleep 0.5; done'
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22
+      - name: Install pa11y-ci (exact versions from tests/package-lock.json)
+        working-directory: tests
+        run: npm ci --ignore-scripts
+      - name: Check the runner has Chrome
+        run: test -x /usr/bin/google-chrome || { echo "::error::Google Chrome is missing from the runner image at /usr/bin/google-chrome"; exit 1; }
+      - name: Run WCAG checks (pa11y-ci, settings in tests/.pa11yci.json)
+        working-directory: tests
+        env:
+          PUPPETEER_EXECUTABLE_PATH: /usr/bin/google-chrome
+        run: npm test
+      - name: Package the site for Pages
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: ./_site
+          # .well-known (the Bluesky handle) starts with a dot
+          include-hidden-files: true
+
+  deploy:
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Publish to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1

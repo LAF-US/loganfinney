@@ -1,8 +1,7 @@
 /* ============================================================
    loganfinney.com — shared stylesheet
-   Design tokens live on :root; dark mode overrides them via
-   [data-theme="dark"] (set by config.js) with a
-   prefers-color-scheme fallback for first visits.
+   Design tokens live on :root, each with its light and dark value;
+   [data-theme] (set by config.js) overrides the system theme.
    ============================================================ */
 
 /* Typefaces are served from /fonts so every visitor sees the same type.
@@ -17,46 +16,38 @@
 @font-face { font-family: "Site Mono"; src: url("fonts/cousine-bold.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
 @font-face { font-family: "Site Mono"; src: url("fonts/cousine-italic.woff2") format("woff2"); font-weight: 400; font-style: italic; font-display: swap; }
 
+/* The site's eight colors. Each theme pairs them with light-dark(light, dark):
+   what is light in one theme is dark in the other. The theme follows the
+   reader's system unless the theme switch has set data-theme */
 :root {
-    --bg: #faf9f7;
-    --bg-rgb: 250, 249, 247;
-    --ink: #1c1b1a;
-    --ink-soft: #4a4641;
-    --line: #e7e5e4;
-    --accent: #1f4f39;
-    --hero-wash: rgba(250, 249, 247, 0.92);
-    /* Cedar and moss, the site's greens in both themes (the fire in fire.js
-       burns through them, darkest to palest) */
-    --cedar-deep: #1f4f39;
-    --cedar: #245a41;
-    --moss: #6fbf98;
-    --moss-pale: #9ad4b6;
+    color-scheme: light dark;
+    --black: #131211;
+    --white: #faf9f7;
+    --grey-dark: #4a4641;
+    --grey-light: #bab5af;
+    --green-dark: #1f4f39;
+    --green-light: #9ad4b6;
+    --blue-dark: #1d3f6e;
+    --blue-light: #a9c7ee;
+
+    --bg: light-dark(var(--white), var(--black));
+    --ink: light-dark(var(--black), var(--white));
+    --ink-soft: light-dark(var(--grey-dark), var(--grey-light));
+    /* Grid lines: the grey nearer the page color, faded 60% into the page */
+    --line: color-mix(in srgb, light-dark(var(--grey-light), var(--grey-dark)) 40%, var(--bg));
+    /* The main color, green, as on the live site: links. The accent, blue:
+       links under the pointer and the keyboard-focus outline */
+    --main: light-dark(var(--green-dark), var(--green-light));
+    --accent: light-dark(var(--blue-dark), var(--blue-light));
+    /* Shade at the foot of the hero photo, behind the title */
+    --hero-wash: light-dark(color-mix(in srgb, var(--white) 92%, transparent), color-mix(in srgb, var(--black) 87%, transparent));
     --font-display: "Site Serif", Georgia, serif;
     --font-body: "Site Sans", Verdana, sans-serif;
     --font-mono: "Site Mono", "Courier New", monospace;
 }
 
-[data-theme="dark"] {
-    --bg: #131211;
-    --bg-rgb: 19, 18, 17;
-    --ink: #f4f2f0;
-    --ink-soft: #bab5af;
-    --line: #2d2a28;
-    --accent: #9ad4b6;
-    --hero-wash: rgba(0, 0, 0, 0.87);
-}
-
-@media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-        --bg: #131211;
-        --bg-rgb: 19, 18, 17;
-        --ink: #f4f2f0;
-        --ink-soft: #bab5af;
-        --line: #2d2a28;
-        --accent: #9ad4b6;
-        --hero-wash: rgba(0, 0, 0, 0.87);
-            }
-}
+[data-theme="light"] { color-scheme: light; }
+[data-theme="dark"] { color-scheme: dark; }
 
 * {
     margin: 0;
@@ -156,7 +147,7 @@ body {
     position: sticky;
     top: 0;
     z-index: 100;
-    background-color: rgba(var(--bg-rgb), 0.9);
+    background-color: color-mix(in srgb, var(--bg) 90%, transparent);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     box-shadow: 0 1px 0 var(--ink);
@@ -242,7 +233,7 @@ body {
        unobscured below that until the bottom gradient eases in to full
        strength near the bottom, where the text starts. Both gradients are set
        in shares of the photo's height, so they look the same at every width */
-    background-image: linear-gradient(to bottom, rgb(var(--bg-rgb)), transparent 28%, transparent 70%, var(--hero-wash) 90%), var(--photo, none);
+    background-image: linear-gradient(to bottom, var(--bg), transparent 28%, transparent 70%, var(--hero-wash) 90%), var(--photo, none);
     background-size: 100% auto;
     background-position: top center;
     background-repeat: no-repeat;
@@ -289,7 +280,7 @@ body {
 
 .page a,
 .connections a {
-    color: var(--accent);
+    color: var(--main);
     text-decoration: underline;
     text-underline-offset: 0.2em;
     text-decoration-thickness: 1px;
@@ -297,7 +288,7 @@ body {
 
 .page a:hover,
 .connections a:hover {
-    color: var(--ink);
+    color: var(--accent);
 }
 
 /* ---------- CV (RenderCV) ---------- */
@@ -352,32 +343,29 @@ body {
 
 .site-footer {
     box-shadow: inset 0 1px 0 var(--ink);
-    /* Three squares above the rule, three below it, and three under the text */
+    /* Three squares above the rule and three below it. The footer is 37
+       squares tall, the height of the fire */
     margin-top: 3rlh;
-    padding: 3rlh 0;
-}
-
-/* The fire (fire.js) stands on the footer rule and rises into the CV above
-   it, across the full width of the page. Its squares are the grid's squares:
-   the canvas is a whole, even number of squares wide, centered like the grid,
-   and sits behind the page's text. It takes up no space, so the layout is the
-   same with or without it, and it never shows when the reader asks for
-   reduced motion. At 12% opacity every text color keeps 7:1 contrast over
-   the fire's strongest square in both themes (13% is the most that does) */
-.site-footer {
+    padding-top: 3rlh;
+    height: 37rlh;
     position: relative;
 }
 
+/* The fire (fire.js) fills the footer, from the rule to the foot of the page,
+   across the full width of the page, in the palette's own colors at full
+   strength. Its squares are the grid's squares: the canvas is a whole, even
+   number of squares wide, centered like the grid, and sits behind the footer
+   text. It takes up no space, so the layout is the same with or without it,
+   and it never shows when the reader asks for reduced motion */
 .footer-fire-band {
     position: absolute;
     left: 0;
     right: 0;
-    bottom: 100%;
+    bottom: 0;
     /* FIRE_ROWS squares tall, as in fire.js */
-    height: 40rlh;
+    height: 37rlh;
     overflow: hidden;
     z-index: -1;
-    opacity: 0.12;
     pointer-events: none;
 }
 
@@ -413,7 +401,7 @@ body {
 }
 
 .footer-content a:hover {
-    color: var(--ink);
+    color: var(--accent);
 }
 
 /* Each footer phrase stays whole: a line that doesn't fit breaks between
@@ -471,7 +459,7 @@ body {
 .contact-line a,
 a.contact-handle {
     font-weight: 400;
-    color: var(--accent);
+    color: var(--main);
     text-decoration: underline;
     text-underline-offset: 0.2em;
     text-decoration-thickness: 1px;
@@ -479,7 +467,7 @@ a.contact-handle {
 
 a.contact-handle:hover,
 .contact-line a:hover {
-    color: var(--ink);
+    color: var(--accent);
 }
 
 /* ---------- Home layout ---------- */
@@ -547,7 +535,7 @@ a.contact-handle:hover,
     font-size: 0.5rem;
     line-height: 1.5rem;
     color: var(--ink);
-    background-color: rgba(var(--bg-rgb), 0.75);
+    background-color: color-mix(in srgb, var(--bg) 75%, transparent);
 }
 
 .photo-caption:empty {

@@ -1,7 +1,9 @@
 """Put RenderCV's own HTML on the site, from its first section down.
 
 Run after `rendercv render cv.yaml` (RenderCV 2.8). Reads the HTML RenderCV
-generated and writes _includes/rendercv.html, which index.html includes.
+generated and writes _includes/rendercv.html, which index.html includes. The
+Site workflow (.github/workflows/site.yml) runs both on every build; the file
+is not committed, so run them yourself before building the site locally.
 
 Two changes are made to RenderCV's output, and nothing else:
 - RenderCV's header (the name heading and the contact list before the first

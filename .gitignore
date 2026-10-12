@@ -17,3 +17,6 @@ node_modules/
 # Build artifacts
 dist/
 build/
+
+# Made at build time by RenderCV (scripts/rendercv-include.py)
+_includes/rendercv.html
