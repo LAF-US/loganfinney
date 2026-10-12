@@ -23,14 +23,8 @@ redirect_from:
             </div>
 
             <div class="hero-content">
-                <h1>{{ site.data.cv.cv.headline }}</h1>
+                <h1><span class="h1-a">Documentary</span> <span class="h1-b">Journalist</span></h1>
                 {% include contact.html %}
-                {%- comment -%} Profile links from custom_connections in cv.yaml, in file order {%- endcomment %}
-                <p class="connections">
-                {%- for c in site.data.cv.cv.custom_connections %}
-                    <a rel="noopener noreferrer" href="{{ c.url }}">{{ c.placeholder }}</a>{% unless forloop.last %}&nbsp;·{% endunless %}
-                {%- endfor %}
-                </p>
             </div>
         </section>
 

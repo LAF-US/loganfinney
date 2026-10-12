@@ -1,16 +1,10 @@
-"""Put RenderCV's own HTML on the site, from its first section down.
+"""Put RenderCV's own HTML on the site, whole and unchanged.
 
 Run after `rendercv render cv.yaml` (RenderCV 2.8). Reads the HTML RenderCV
-generated and writes _includes/rendercv.html, which index.html includes. The
-Site workflow (.github/workflows/site.yml) runs both on every build; the file
-is not committed, so run them yourself before building the site locally.
-
-Two changes are made to RenderCV's output, and nothing else:
-- RenderCV's header (the name heading and the contact list before the first
-  section) is dropped, because the site has its own name, headline and
-  contact lines.
-- Every heading moves down one level (h1 to h2, h2 to h3), because the page's
-  one h1 is the headline.
+generated and writes everything inside its <article class="markdown-body">
+to _includes/rendercv.html, which index.html includes. The Site workflow
+(.github/workflows/site.yml) runs both on every build; the file is not
+committed, so run them yourself before building the site locally.
 
 Usage: python3 scripts/rendercv-include.py rendercv_output/Logan_Finney_CV.html
 """
@@ -26,16 +20,6 @@ article = re.search(r'<article class="markdown-body">(.*?)</article>', source, r
 if not article:
     sys.exit("No <article class=\"markdown-body\"> in RenderCV's HTML")
 body = article.group(1)
-
-# The first h1 is the name; the second starts the first section
-headings = [m.start() for m in re.finditer(r"<h1>", body)]
-if len(headings) < 2:
-    sys.exit("No sections in RenderCV's HTML")
-body = body[headings[1]:]
-
-# Down one level, deepest first so a heading only moves once
-for level in range(5, 0, -1):
-    body = re.sub(rf"<(/?)h{level}>", rf"<\1h{level + 1}>", body)
 
 target = Path(__file__).resolve().parent.parent / "_includes" / "rendercv.html"
 target.write_text(

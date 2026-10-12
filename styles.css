@@ -131,7 +131,7 @@ body {
 .logo,
 .contact-line,
 .connections,
-.rendercv h3,
+.rendercv h2,
 .rendercv p,
 .footer-content p {
     position: relative;
@@ -256,20 +256,42 @@ body {
     /* Text starts on the first grid row below the photo */
     padding: calc(100vw * 2 / 3) 0 0;
     padding: round(up, 100vw * 2 / 3, 1rlh) 0 0;
+    /* The headline on the left, the contacts on the right; on a narrow
+       screen the contacts go under the headline */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rlh;
 }
 
+/* The headline: DOCUMENTARY one line high, JOURNALIST two lines high, each
+   sized so the two words are the same width */
 .hero h1 {
     font-family: var(--font-body);
     font-size: 1.75rem;
     font-weight: 700;
     letter-spacing: -0.03em;
     text-transform: uppercase;
-    max-width: 16ch;
-    /* Each line fills two squares; one square above, one square to the rule, one square after it */
+    /* Level with the contacts, below their rule */
+    padding-top: 1rlh;
+}
+
+.hero h1 span {
+    display: block;
+}
+
+.hero h1 .h1-a {
+    line-height: 1.5rem;
+    position: relative;
+    top: 0.125rem;
+}
+
+.hero h1 .h1-b {
+    font-size: 2.186rem;
     line-height: 3rem;
-    margin: 1rlh 0;
-    padding-bottom: 1rlh;
-    box-shadow: 0 1px 0 var(--ink);
+    position: relative;
+    top: 0.0625rem;
 }
 
 /* ---------- Page scaffolding ---------- */
@@ -293,13 +315,14 @@ body {
 
 /* ---------- CV (RenderCV) ---------- */
 
-/* Everything from Summary down is RenderCV's own HTML (_includes/rendercv.html):
-   h2 for each section, h3 for each entry, then paragraphs and bulleted or
-   numbered lists. Every line is one square tall, so it all sits on the grid */
+/* Everything between the photo and the footer is RenderCV's own HTML
+   (_includes/rendercv.html), unchanged: h1 for the name and each section, h2
+   for each entry, then paragraphs and bulleted or numbered lists. Every line
+   is one square tall, so it all sits on the grid */
 
-/* Sections: large capitals under a full-width rule, like the section heads.
-   At this size the centering nudge is under a pixel, so it is left out */
-.rendercv h2 {
+/* Sections: large capitals under a full-width rule. At this size the
+   centering nudge is under a pixel, so it is left out */
+.rendercv h1 {
     font-family: var(--font-body);
     font-size: 2.5rem;
     line-height: 3rem;
@@ -313,18 +336,18 @@ body {
     overflow-wrap: break-word;
 }
 
-.rendercv h2:first-child {
+.rendercv h1:first-child {
     margin-top: 0;
 }
 
 /* Entries: one blank square above each, body size; RenderCV bolds the name */
-.rendercv h3 {
+.rendercv h2 {
     font-size: 1rem;
     font-weight: 400;
     margin-top: 1rlh;
 }
 
-.rendercv h2 + h3 {
+.rendercv h1 + h2 {
     margin-top: 0;
 }
 
@@ -478,9 +501,14 @@ a.contact-handle:hover,
     height: 1rlh;
 }
 
-/* One contact per line under the headline */
+/* One contact per line, left-aligned, in a box on the right side of the
+   page, beside the headline, under a rule as wide as the box */
 .hero-contact {
     flex-direction: column;
+    /* Stays at the right side when it goes under the headline */
+    margin-left: auto;
+    padding-top: 1rlh;
+    box-shadow: inset 0 1px 0 var(--ink);
 }
 
 /* Profile links: one run of names separated by middle dots, a square below the contacts */
