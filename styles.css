@@ -130,15 +130,8 @@ body {
     --cap: 0.729;
 }
 
-.page-intro,
-.timeline-entry blockquote {
-    --ad: 0.293;           /* Gelasio */
-    --cap: 0.693;
-}
-
 .contact-line,
 .connections,
-.entry-dates,
 .footer-content{
     --ad: 0.266;           /* Cousine */
     --cap: 0.659;
@@ -147,13 +140,8 @@ body {
 .logo,
 .contact-line,
 .connections,
-.page-intro,
-.timeline-entry h3,
-.timeline-entry h4,
-.timeline-entry p,
-.timeline-entry .placings li,
-.timeline-entry blockquote,
-.entry-dates,
+.rendercv h3,
+.rendercv p,
 .footer-content p {
     position: relative;
     top: calc((var(--cap) / 2 - var(--ad)) * 1em);
@@ -299,54 +287,6 @@ body {
     padding: 2rlh 0 0;
 }
 
-.page-title {
-    font-family: var(--font-body);
-    font-size: 3.75rem;
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    --lh: 4.5rem;
-    line-height: var(--lh);
-    text-transform: uppercase;
-    margin-bottom: 1rlh;
-    /* At this size the centering nudge is about 1px, so it is left out and the
-       padding stays a whole square, keeping the rule on the grid */
-    padding-top: 1rlh;
-    box-shadow: 0 1px 0 var(--ink);
-}
-
-.page-intro {
-    font-family: var(--font-display);
-    font-size: 1rem;
-    color: var(--ink-soft);
-    max-width: 62ch;
-}
-
-/* Section heads: large capitals under a full-width rule */
-.section-title {
-    font-family: var(--font-body);
-    --fs: 2.5rem;
-    font-size: var(--fs);
-    --lh: 3rem;
-    line-height: var(--lh);
-    padding-top: 1rlh;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    text-transform: uppercase;
-    margin: 2rlh 0 0;
-    box-shadow: inset 0 1px 0 var(--ink);
-    /* A word too long for the column breaks (with a hyphen where the browser
-       can) instead of running off the page */
-    hyphens: auto;
-    overflow-wrap: break-word;
-}
-
-/* The words sit centered in their squares; a title that wraps on a
-   column too narrow for it takes another whole row instead of overlapping what follows */
-.section-title > span {
-    position: relative;
-    top: calc((var(--cap) / 2 - var(--ad)) * var(--fs));
-}
-
 .page a,
 .connections a {
     color: var(--accent);
@@ -360,90 +300,52 @@ body {
     color: var(--ink);
 }
 
-/* ---------- Resume ledger ---------- */
+/* ---------- CV (RenderCV) ---------- */
 
-/* Dates run down a mono column on the left, entries on the right */
-.timeline {
-    box-shadow: inset 0 1px 0 var(--line);
-}
+/* Everything from Summary down is RenderCV's own HTML (_includes/rendercv.html):
+   h2 for each section, h3 for each entry, then paragraphs and bulleted or
+   numbered lists. Every line is one square tall, so it all sits on the grid */
 
-.timeline-entry {
-    padding: 1rlh 0;
-    box-shadow: 0 1px 0 var(--line);
-}
-
-/* Each row: dates on the left, the entry beside them; the entry drops below
-   the dates when there isn't room for both. An organization heads its rows */
-.timeline-entry .entry-row {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    column-gap: 1rlh;
-}
-
-.timeline-entry .entry-row + .entry-row:not(.entry-head + .entry-row) {
-    margin-top: 1rlh;
-}
-
-.timeline-entry .entry-body {
-    flex: 1 1 30ch;
-    min-width: 0;
-}
-
-.timeline-entry .entry-dates {
-    flex: 0 0 9rlh;
-    font-family: var(--font-mono);
-    font-size: 0.875rem;
-    font-weight: 700;
-    color: var(--ink-soft);
-}
-
-.timeline-entry h3 {
+/* Sections: large capitals under a full-width rule, like the section heads.
+   At this size the centering nudge is under a pixel, so it is left out */
+.rendercv h2 {
     font-family: var(--font-body);
-    font-size: 1.25rem;
-    text-transform: uppercase;
+    font-size: 2.5rem;
+    line-height: 3rem;
+    padding-top: 1rlh;
     font-weight: 700;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    margin: 2rlh 0 1rlh;
+    box-shadow: inset 0 1px 0 var(--ink);
+    hyphens: auto;
+    overflow-wrap: break-word;
 }
 
-.timeline-entry p {
-    color: var(--ink-soft);
-    max-width: 68ch;
+.rendercv h2:first-child {
+    margin-top: 0;
 }
 
-/* One blank grid line between paragraphs */
-.timeline-entry p + p {
-    margin-top: 1rlh;
-}
-
-/* Award placings: one line each, no gaps, no bullets */
-.timeline-entry .placings {
-    list-style: none;
-    color: var(--ink-soft);
-    max-width: 68ch;
-}
-
-/* A title under an entry heading (a role, an award, a degree, a work):
-   body size in full ink, like the entry heading but not set in capitals */
-.timeline-entry .role {
+/* Entries: one blank square above each, body size; RenderCV bolds the name */
+.rendercv h3 {
     font-size: 1rem;
-    text-transform: none;
-    color: var(--ink);
-    max-width: 68ch;
-}
-
-/* A paragraph after a list gets the same blank grid line */
-.timeline-entry .placings + p {
+    font-weight: 400;
     margin-top: 1rlh;
 }
 
-.timeline-entry blockquote {
-    margin: 1rlh 0;
-    padding-left: 1rlh;
-    box-shadow: inset 1px 0 0 var(--ink);
+.rendercv h2 + h3 {
+    margin-top: 0;
+}
+
+.rendercv p,
+.rendercv li {
     color: var(--ink-soft);
-    font-family: var(--font-display);
-    font-style: italic;
-    max-width: 64ch;
+    max-width: 68ch;
+}
+
+.rendercv ul,
+.rendercv ol {
+    padding-left: 1rlh;
 }
 
 /* ---------- Footer ---------- */

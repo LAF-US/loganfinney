@@ -1,563 +1,369 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/rendercv/rendercv/refs/tags/v2.8/schema.json
 cv:
   name: Logan Finney
-  headline: Documentary Journalist
-  email: loganfinney@proton.me
-  website: https://loganfinney.com
+  headline:
+  location: San Francisco, CA
+  email: john.doe@email.com
+  photo:
+  phone:
+  website: https://rendercv.com/
+  social_networks:
+    - network: LinkedIn
+      username: rendercv
+    - network: GitHub
+      username: rendercv
   custom_connections:
-    - placeholder: Facebook
-      url: https://www.facebook.com/lfinneynews/
-      fontawesome_icon: facebook
-    - placeholder: Instagram
-      url: https://www.instagram.com/loganfinney27/
-      fontawesome_icon: instagram
-    - placeholder: Threads
-      url: https://www.threads.net/@loganfinney27
-      fontawesome_icon: threads
-    - placeholder: Bluesky
-      url: https://bsky.app/profile/loganfinney.com
-      fontawesome_icon: bluesky
-    - placeholder: X
-      url: https://x.com/lfinneytweets
-      fontawesome_icon: x-twitter
-    - placeholder: Mastodon
-      url: https://syringa.social/@Logan
-      fontawesome_icon: mastodon
-    - placeholder: LinkedIn
-      url: https://www.linkedin.com/in/loganfinney/
-      fontawesome_icon: linkedin
-    - placeholder: Twitch
-      url: https://www.twitch.tv/loganfinney
-      fontawesome_icon: twitch
-    - placeholder: TikTok
-      url: https://www.tiktok.com/@finneylogan
-      fontawesome_icon: tiktok
-    - placeholder: Vimeo
-      url: https://vimeo.com/loganfinney
-      fontawesome_icon: vimeo
-    - placeholder: YouTube
-      url: https://www.youtube.com/@LoganFinney
-      fontawesome_icon: youtube
-    - placeholder: Flickr
-      url: https://www.flickr.com/photos/loganfinney
-      fontawesome_icon: flickr
-    - placeholder: SoundCloud
-      url: https://soundcloud.com/loganfinney
-      fontawesome_icon: soundcloud
-    - placeholder: Spotify
-      url: https://open.spotify.com/user/loganfinney27
-      fontawesome_icon: spotify
-    - placeholder: IMDb
-      url: https://www.imdb.com/name/nm13184582/
-      fontawesome_icon: imdb
-    - placeholder: Muck Rack
-      url: https://muckrack.com/loganfinney
-      fontawesome_icon: link
-    - placeholder: Authory
-      url: https://authory.com/LoganFinney
-      fontawesome_icon: link
-    - placeholder: Linktree
-      url: https://linktr.ee/loganfinney
-      fontawesome_icon: link
-    - placeholder: Letterboxd
-      url: https://letterboxd.com/loganfinney
-      fontawesome_icon: letterboxd
-    - placeholder: Goodreads
-      url: https://www.goodreads.com/loganfinney
-      fontawesome_icon: goodreads
-    - placeholder: GitHub
-      url: https://github.com/loganfinney27
-      fontawesome_icon: github
-    - placeholder: PayPal
-      url: https://www.paypal.com/paypalme/LoganFinney
-      fontawesome_icon: paypal
-    - placeholder: Cash App
-      url: https://cash.app/$loganfinney27
-      fontawesome_icon: link
-    - placeholder: Venmo
-      url: https://account.venmo.com/u/loganfinney27
-      fontawesome_icon: link
-    - placeholder: Ko-fi
-      url: https://ko-fi.com/loganfinney
-      fontawesome_icon: link
-    - placeholder: Buy Me a Coffee
-      url: https://buymeacoffee.com/loganfinney
-      fontawesome_icon: link
-    - placeholder: Patreon
-      url: https://www.patreon.com/loganfinney
-      fontawesome_icon: patreon
-    - placeholder: Stripe
-      url: https://profile.stripe.com/@loganfinney
-      fontawesome_icon: stripe
   sections:
-    Summary:
-      - Logan Finney is an award-winning reporter who covers politics, elections, and government. He grew up hunting, hiking, and skiing in the Idaho Panhandle and remains forever fascinated by the people, history, and culture of his home state.
-    Experience:
-      - company: '[FāVS News](https://favs.news/)'
-        position: reporter
-        start_date: 2026-01
+    Welcome to RenderCV:
+      - RenderCV reads a CV written in a YAML file, and generates a PDF with professional typography.
+      - Each section title is arbitrary.
+      - You can choose any of the 9 entry types for each section.
+      - Markdown syntax is supported everywhere. This is **bold**, *italic*, and [link](https://example.com).
+    education:
+      - institution: Princeton University
+        area: Computer Science
+        degree: PhD
+        date:
+        start_date: 2018-09
+        end_date: 2023-05
+        location: Princeton, NJ
+        summary:
+        highlights:
+          - 'Thesis: Efficient Neural Architecture Search for Resource-Constrained Deployment'
+          - 'Advisor: Prof. Sanjeev Arora'
+          - NSF Graduate Research Fellowship, Siebel Scholar (Class of 2022)
+      - institution: Boğaziçi University
+        area: Computer Engineering
+        degree: BS
+        date:
+        start_date: 2014-09
+        end_date: 2018-06
+        location: Istanbul, Türkiye
+        summary:
+        highlights:
+          - 'GPA: 3.97/4.00, Valedictorian'
+          - Fulbright Scholarship recipient for Graduate Studies
+    experience:
+      - company: Nexus AI
+        position: Co-Founder & CTO
+        date:
+        start_date: 2023-06
         end_date: present
+        location: San Francisco, CA
+        summary:
         highlights:
-          - religion and ethics in Idaho
-          - republished by the *Idaho Capital Sun* and *Big Country News Connection*
-      - company: '[Idaho Public Television](https://www.idahoptv.org/)'
-        position: producer/writer
-        start_date: 2025-11
-        end_date: 2026-09
+          - Built foundation model infrastructure serving 2M+ monthly API requests with 99.97% uptime
+          - Raised $18M Series A led by Sequoia Capital, with participation from a16z and Founders Fund
+          - Scaled engineering team from 3 to 28 across ML research, platform, and applied AI divisions
+          - Developed proprietary inference optimization reducing latency by 73% compared to baseline
+      - company: NVIDIA Research
+        position: Research Intern
+        date:
+        start_date: 2022-05
+        end_date: 2022-08
+        location: Santa Clara, CA
+        summary:
         highlights:
-          - '*Idaho Reports* · producer and reporter'
-          - '*Idaho Experience* · associate producer and videographer'
-      - company: '[Idaho Public Television](https://www.idahoptv.org/)'
-        position: associate producer
+          - Designed sparse attention mechanism reducing transformer memory footprint by 4.2x
+          - Co-authored paper accepted at NeurIPS 2022 (spotlight presentation, top 5% of submissions)
+      - company: Google DeepMind
+        position: Research Intern
+        date:
         start_date: 2021-05
-        end_date: 2025-11
+        end_date: 2021-08
+        location: London, UK
+        summary:
         highlights:
-          - '*Idaho Reports* · reporter, producer, and fill-in host'
-          - '*Idaho Reports* · [blog](https://blog.idahoreports.idahoptv.org/), [podcast](https://pod.link/IdahoReports), and social media manager'
-          - '*Dialogue* · associate producer · 2021–2024'
-          - '*Science Trek: The Podcast* · producer and editor · 2023–2024'
-          - '*FYIdaho* · producer, director, editor, and host · 2022'
-          - '*createid* and *Outdoor Idaho* · digital producer · 2022–2024'
-      - company: Project FARE
-        position: freelance reporter and photographer
-        date: 2022-07
+          - Developed reinforcement learning algorithms for multi-agent coordination
+          - Published research at top-tier venues with significant academic impact
+            - ICML 2022 main conference paper, cited 340+ times within two years
+            - NeurIPS 2022 workshop paper on emergent communication protocols
+            - Invited journal extension in JMLR (2023)
+      - company: Apple ML Research
+        position: Research Intern
+        date:
+        start_date: 2020-05
+        end_date: 2020-08
+        location: Cupertino, CA
+        summary:
         highlights:
-          - '[Idaho water and agriculture](https://web.archive.org/web/20230816194454/https://www.projectfare.org/farmstories/snow-rain-patterns-water-agriculture) · story and photos'
-      - company: '[Idaho Public Television](https://www.idahoptv.org/)'
-        position: production assistant
-        start_date: 2020-03
-        end_date: 2021-05
+          - Created on-device neural network compression pipeline deployed across 50M+ devices
+          - Filed 2 patents on efficient model quantization techniques for edge inference
+      - company: Microsoft Research
+        position: Research Intern
+        date:
+        start_date: 2019-05
+        end_date: 2019-08
+        location: Redmond, WA
+        summary:
         highlights:
-          - '*Idaho Reports* COVID-19 updates · writer, voice, and editor · [watch](https://www.youtube.com/playlist?list=PLvDo4LDXnoaBgrKIrniQ-O7Rw5kOx0KVr), [listen](https://soundcloud.com/idaho-reports/sets/coronavirus-updates)'
-          - '*Idaho Reports* [podcast](https://pod.link/IdahoReports) · founder · under 300 plays a year to 44,000 in 2021'
-      - company: '[*The Owyhee Avalanche*](https://www.owyheeavalanche.com/)'
-        position: freelance reporter
-        date: 2020-07
+          - Implemented novel self-supervised learning framework for low-resource language modeling
+          - Research integrated into Azure Cognitive Services, reducing training data requirements by 60%
+    projects:
+      - name: '[FlashInfer](https://github.com/)'
+        date:
+        start_date: 2023-01
+        end_date: present
+        location:
+        summary: Open-source library for high-performance LLM inference kernels
         highlights:
-          - COVID-19 school reopening plans
-      - company: '[McClure Center for Public Policy Research](https://www.uidaho.edu/mcclure-center)'
-        position: legislative reporter
-        start_date: '2020-01-15'
-        end_date: '2020-05-15'
-        highlights:
-          - Idaho Public Radio State Capitol Bureau · [stories](https://idahopublicradio.wordpress.com/?s=logan%20finney), [video](https://www.youtube.com/watch?v=bfBn5fl0GL4)
-          - printed in the *Bonner County Daily Bee*, *Coeur d’Alene Press*, *Idaho County Free Press*, *Owyhee Avalanche*, *Power County Press*, and *Aberdeen Times*
-      - company: '[Idaho Public Television](https://www.idahoptv.org/)'
-        position: student intern
-        start_date: 2020-01
-        end_date: 2020-03
-        highlights:
-          - '*Idaho Reports* · 2020 legislative session'
-      - company: '[*The Argonaut*](https://www.uiargonaut.com/)'
-        position: staff member
-        start_date: 2018-01
-        end_date: 2020-03
-        highlights:
-          - copy editor and videographer · [archive](https://www.uiargonaut.com/author/lfinney/)
-      - company: '[*Blot*](https://www.blotmagazine.com/)'
-        position: staff member
-        start_date: 2018-01
-        end_date: 2020-01
-        highlights:
-          - videographer · [videos](https://www.youtube.com/playlist?list=PLaXjVGiQcSQW0wc2e6YUeLZsxsmPMopas)
-      - company: '[*The Cedar Post*](https://shscedarpost.com/)'
-        position: multimedia editor
-        start_date: '2015'
-        end_date: '2016'
-        highlights:
-          - daily video announcements and video team · [archive](https://shscedarpost.com/staff_name/logan-finney/)
-    Education:
-      - institution: '[Poynter Institute and Corporation for Public Broadcasting](https://www.poynter.org/)'
-        area: Digital Transformation Program
-        date: '2022'
-      - institution: '[University of Idaho](https://www.uidaho.edu/)'
-        area: Broadcasting & Digital Media, School of Journalism and Mass Media
-        degree: B.S.
-        start_date: '2016'
-        end_date: '2020'
-        highlights:
-          - University Honors Program member
-          - Dean’s List · fall 2016, spring 2017, fall 2017, spring 2018, fall 2018, spring 2019
-      - institution: Sandpoint High School
-        area: Idaho High School Diploma
-        start_date: '2012'
-        end_date: '2016'
-    Honors and Awards:
-      - name: 2026 Mid-Career Scholarship
-        date: 2026-05
-        summary: Idaho Press Club
-        highlights:
-          - NLGJA 2026 National Convention
-      - name: Best of 2025 Awards
-        date: 2026-05
-        summary: Idaho Press Club
-        highlights:
-          - 1st · Government / Political – TV · *Idaho Reports* “[An Adult-Only Library Sues the State](https://www.youtube.com/watch?v=xLigP6pHj2U)”
-          - 2nd · Best Blog · *[Idaho Reports](https://blog.idahoreports.idahoptv.org/)*
-          - 3rd · Public Affairs Program – TV – Studio · *Idaho Reports* “[The Attorney General’s Take . . .](https://video.idahoptv.org/video/the-attorney-generals-take-may-9-2025-b0dufu/)”
-          - 3rd · Political Report – Weekly · *Idaho Reports* “[Idaho Grant Recipients Scrambling for Clarity after Federal Freeze](https://blog.idahoreports.idahoptv.org/2025/01/28/idaho-grant-recipients-scrambling-for-clarity-after-federal-freeze/)”
-      - name: Scholarships+
-        date: 2026-04
-        summary: OpenNews
-        highlights:
-          - NLGJA 2026 National Convention
-      - name: 59th WorldFest Awards
-        date: '2026'
-        summary: WorldFest-Houston International Film Festival
-        highlights:
-          - Bronze · Talk Shows · *Dialogue* “[Author Margaret Atwood](https://video.idahoptv.org/video/author-margaret-atwood-m9nw4m/)”
-      - name: 58th WorldFest Awards
-        date: 2025-06
-        summary: WorldFest-Houston International Film Festival
-        highlights:
-          - Gold · Talk Show · *Dialogue* “[Author David Grann](https://video.idahoptv.org/video/author-david-grann-xx8ajp/)”
-          - 'Silver · New Media – Video Podcast · *Science Trek: The Podcast* “[Rabbits](https://www.youtube.com/watch?v=yS8te-9vyvI)”'
-      - name: 46th Annual Telly Awards
-        date: 2025-05
-        summary: Telly Awards
-        highlights:
-          - Silver · General – Interview & Talk Show · *Dialogue* “[Author David Grann](https://video.idahoptv.org/video/author-david-grann-xx8ajp/)”
-          - 'Bronze · General – Video Podcast · *Science Trek: The Podcast* “[Rabbits](https://www.youtube.com/watch?v=yS8te-9vyvI)”'
-      - name: Best of 2024 Awards
-        date: 2025-05
-        summary: Idaho Press Club
-        highlights:
-          - 1st · Public Affairs Program – TV – Studio · *Dialogue* “[Author Margaret Atwood](https://video.idahoptv.org/video/author-margaret-atwood-m9nw4m/)”
-          - 1st · Best Blog · *[Idaho Reports](https://blog.idahoreports.idahoptv.org/)*
-          - '2nd · Best Audience Engagement · *[Science Trek: The Podcast](https://sciencetrek.libsyn.com/)*'
-          - '3rd · Public Affairs Program – TV – Studio · *Idaho Reports* “[Idaho Reports Special: Proposition One . . .](https://video.idahoptv.org/video/idaho-reports-special-proposition-one-october-25-2024-zgyvzz/)”'
-      - name: Northwest Regional Emmy® Awards 2025 Nominations
-        date: 2025-04
-        summary: Northwest Chapter of the National Academy of Television Arts and Sciences
-        highlights:
-          - 'Children/Youth/Teens · *Science Trek: The Podcast* “[The Earth](https://www.youtube.com/watch?v=_znfRwMchEI)”'
-          - Interview/Discussion · *Dialogue* “[Journalist Clarissa Ward](https://video.idahoptv.org/video/journalist-clarissa-ward-f6z8zw/)”
-      - name: Elevation Award
-        date: 2024-10
-        summary: Mountain States Policy Center
-        highlights:
-          - '*[Idaho Reports](https://www.idahoptv.org/shows/idahoreports/)*'
-      - name: 45th Annual Telly Awards
-        date: 2024-05
-        summary: Telly Awards
-        highlights:
-          - 'Bronze · General – Political & Commentary · *Idaho Reports* “[Idaho Reports Special: Remembering Phil Batt](https://video.idahoptv.org/video/idaho-reports-remembering-phil-batt-epokxz/)”'
-      - name: Best of 2023 Awards
-        date: 2024-05
-        summary: Idaho Press Club
-        highlights:
-          - 1st · Public Affairs Program – TV – Studio · *Dialogue* “[Journalist Andrea Elliott](https://video.idahoptv.org/video/journalist-andrea-elliott-omtkqe/)”
-          - 1st · Best Blog · *[Idaho Reports](https://blog.idahoreports.idahoptv.org/)*
-          - '2nd · Best Audience Engagement · *[Science Trek: The Podcast](https://sciencetrek.libsyn.com/)*'
-          - '3rd · Public Affairs Program – TV – Studio · *Idaho Reports* “[Idaho Reports Special: Remembering Phil Batt](https://video.idahoptv.org/video/idaho-reports-remembering-phil-batt-epokxz/)”'
-      - name: 57th WorldFest Awards
-        date: 2024-04
-        summary: WorldFest-Houston International Film Festival
-        highlights:
-          - 'Gold · Public Affairs Programs · *Idaho Reports* “[Idaho Reports Special: Remembering Phil Batt](https://video.idahoptv.org/video/idaho-reports-remembering-phil-batt-epokxz/)”'
-          - Gold · Talk Shows · *Dialogue* “[Author Rebecca Donner](https://video.idahoptv.org/video/author-rebecca-donner-gcrptn/)”
-      - name: Northwest Regional Emmy® Awards 2023 Nominations
-        date: 2023-04
-        summary: Northwest Chapter of the National Academy of Television Arts and Sciences
-        highlights:
-          - Politics/Government – Short Form Content · *Idaho Reports* “[Cleaning Up the Legacy of Silver Valley Mining](https://www.youtube.com/watch?v=KKe5dXBFluA)”
-          - Politics/Government – Long Form Content · *Idaho Reports* “[One Bill, One Day, One Billion Dollars](https://video.idahoptv.org/video/one-bill-one-day-one-billion-dollars-sept-2nd-2022-8dkbau/)”
-          - Politics/Government – Long Form Content · *Idaho Reports* “[A Look Back on Our 50 Years of Political Reporting in Idaho](https://www.youtube.com/watch?v=Zccno2Ubdgw)”
-          - Interview/Discussion · *Dialogue* “[Author Rebecca Donner](https://video.idahoptv.org/video/author-rebecca-donner-gcrptn/)”
-      - name: 56th WorldFest Awards
-        date: 2023-04
-        summary: WorldFest-Houston International Film Festival
-        highlights:
-          - Platinum · Interviews · *Dialogue* “[Author Catherine Grace Katz](https://video.idahoptv.org/video/author-catherine-grace-katz-xyutqq/)”
-          - Silver · Historical Programming – Segment · *Idaho Reports* “[A Look Back on Our 50 Years of Political Reporting in Idaho](https://www.youtube.com/watch?v=Zccno2Ubdgw)”
-      - name: Best of 2022 Awards
-        date: 2023-04
-        summary: Idaho Press Club
-        highlights:
-          - 1st · Public Affairs Program – TV – Studio · *Dialogue* “[Author Rebecca Donner](https://video.idahoptv.org/video/author-rebecca-donner-gcrptn/)”
-          - 1st · Best Blog · *[Idaho Reports](https://blog.idahoreports.idahoptv.org/)*
-          - 1st · Interview – Audio · *Idaho Reports* “[Property Tax Problems](https://soundcloud.com/idaho-reports/episode-property-tax-problems)”
-          - 1st · Election Report – Weekly · *Idaho Reports* “[How Does Idaho Get Unofficial Election Results Out So Quickly?](https://blog.idahoreports.idahoptv.org/2022/11/16/how-does-idaho-get-unofficial-election-results-out-so-quickly/)”
-          - 2nd · Best Online-Only Video Program – Public Affairs · *Idaho Reports* “[Idaho Has Election Day, Not Election Week](https://www.youtube.com/watch?v=lbo7OYdyvuk)”
-          - 2nd · Political Report – Weekly · *Idaho Reports* “[Special Session Tax Bill Passed into Law](https://blog.idahoreports.idahoptv.org/2022/09/01/special-session-tax-bill-passed-into-law/)”
-          - 3rd · Public Affairs Program – TV – Studio · *Idaho Reports* “[One Bill, One Day, One Billion Dollars](https://video.idahoptv.org/video/one-bill-one-day-one-billion-dollars-sept-2nd-2022-8dkbau/)”
-          - 3rd · Best Online-Only Video Program – Public Affairs · *Idaho Reports* “[A Conversation with INL](https://video.idahoptv.org/video/a-conversation-with-inl-july-19th-2022-lhgmld/)”
-          - 3rd · Election Report – Audio · *Idaho Reports* “[Judges on the Ballot](https://soundcloud.com/idaho-reports/episode-judges-on-the-ballot)”
-          - 3rd · Election Report – Weekly · *Idaho Reports* “[Arguments Approved for and against Measure to Let Legislature Call Itself into Session](https://blog.idahoreports.idahoptv.org/2022/06/16/arguments-approved-for-and-against-measure-to-let-legislature-call-itself-into-session/)”
-          - 3rd · Political Report – Weekly · *Idaho Reports* “[Idaho Democrats Prepare for General Election and Beyond](https://blog.idahoreports.idahoptv.org/2022/06/23/idaho-democrats-prepare-for-general-election-and-beyond/)”
-          - 3rd · Best Use of Social Media · [*Outdoor Idaho* Facebook page](https://www.facebook.com/outdoor.idaho/)
-      - name: 2022 Best in Broadcasting Awards
-        date: 2022-08
-        summary: Idaho State Broadcasters Association
-        highlights:
-          - 3rd · Best Spot News Story · *Idaho Reports* “[Can We Do More with One Penny?](https://www.youtube.com/watch?v=WltDtVskh1Y)”
-      - name: Northwest Regional Emmy® Awards 2022 Nominations
-        date: 2022-04
-        summary: Northwest Chapter of the National Academy of Television Arts and Sciences
-        highlights:
-          - Interview/Discussion · *Dialogue* “[Author Catherine Grace Katz](https://video.idahoptv.org/video/author-catherine-grace-katz-xyutqq/)”
-      - name: 55th WorldFest Awards
-        date: 2022-04
-        summary: WorldFest-Houston International Film Festival
-        highlights:
-          - Bronze · Interview/Discussion · *Idaho Reports* “[A Conversation with Governor Little](https://video.idahoptv.org/video/a-conversation-with-governor-little-june-4-2021-1mwslk/)”
-      - name: Best of 2021 Awards
-        date: 2022-04
-        summary: Idaho Press Club
-        highlights:
-          - 2nd · Public Affairs Program – TV – Studio · *Dialogue* “[Public Historian Tom Ikeda](https://video.idahoptv.org/video/public-historian-tom-ikeda-dkok8l/)”
-          - 3rd · Political Report – Weekly Print · *Idaho Reports* “[Senate Moving Methodically on COVID Legislation](https://blog.idahoreports.idahoptv.org/2021/11/16/senate-moving-methodically-on-covid-legislation/)”
-      - name: Best of 2020 Awards
-        date: 2021-04
-        summary: Idaho Press Club
-        highlights:
-          - 2nd · Election Report – TV · *Idaho Reports* “[Applying Lessons Learned](https://video.idahoptv.org/video/applying-lessons-learned-15lczq/)”
-          - 3rd · Public Affairs Program – TV – Studio · *Idaho Reports* “[The 2020 Extra Special Tumultuous Session](https://video.idahoptv.org/video/the-2020-extra-special-tumultuous-session-m57job/)”
-      - name: 42nd Annual Telly Awards
+          - Achieved 2.8x speedup over baseline attention implementations on A100 GPUs
+          - Adopted by 3 major AI labs, 8,500+ GitHub stars, 200+ contributors
+      - name: '[NeuralPrune](https://github.com/)'
         date: '2021'
-        summary: Telly Awards
+        start_date:
+        end_date:
+        location:
+        summary: Automated neural network pruning toolkit with differentiable masks
         highlights:
-          - Bronze · General – Political/Commentary · *Idaho Reports* “[The 2020 Extra Special Tumultuous Session](https://video.idahoptv.org/video/the-2020-extra-special-tumultuous-session-m57job/)”
-      - name: 54th WorldFest Awards
-        date: '2021'
-        summary: WorldFest-Houston International Film Festival
-        highlights:
-          - Bronze · Government Relations · *Idaho Reports* “[The 2020 Extra Special Tumultuous Session](https://video.idahoptv.org/video/the-2020-extra-special-tumultuous-session-m57job/)”
-      - name: Audience Choice Award
-        date: '2019-05-03'
-        summary: KINO Short Film Festival
-        highlights:
-          - 2nd · student · *[Personal Day](https://www.youtube.com/watch?v=zFi0sYGJ22U)*
-    Publications:
-      - title: Idaho Grant Recipients Scrambling for Clarity after Federal Freeze
+          - Reduced model size by 90% with less than 1% accuracy degradation on ImageNet
+          - Featured in PyTorch ecosystem tools, 4,200+ GitHub stars
+    publications:
+      - title: 'Sparse Mixture-of-Experts at Scale: Efficient Routing for Trillion-Parameter Models'
         authors:
-          - '**Logan Finney**'
-          - Melissa Davlin
-        journal: '*Idaho Reports*'
-        date: '2025-01-28'
-        url: https://blog.idahoreports.idahoptv.org/2025/01/28/idaho-grant-recipients-scrambling-for-clarity-after-federal-freeze/
-      - title: How Does Idaho Get Unofficial Election Results Out So Quickly?
+          - '*John Doe*'
+          - Sarah Williams
+          - David Park
+        summary:
+        doi: 10.1234/neurips.2023.1234
+        url:
+        journal: NeurIPS 2023
+        date: 2023-07
+      - title: Neural Architecture Search via Differentiable Pruning
         authors:
-          - '**Logan Finney**'
-        journal: '*Idaho Reports*'
-        date: '2022-11-16'
-        url: https://blog.idahoreports.idahoptv.org/2022/11/16/how-does-idaho-get-unofficial-election-results-out-so-quickly/
-      - title: Special Session Tax Bill Passed into Law
+          - James Liu
+          - '*John Doe*'
+        summary:
+        doi: 10.1234/neurips.2022.5678
+        url:
+        journal: NeurIPS 2022, Spotlight
+        date: 2022-12
+      - title: Multi-Agent Reinforcement Learning with Emergent Communication
         authors:
-          - '**Logan Finney**'
-        journal: '*Idaho Reports*'
-        date: '2022-09-01'
-        url: https://blog.idahoreports.idahoptv.org/2022/09/01/special-session-tax-bill-passed-into-law/
-      - title: Idaho water and agriculture
-        authors:
-          - '**Logan Finney**'
-        journal: Project FARE
+          - Maria Garcia
+          - '*John Doe*'
+          - Tom Anderson
+        summary:
+        doi: 10.1234/icml.2022.9012
+        url:
+        journal: ICML 2022
         date: 2022-07
-        url: https://web.archive.org/web/20230816194454/https://www.projectfare.org/farmstories/snow-rain-patterns-water-agriculture
-      - title: Idaho Democrats Prepare for General Election and Beyond
+      - title: On-Device Model Compression via Learned Quantization
         authors:
-          - '**Logan Finney**'
-        journal: '*Idaho Reports*'
-        date: '2022-06-23'
-        url: https://blog.idahoreports.idahoptv.org/2022/06/23/idaho-democrats-prepare-for-general-election-and-beyond/
-      - title: Arguments Approved for and against Measure to Let Legislature Call Itself into Session
-        authors:
-          - '**Logan Finney**'
-        journal: '*Idaho Reports*'
-        date: '2022-06-16'
-        url: https://blog.idahoreports.idahoptv.org/2022/06/16/arguments-approved-for-and-against-measure-to-let-legislature-call-itself-into-session/
-      - title: Senate Moving Methodically on COVID Legislation
-        authors:
-          - '**Logan Finney**'
-        journal: '*Idaho Reports*'
-        date: '2021-11-16'
-        url: https://blog.idahoreports.idahoptv.org/2021/11/16/senate-moving-methodically-on-covid-legislation/
-    Folio:
-      - name: '[*Idaho Reports*](https://www.idahoptv.org/shows/idahoreports/)'
-        start_date: 2020-01
-        end_date: 2026-09
-        summary: Idaho Public Television · show
-      - name: '[*Idaho Reports*](https://blog.idahoreports.idahoptv.org/)'
-        start_date: '2020-11-04'
-        end_date: '2026-02-19'
-        summary: '*Idaho Reports* · blog'
-      - name: '[“The Attorney General’s Take . . .”](https://video.idahoptv.org/video/the-attorney-generals-take-may-9-2025-b0dufu/)'
-        date: '2025-05-09'
-        summary: '*Idaho Reports* · episode'
-      - name: '[“An Adult-Only Library Sues the State”](https://www.youtube.com/watch?v=xLigP6pHj2U)'
-        date: '2025-02-28'
-        summary: '*Idaho Reports* · segment'
-      - name: '[“Journalist Clarissa Ward”](https://video.idahoptv.org/video/journalist-clarissa-ward-f6z8zw/)'
-        date: '2024-11-01'
-        summary: '*Dialogue* · episode'
-        highlights:
-          - associate producer
-      - name: '[“Author Margaret Atwood”](https://video.idahoptv.org/video/author-margaret-atwood-m9nw4m/)'
-        date: '2024-11-01'
-        summary: '*Dialogue* · episode'
-        highlights:
-          - associate producer
-      - name: '[“The Earth”](https://www.youtube.com/watch?v=_znfRwMchEI)'
-        date: '2024-11-01'
-        summary: '*Science Trek* · podcast episode'
-        highlights:
-          - editor
-      - name: '[“Idaho Reports Special: Proposition One . . .”](https://video.idahoptv.org/video/idaho-reports-special-proposition-one-october-25-2024-zgyvzz/)'
-        date: '2024-10-25'
-        summary: '*Idaho Reports* · episode'
-      - name: '[“Rabbits”](https://www.youtube.com/watch?v=yS8te-9vyvI)'
-        date: '2024-04-29'
-        summary: '*Science Trek* · podcast episode'
-        highlights:
-          - editor
-      - name: '[*Science Trek: The Podcast*](https://sciencetrek.libsyn.com/)'
-        start_date: '2023-08-29'
-        end_date: '2024'
-        summary: '*Science Trek* · podcast'
-      - name: '[*Outdoor Idaho* Facebook page](https://www.facebook.com/outdoor.idaho/)'
-        start_date: '2022'
-        end_date: '2024'
-        summary: '*Outdoor Idaho* · Facebook page'
-      - name: '[“Journalist Andrea Elliott”](https://video.idahoptv.org/video/journalist-andrea-elliott-omtkqe/)'
-        date: '2023-12-22'
-        summary: '*Dialogue* · episode'
-        highlights:
-          - associate producer
-      - name: '[“Author David Grann”](https://video.idahoptv.org/video/author-david-grann-xx8ajp/)'
-        date: '2023-12-15'
-        summary: '*Dialogue* · episode'
-        highlights:
-          - associate producer
-      - name: '[“Idaho Reports Special: Remembering Phil Batt”](https://video.idahoptv.org/video/idaho-reports-remembering-phil-batt-epokxz/)'
-        date: '2023-03-10'
-        summary: '*Idaho Reports* · special'
-        highlights:
-          - producer
-      - name: '[“Cleaning Up the Legacy of Silver Valley Mining”](https://www.youtube.com/watch?v=KKe5dXBFluA)'
-        date: '2022-12-02'
-        summary: '*Idaho Reports* · segment'
-        highlights:
-          - producer
-      - name: '[“Idaho Has Election Day, Not Election Week”](https://www.youtube.com/watch?v=lbo7OYdyvuk)'
-        date: '2022-11-16'
-        summary: '*Idaho Reports* · web video'
-      - name: '[“Author Rebecca Donner”](https://video.idahoptv.org/video/author-rebecca-donner-gcrptn/)'
-        date: '2022-11-04'
-        summary: '*Dialogue* · episode'
-        highlights:
-          - associate producer
-      - name: '[“Judges on the Ballot”](https://soundcloud.com/idaho-reports/episode-judges-on-the-ballot)'
-        date: '2022-10-26'
-        summary: '*Idaho Reports* · podcast episode'
-      - name: '[“One Bill, One Day, One Billion Dollars”](https://video.idahoptv.org/video/one-bill-one-day-one-billion-dollars-sept-2nd-2022-8dkbau/)'
-        date: '2022-09-02'
-        summary: '*Idaho Reports* · special'
-        highlights:
-          - producer
-      - name: '[“A Conversation with INL”](https://video.idahoptv.org/video/a-conversation-with-inl-july-19th-2022-lhgmld/)'
-        date: '2022-07-19'
-        summary: '*Idaho Reports* · special'
-      - name: '[“Property Tax Problems”](https://soundcloud.com/idaho-reports/episode-property-tax-problems)'
-        date: '2022-06-15'
-        summary: '*Idaho Reports* · podcast episode'
-      - name: '[“A Look Back on Our 50 Years of Political Reporting in Idaho”](https://www.youtube.com/watch?v=Zccno2Ubdgw)'
-        date: '2022-05-27'
-        summary: '*Idaho Reports* · segment'
-        highlights:
-          - associate producer
-      - name: '[“Author Catherine Grace Katz”](https://video.idahoptv.org/video/author-catherine-grace-katz-xyutqq/)'
-        date: '2021-12-17'
-        summary: '*Dialogue* · episode'
-        highlights:
-          - associate producer
-      - name: '[“Public Historian Tom Ikeda”](https://video.idahoptv.org/video/public-historian-tom-ikeda-dkok8l/)'
-        date: '2021-12-10'
-        summary: '*Dialogue* · episode'
-        highlights:
-          - associate producer
-      - name: '[“Can We Do More with One Penny?”](https://www.youtube.com/watch?v=WltDtVskh1Y)'
-        date: '2021-11-05'
-        summary: '*Idaho Reports* · segment'
-      - name: '[“A Conversation with Governor Little”](https://video.idahoptv.org/video/a-conversation-with-governor-little-june-4-2021-1mwslk/)'
-        date: '2021-06-04'
-        summary: '*Idaho Reports* · episode'
-      - name: '[“Applying Lessons Learned”](https://video.idahoptv.org/video/applying-lessons-learned-15lczq/)'
-        date: '2020-09-25'
-        summary: '*Idaho Reports* · episode'
-      - name: '[“The 2020 Extra Special Tumultuous Session”](https://video.idahoptv.org/video/the-2020-extra-special-tumultuous-session-m57job/)'
-        date: '2020-08-28'
-        summary: '*Idaho Reports* · episode'
-      - name: '[*Personal Day*](https://www.youtube.com/watch?v=zFi0sYGJ22U)'
-        date: '2019-05-03'
-        summary: short film
-        highlights:
-          - art director, casting director, cinematographer, director, editor, locations, producer, production manager, script, set decorator, audio, writer
-    Media Appearances:
-      - name: '*Idaho Matters* · [Reporter Roundtable](https://www.boisestatepublicradio.org/show/idaho-matters/2026-04-03/reporter-roundtable-idaho-legislature-hunting)'
-        start_date: 2023-04
-        end_date: 2026-04
-        summary: Boise State Public Radio · panelist
-      - name: '[Candidates for Idaho Superintendent of Public Instruction debate live on KTVB](https://www.youtube.com/watch?v=vr8nKjKmd8E)'
-        date: '2022-10-25'
-        summary: KTVB · debate panelist
-      - name: '[Republican candidates for Idaho superintendent](https://www.youtube.com/watch?v=ThwjlA3APdQ)'
-        date: '2022-04-26'
-        summary: KTVB · debate panelist
-      - name: '[*Viewpoint*](https://www.ktvb.com/article/news/local/viewpoint/viewpoint-breaking-down-idaho-superintendent-of-public-instruction-debate-critchfield-durst-ybarra/277-8ed457e0-2575-4f97-bd8f-6826577735ee)'
-        date: 2022-04
-        summary: KTVB · debate analyst
-    Professional Memberships:
-      - name: Documentary Producers Alliance
-        start_date: '2025'
-        end_date: present
-      - name: '[Archival Producers Alliance](https://www.archivalproducersalliance.com/)'
-        start_date: '2025'
-        end_date: present
-      - name: '[NLGJA: The Association of LGBTQ+ Journalists](https://www.nlgja.org/)'
-        start_date: 2022-12
-        end_date: present
-      - name: '[Northwest Chapter of the National Academy of Television Arts and Sciences](https://natasnw.org/)'
-        start_date: '2022'
-        end_date: present
-      - name: '[Investigative Reporters & Editors](https://www.ire.org/)'
-        start_date: '2021'
-        end_date: present
-      - name: '[Idaho Press Club](https://idahopressclub.org/)'
-        start_date: '2020'
-        end_date: present
-      - name: '[Capitol Correspondents Association](https://idahopressclub.org/capitol-correspondents-association/)'
-        start_date: '2020'
-        end_date: present
-      - name: '[Society of Professional Journalists](https://www.spj.org/)'
-        start_date: '2020'
-        end_date: present
-      - name: '[Freelance Journalists Union, Industrial Workers of the World](https://freelancejournalistsunion.org/)'
-        start_date: '2020'
-        end_date: present
-    Service and Leadership:
-      - name: '[Capitol Correspondents Association](https://idahopressclub.org/capitol-correspondents-association/)'
-        start_date: '2023-01-17'
-        end_date: present
-        summary: standing committee member
-      - name: '[Phi Mu Alpha Sinfonia](https://www.sinfonia.org/)'
-        start_date: '2019-04-01'
-        end_date: '2020'
-        summary: alumni relations officer
-      - name: Vandal Marching Band
-        start_date: '2016'
-        end_date: '2020'
-        summary: section leader
-      - name: '[Phi Mu Alpha Sinfonia](https://www.sinfonia.org/)'
-        start_date: '2017-08-27'
-        end_date: '2019-04-01'
-        summary: treasurer
-    Conferences:
-      - name: NLGJA 2026 National Convention
-        date: 2026-09
-        summary: 'NLGJA: The Association of LGBTQ+ Journalists'
-      - name: NICAR 2025
-        date: '2025'
-        summary: Investigative Reporters & Editors
-      - name: NICAR 2023
-        date: '2023'
-        summary: Investigative Reporters & Editors
+          - '*John Doe*'
+          - Kevin Wu
+        summary:
+        doi: 10.1234/iclr.2021.3456
+        url:
+        journal: ICLR 2021, Best Paper Award
+        date: 2021-05
+    selected_honors:
+      - bullet: MIT Technology Review 35 Under 35 Innovators (2024)
+      - bullet: Forbes 30 Under 30 in Enterprise Technology (2024)
+      - bullet: ACM Doctoral Dissertation Award Honorable Mention (2023)
+      - bullet: Google PhD Fellowship in Machine Learning (2020 – 2023)
+      - bullet: Fulbright Scholarship for Graduate Studies (2018)
+    skills:
+      - label: Languages
+        details: Python, C++, CUDA, Rust, Julia
+      - label: ML Frameworks
+        details: PyTorch, JAX, TensorFlow, Triton, ONNX
+      - label: Infrastructure
+        details: Kubernetes, Ray, distributed training, AWS, GCP
+      - label: Research Areas
+        details: Neural architecture search, model compression, efficient inference, multi-agent RL
+    patents:
+      - number: Adaptive Quantization for Neural Network Inference on Edge Devices (US Patent 11,234,567)
+      - number: Dynamic Sparsity Patterns for Efficient Transformer Attention (US Patent 11,345,678)
+      - number: Hardware-Aware Neural Architecture Search Method (US Patent 11,456,789)
+    invited_talks:
+      - reversed_number: Scaling Laws for Efficient Inference — Stanford HAI Symposium (2024)
+      - reversed_number: Building AI Infrastructure for the Next Decade — TechCrunch Disrupt (2024)
+      - reversed_number: 'From Research to Production: Lessons in ML Systems — NeurIPS Workshop (2023)'
+      - reversed_number: "Efficient Deep Learning: A Practitioner's Perspective — Google Tech Talk (2022)"
+design:
+  theme: classic
+  # page:
+  #   size: us-letter
+  #   top_margin: 0.7in
+  #   bottom_margin: 0.7in
+  #   left_margin: 0.7in
+  #   right_margin: 0.7in
+  #   show_footer: true
+  #   show_top_note: true
+  # colors:
+  #   body: rgb(0, 0, 0)
+  #   name: rgb(0, 79, 144)
+  #   headline: rgb(0, 79, 144)
+  #   connections: rgb(0, 79, 144)
+  #   section_titles: rgb(0, 79, 144)
+  #   links: rgb(0, 79, 144)
+  #   footer: rgb(128, 128, 128)
+  #   top_note: rgb(128, 128, 128)
+  # typography:
+  #   line_spacing: 0.6em
+  #   alignment: justified
+  #   date_and_location_column_alignment: right
+  #   font_family:
+  #     body: Source Sans 3
+  #     name: Source Sans 3
+  #     headline: Source Sans 3
+  #     connections: Source Sans 3
+  #     section_titles: Source Sans 3
+  #   font_size:
+  #     body: 10pt
+  #     name: 30pt
+  #     headline: 10pt
+  #     connections: 10pt
+  #     section_titles: 1.4em
+  #   small_caps:
+  #     name: false
+  #     headline: false
+  #     connections: false
+  #     section_titles: false
+  #   bold:
+  #     name: true
+  #     headline: false
+  #     connections: false
+  #     section_titles: true
+  # links:
+  #   underline: false
+  #   show_external_link_icon: false
+  # header:
+  #   alignment: center
+  #   photo_width: 3.5cm
+  #   photo_position: left
+  #   photo_space_left: 0.4cm
+  #   photo_space_right: 0.4cm
+  #   space_below_name: 0.7cm
+  #   space_below_headline: 0.7cm
+  #   space_below_connections: 0.7cm
+  #   connections:
+  #     phone_number_format: national
+  #     hyperlink: true
+  #     show_icons: true
+  #     display_urls_instead_of_usernames: false
+  #     separator: ''
+  #     space_between_connections: 0.5cm
+  # section_titles:
+  #   type: with_partial_line
+  #   line_thickness: 0.5pt
+  #   space_above: 0.5cm
+  #   space_below: 0.3cm
+  # sections:
+  #   allow_page_break: true
+  #   space_between_regular_entries: 1.2em
+  #   space_between_text_based_entries: 0.3em
+  #   show_time_spans_in:
+  #     - experience
+  # entries:
+  #   date_and_location_width: 4.15cm
+  #   side_space: 0.2cm
+  #   space_between_columns: 0.1cm
+  #   allow_page_break: false
+  #   short_second_row: true
+  #   degree_width: 1cm
+  #   summary:
+  #     space_above: 0cm
+  #     space_left: 0cm
+  #   highlights:
+  #     bullet: •
+  #     nested_bullet: •
+  #     space_left: 0.15cm
+  #     space_above: 0cm
+  #     space_between_items: 0cm
+  #     space_between_bullet_and_text: 0.5em
+  # templates:
+  #   footer: '*NAME -- PAGE_NUMBER/TOTAL_PAGES*'
+  #   top_note: '*LAST_UPDATED CURRENT_DATE*'
+  #   single_date: MONTH_ABBREVIATION YEAR
+  #   date_range: START_DATE – END_DATE
+  #   time_span: HOW_MANY_YEARS YEARS HOW_MANY_MONTHS MONTHS
+  #   one_line_entry:
+  #     main_column: '**LABEL:** DETAILS'
+  #   education_entry:
+  #     main_column: |-
+  #       **INSTITUTION**, AREA
+  #       SUMMARY
+  #       HIGHLIGHTS
+  #     degree_column: '**DEGREE**'
+  #     date_and_location_column: |-
+  #       LOCATION
+  #       DATE
+  #   normal_entry:
+  #     main_column: |-
+  #       **NAME**
+  #       SUMMARY
+  #       HIGHLIGHTS
+  #     date_and_location_column: |-
+  #       LOCATION
+  #       DATE
+  #   experience_entry:
+  #     main_column: |-
+  #       **COMPANY**, POSITION
+  #       SUMMARY
+  #       HIGHLIGHTS
+  #     date_and_location_column: |-
+  #       LOCATION
+  #       DATE
+  #   publication_entry:
+  #     main_column: |-
+  #       **TITLE**
+  #       SUMMARY
+  #       AUTHORS
+  #       URL (JOURNAL)
+  #     date_and_location_column: DATE
+locale:
+  language: english
+  # last_updated: Last updated in
+  # month: month
+  # months: months
+  # year: year
+  # years: years
+  # present: present
+  # phrases:
+  #   degree_with_area: DEGREE in AREA
+  # month_abbreviations:
+  #   - Jan
+  #   - Feb
+  #   - Mar
+  #   - Apr
+  #   - May
+  #   - June
+  #   - July
+  #   - Aug
+  #   - Sept
+  #   - Oct
+  #   - Nov
+  #   - Dec
+  # month_names:
+  #   - January
+  #   - February
+  #   - March
+  #   - April
+  #   - May
+  #   - June
+  #   - July
+  #   - August
+  #   - September
+  #   - October
+  #   - November
+  #   - December
+settings:
+  current_date: today
+  render_command:
+    output_folder: rendercv_output
+    design:
+    locale:
+    typst_path: OUTPUT_FOLDER/NAME_IN_SNAKE_CASE_CV.typ
+    pdf_path: OUTPUT_FOLDER/NAME_IN_SNAKE_CASE_CV.pdf
+    markdown_path: OUTPUT_FOLDER/NAME_IN_SNAKE_CASE_CV.md
+    html_path: OUTPUT_FOLDER/NAME_IN_SNAKE_CASE_CV.html
+    png_path: OUTPUT_FOLDER/NAME_IN_SNAKE_CASE_CV.png
+    dont_generate_markdown: false
+    dont_generate_html: false
+    dont_generate_typst: false
+    dont_generate_pdf: false
+    dont_generate_png: false
+  bold_keywords: []
+  pdf_title: NAME - CV

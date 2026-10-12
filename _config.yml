@@ -2,6 +2,7 @@ include:
   - ".well-known"
 exclude:
   - tests
+  - scripts
 # cv.yaml (RenderCV) at the site root is both the site's data (site.data.cv) and the published /cv.yaml
 data_dir: .
 defaults:
