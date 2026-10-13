@@ -1,6 +1,6 @@
 ---
 layout: default
-body_class: home
+body_class: home h-card
 # Earlier versions of the site had separate pages; their addresses (with or
 # without .html or a trailing slash) all lead here
 redirect_from:
@@ -23,9 +23,9 @@ redirect_from:
             </div>
 
             <div class="hero-content">
-                <p class="headline"><span class="headline-a">Documentary</span> <span class="headline-b">Journalist</span></p>
+                <p class="headline p-job-title"><span class="headline-a">Documentary</span> <span class="headline-b">Journalist</span></p>
                 {% include contact.html %}
-                <div class="hero-bio"><p>{{ site.description }}</p></div>
+                <div class="hero-bio"><p class="p-note">{{ site.description }}</p></div>
             </div>
         </section>
 
