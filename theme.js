@@ -1,8 +1,8 @@
 // Runs before the stylesheet applies so a stored theme never flashes the wrong colors
 
-// The browser bar's color: the blue the fire doesn't use, light blue on a light
-// page and dark blue on a dark one (--blue-light and --blue-dark in styles.css)
-var THEME_COLORS = { light: '#a9c7ee', dark: '#1d3f6e' };
+// The browser bar's color: the accent blue, dark blue on a light page and light
+// blue on a dark one (--blue-dark and --blue-light in styles.css)
+var THEME_COLORS = { light: '#1d3f6e', dark: '#a9c7ee' };
 function setThemeColor(t) {
     document.querySelectorAll('meta[name="theme-color"]').forEach(function (meta) {
         meta.content = THEME_COLORS[t];
