@@ -4,25 +4,25 @@
 {%- assign url = page.url | replace: "/index.html", "/" | prepend: site.url -%}
 {%- assign image = page.image.path | prepend: site.url -%}
 {%- if page.title -%}{%- assign headline = page.title -%}{%- else -%}{%- assign headline = cv.name -%}{%- endif %}
-    <title>{% if page.title %}{{ page.title }} | {{ cv.name }}{% else %}{{ cv.name }} | {{ cv.headline }}{% endif %}</title>
-    <meta property="og:title" content="{{ headline }}">
+    <title>{% if page.title %}{{ page.title | escape }} | {{ cv.name | escape }}{% else %}{{ cv.name | escape }} | {{ cv.headline | escape }}{% endif %}</title>
+    <meta property="og:title" content="{{ headline | escape }}">
     <meta property="og:locale" content="en_US">
 {%- if description and description != "" %}
     <meta name="description" content="{{ description | escape }}">
     <meta property="og:description" content="{{ description | escape }}">
 {%- endif %}
-    <link rel="canonical" href="{{ url }}">
-    <meta property="og:url" content="{{ url }}">
-    <meta property="og:site_name" content="{{ cv.name }}">
-    <meta property="og:image" content="{{ image }}">
+    <link rel="canonical" href="{{ url | escape }}">
+    <meta property="og:url" content="{{ url | escape }}">
+    <meta property="og:site_name" content="{{ cv.name | escape }}">
+    <meta property="og:image" content="{{ image | escape }}">
     <meta property="og:image:height" content="{{ page.image.height }}">
     <meta property="og:image:width" content="{{ page.image.width }}">
-    <meta property="og:image:alt" content="{{ page.image.alt }}">
+    <meta property="og:image:alt" content="{{ page.image.alt | escape }}">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
-    <meta property="twitter:image" content="{{ image }}">
-    <meta name="twitter:image:alt" content="{{ page.image.alt }}">
-    <meta property="twitter:title" content="{{ headline }}">
+    <meta property="twitter:image" content="{{ image | escape }}">
+    <meta name="twitter:image:alt" content="{{ page.image.alt | escape }}">
+    <meta property="twitter:title" content="{{ headline | escape }}">
     <script type="application/ld+json">
     {"@context":"https://schema.org","@type":{% if page.title %}"WebPage"{% else %}"WebSite"{% endif %},{% if description and description != "" %}"description":{{ description | jsonify }},{% endif %}"headline":{{ headline | jsonify }},"image":{"width":{{ page.image.width }},"height":{{ page.image.height }},"alt":{{ page.image.alt | jsonify }},"url":{{ image | jsonify }},"@type":"ImageObject"},{% unless page.title %}"name":{{ cv.name | jsonify }},{% endunless %}"url":{{ url | jsonify }}}
     </script>

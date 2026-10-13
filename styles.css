@@ -122,7 +122,6 @@ body {
 }
 
 .contact-line,
-.connections,
 .footer-content{
     --ad: 0.266;           /* Cousine */
     --cap: 0.659;
@@ -130,7 +129,6 @@ body {
 
 .logo,
 .contact-line,
-.connections,
 .rendercv h2,
 .rendercv p,
 .hero-bio p,
@@ -301,16 +299,14 @@ body {
     padding: 2rlh 0 0;
 }
 
-.page a,
-.connections a {
+.page a {
     color: var(--main);
     text-decoration: underline;
     text-underline-offset: 0.2em;
     text-decoration-thickness: 1px;
 }
 
-.page a:hover,
-.connections a:hover {
+.page a:hover {
     color: var(--accent);
 }
 
@@ -527,20 +523,6 @@ a.contact-handle:hover,
        "Signal signal.me/loganfinney.27", is 31 Cousine characters (0.6em each) at 0.875rem */
     background: linear-gradient(var(--ink), var(--ink)) top left / min(calc(31 * 0.6 * 0.875rem), 100%) 1px no-repeat;
     color: var(--ink-soft);
-}
-
-/* Profile links: one run of names separated by middle dots, a square below the contacts */
-.connections {
-    margin-top: 1rlh;
-    font-family: var(--font-mono);
-    font-size: 0.875rem;
-    color: var(--ink-soft);
-    max-width: 68ch;
-}
-
-/* A name never breaks across lines, and a line never starts with a dot */
-.connections a {
-    white-space: nowrap;
 }
 
 /* The photo's frame, the same box as the photo, with the content column inside */
