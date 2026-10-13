@@ -266,7 +266,7 @@ body {
 
 /* The headline: DOCUMENTARY one line high, JOURNALIST two lines high, each
    sized so the two words are the same width */
-.hero h1 {
+.hero .headline {
     font-family: var(--font-body);
     font-size: 1.75rem;
     font-weight: 700;
@@ -276,17 +276,17 @@ body {
     padding-top: 1rlh;
 }
 
-.hero h1 span {
+.hero .headline span {
     display: block;
 }
 
-.hero h1 .h1-a {
+.hero .headline-a {
     line-height: 1.5rem;
     position: relative;
     top: 0.125rem;
 }
 
-.hero h1 .h1-b {
+.hero .headline-b {
     font-size: 2.186rem;
     line-height: 3rem;
     position: relative;
