@@ -571,3 +571,47 @@ a.contact-handle:hover,
 .photo-caption:empty {
     visibility: hidden;
 }
+
+/* ---------- Print ---------- */
+
+/* On paper: the name, headline, contacts, bio and CV in the light theme's
+   ink, with no grid, photos, theme switch or fire */
+@media print {
+    :root,
+    [data-theme] {
+        color-scheme: light;
+    }
+
+    body {
+        background: none;
+    }
+
+    .site-header {
+        position: static;
+        background: none;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+    }
+
+    .skip-link,
+    #themeToggle,
+    .hero-bg,
+    .photo-frame,
+    .footer-fire-band {
+        display: none;
+    }
+
+    /* No photo above the headline, so the text starts one square down */
+    .hero-content {
+        padding-top: 1rlh;
+    }
+
+    .site-footer {
+        height: auto;
+    }
+
+    .rendercv h1,
+    .rendercv h2 {
+        break-after: avoid;
+    }
+}
