@@ -16,7 +16,7 @@
 @font-face { font-family: "Site Mono"; src: url("fonts/cousine-bold.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
 @font-face { font-family: "Site Mono"; src: url("fonts/cousine-italic.woff2") format("woff2"); font-weight: 400; font-style: italic; font-display: swap; }
 
-/* The site's eight colors. Each theme pairs them with light-dark(light, dark):
+/* The site's ten colors. Each theme pairs them with light-dark(light, dark):
    what is light in one theme is dark in the other. The theme follows the
    reader's system unless the theme switch has set data-theme */
 :root {
@@ -29,6 +29,8 @@
     --green-light: #9ad4b6;
     --blue-dark: #1d3f6e;
     --blue-light: #a9c7ee;
+    --red-dark: #702323;
+    --red-light: #edabab;
 
     --bg: light-dark(var(--white), var(--black));
     --ink: light-dark(var(--black), var(--white));
