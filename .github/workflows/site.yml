@@ -21,10 +21,11 @@ on:
 permissions:
   contents: read
 
-# One publish at a time; a newer run waits rather than cancelling one that has
-# started
+# One run at a time per branch, so a pull request's checks never displace a
+# waiting publish from main; a newer run waits rather than cancelling one that
+# has started
 concurrency:
-  group: pages
+  group: pages-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:

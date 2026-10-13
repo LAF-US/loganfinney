@@ -80,18 +80,24 @@ function luminance(rgb) {
 
 // The 37 fire colors for the current theme: each key color at its heat, and
 // the heats between two keys blended evenly from one to the next. They are
-// worked out again only when the theme's colors change
-let paletteKey = '';
-let paletteCache = [];
+// worked out again only after the theme changes: the theme switch sets
+// data-theme on the page, or the reader's system switches between light and dark
+let paletteCache = null;
+const clearPalette = () => { paletteCache = null; };
+new MutationObserver(clearPalette).observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['data-theme'],
+});
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', clearPalette);
+
 function firePalette() {
+    if (paletteCache) {
+        return paletteCache;
+    }
     const page = readColor('--bg');
     const keys = FIRE_KEYS.map(([heat, ...names]) => [heat, ...names.map(
         (name) => (name.startsWith('--') ? readColor(name) : name),
     )]);
-    const key = [page, ...keys.flat()].join();
-    if (key === paletteKey) {
-        return paletteCache;
-    }
     const distance = (rgb) => Math.abs(luminance(rgb) - luminance(page));
     const stops = keys.map(([heat, first, ...shades]) => {
         if (first !== 'far' && first !== 'near') {
@@ -108,7 +114,6 @@ function firePalette() {
         const t = toHeat === fromHeat ? 1 : (heat - fromHeat) / (toHeat - fromHeat);
         palette.push(from.map((c, k) => Math.round(c + (to[k] - c) * t)));
     }
-    paletteKey = key;
     paletteCache = palette.map((rgb) => `rgb(${rgb.join(',')})`);
     return paletteCache;
 }
