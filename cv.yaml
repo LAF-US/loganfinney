@@ -183,6 +183,36 @@ cv:
       - reversed_number: "Efficient Deep Learning: A Practitioner's Perspective — Google Tech Talk (2022)"
 design:
   theme: classic
+  # The site's look (styles.css) without its grid: its fonts, ink and link
+  # colors, left alignment and underlined links. Fonts come from fonts/, as
+  # TTF files that scripts/fonts-for-rendercv.py makes from the site's WOFF2
+  colors:
+    body: rgb(74, 70, 65)
+    name: rgb(19, 18, 17)
+    headline: rgb(19, 18, 17)
+    connections: rgb(74, 70, 65)
+    section_titles: rgb(19, 18, 17)
+    links: rgb(31, 79, 57)
+    footer: rgb(74, 70, 65)
+    top_note: rgb(74, 70, 65)
+  typography:
+    alignment: left
+    font_family:
+      body: DejaVu Sans
+      name: DejaVu Sans
+      headline: DejaVu Sans
+      connections: Cousine
+      section_titles: DejaVu Sans
+  links:
+    underline: true
+  header:
+    alignment: left
+    connections:
+      show_icons: false
+      separator: ·
+  section_titles:
+    type: with_full_line
+  # RenderCV's other settings and their defaults:
   # page:
   #   size: us-letter
   #   top_margin: 0.7in

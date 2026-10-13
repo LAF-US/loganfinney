@@ -22,3 +22,4 @@ build/
 _includes/rendercv.html
 _includes/rendercv.md
 cv.pdf
+fonts/*.ttf
