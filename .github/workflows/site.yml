@@ -38,10 +38,12 @@ jobs:
           python-version: "3.13"
       - name: Install RenderCV
         run: pip install "rendercv[full]==2.8"
-      - name: Render the CV (HTML only)
-        run: rendercv render cv.yaml -nopdf -nopng -notyp -o "$RUNNER_TEMP/rendercv"
-      - name: Put RenderCV's HTML on the site
-        run: python3 scripts/rendercv-include.py "$RUNNER_TEMP/rendercv/Logan_Finney_CV.html"
+      - name: Render the CV (HTML, Markdown and PDF)
+        run: rendercv render cv.yaml -nopng -o "$RUNNER_TEMP/rendercv"
+      - name: Put RenderCV's HTML on the site, and its PDF at /cv.pdf
+        run: |
+          python3 scripts/rendercv-include.py "$RUNNER_TEMP/rendercv/Logan_Finney_CV.html"
+          cp "$RUNNER_TEMP/rendercv/Logan_Finney_CV.pdf" cv.pdf
       - name: Build site (same as GitHub Pages)
         uses: actions/jekyll-build-pages@44a6e6beabd48582f863aeeb6cb2151cc1716697 # v1.0.13
         with:
