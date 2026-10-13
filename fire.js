@@ -37,18 +37,19 @@ const FIRE_HEAT = 36;
 // in styles.css matches it
 const FIRE_ROWS = FIRE_HEAT + 1;
 
-// The fire's colors, built the way Doom's 37 are: Doom's palette is four key
-// colors blended in straight lines between them (black at heat 0, red-orange
-// at 12, dark yellow at 32, white at 36), so it brightens out of the
-// background, shifts hue at a steady lightness, then flashes to white. Here
-// the keys are the site's colors (styles.css): the page color, a blue, a green
-// and the text color. "far" takes the family's shade farther from the page
-// color (dark on a light page, light on a dark one), so the fire follows the
-// palette and each theme. To swap in other key colors, change the names here
+// The fire's 37 colors, after Doom's: Doom's hand-picked palette runs roughly
+// from black at heat 0 through red-orange at 12 and dark yellow at 32 to white
+// at 36. Here the key colors are the site's own (styles.css), set at the heats
+// below, with the heats between two keys blended evenly from one to the next.
+// "far" takes the family's shade farther from the page color (dark on a light
+// page, light on a dark one), so the fire follows the palette and each theme.
+// To swap in other key colors, change the names here
 const FIRE_KEYS = [
     [0, '--bg'],
+    [6, 'far', '--red-light', '--red-dark'],
     [12, 'far', '--blue-light', '--blue-dark'],
-    [32, 'far', '--green-light', '--green-dark'],
+    [20, 'far', '--green-light', '--green-dark'],
+    [32, 'far', '--grey-light', '--grey-dark'],
     [36, '--ink'],
 ];
 
