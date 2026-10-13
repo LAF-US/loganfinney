@@ -6,7 +6,6 @@ include:
 exclude:
   - tests
   - scripts
-  - README.md
   - cv-old.yaml
   - cv-template.yaml
   # TTF copies of the fonts, made for RenderCV's PDF only (scripts/fonts-for-rendercv.py)
