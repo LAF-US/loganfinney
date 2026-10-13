@@ -614,4 +614,10 @@ a.contact-handle:hover,
     .rendercv h2 {
         break-after: avoid;
     }
+
+    /* Paper can't be clicked, so each web link's address follows it */
+    .rendercv a[href^="http"]::after {
+        content: " (" attr(href) ")";
+        overflow-wrap: anywhere;
+    }
 }
