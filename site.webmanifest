@@ -1,0 +1,12 @@
+---
+---
+{
+  "name": {{ site.data.cv.cv.name | jsonify }},
+  "short_name": {{ site.data.cv.cv.name | jsonify }},
+  "description": {{ site.description | jsonify }},
+  "lang": "en",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#faf9f7",
+  "theme_color": "#faf9f7"
+}

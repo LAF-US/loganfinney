@@ -195,7 +195,7 @@ function initThemeToggle() {
     const currentTheme = () => root.getAttribute('data-theme') ||
         (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
 
-    // The visible word names the theme the button switches to; the label says so for screen readers
+    // The label names the theme the button switches to, for screen readers
     const updateLabel = () => {
         const next = currentTheme() === 'dark' ? 'light' : 'dark';
         themeToggle.setAttribute('aria-label', `Switch to ${next} theme`);

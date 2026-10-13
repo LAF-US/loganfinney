@@ -35,11 +35,11 @@
     --ink-soft: light-dark(var(--grey-dark), var(--grey-light));
     /* Grid lines: the grey nearer the page color, faded 60% into the page */
     --line: color-mix(in srgb, light-dark(var(--grey-light), var(--grey-dark)) 40%, var(--bg));
-    /* The main color, green, as on the live site: links. The accent, blue:
+    /* The main color, green: links. The accent, blue:
        links under the pointer and the keyboard-focus outline */
     --main: light-dark(var(--green-dark), var(--green-light));
     --accent: light-dark(var(--blue-dark), var(--blue-light));
-    /* Shade at the foot of the hero photo, behind the title */
+    /* Shade at the foot of the hero photo */
     --hero-wash: light-dark(color-mix(in srgb, var(--white) 92%, transparent), color-mix(in srgb, var(--black) 87%, transparent));
     --font-display: "Site Serif", Georgia, serif;
     --font-body: "Site Sans", Verdana, sans-serif;
@@ -56,7 +56,7 @@
 }
 
 html {
-    /* Links to a section (#cv, #folio) stop below the header, which stays on screen */
+    /* Links to a section (#cv) stop below the header, which stays on screen */
     scroll-padding-top: 3rlh;
     /* One grid square (1rlh) is one line of body text. It is set relative to
        the text size, so when a reader's device enlarges text the squares and
@@ -141,7 +141,7 @@ body {
 
 /* ---------- Header ---------- */
 
-/* A plain masthead: name on the left, text links on the right, one hard rule
+/* A plain masthead: name on the left, the theme switch on the right, one hard rule
    underneath. The frosted glass stays so the photo reads through it; 0.9 is
    the thinnest frost that keeps the header text at 7:1 over every hero photo */
 .site-header {
@@ -316,13 +316,13 @@ body {
 
 /* ---------- CV (RenderCV) ---------- */
 
-/* Everything between the photo and the footer is RenderCV's own HTML
+/* Everything between the bio and the footer is RenderCV's own HTML
    (_includes/rendercv.html), unchanged: h1 for the name and each section, h2
    for each entry, then paragraphs and bulleted or numbered lists. Every line
    is one square tall, so it all sits on the grid */
 
-/* Sections: large capitals under a full-width rule. At this size the
-   centering nudge is under a pixel, so it is left out */
+/* Sections: large capitals. At this size the centering nudge is under a
+   pixel, so it is left out */
 .rendercv h1 {
     font-family: var(--font-body);
     font-size: 2.5rem;
@@ -332,13 +332,16 @@ body {
     letter-spacing: -0.02em;
     text-transform: uppercase;
     margin: 2rlh 0 1rlh;
-    box-shadow: inset 0 1px 0 var(--ink);
     hyphens: auto;
     overflow-wrap: break-word;
 }
 
 .rendercv h1:first-child {
     margin-top: 0;
+}
+
+.rendercv h1:not(:first-child) {
+    box-shadow: inset 0 1px 0 var(--ink);
 }
 
 /* Entries: one blank square above each, body size; RenderCV bolds the name */
@@ -464,8 +467,6 @@ body {
     outline: 2px solid var(--accent);
     outline-offset: 2px;
 }
-
-/* ---------- Responsive ---------- */
 
 /* ---------- Contact ---------- */
 

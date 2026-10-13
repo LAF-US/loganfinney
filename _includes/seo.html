@@ -26,3 +26,8 @@
     <script type="application/ld+json">
     {"@context":"https://schema.org","@type":{% if page.title %}"WebPage"{% else %}"WebSite"{% endif %},{% if description and description != "" %}"description":{{ description | jsonify }},{% endif %}"headline":{{ headline | jsonify }},"image":{"width":{{ page.image.width }},"height":{{ page.image.height }},"alt":{{ page.image.alt | jsonify }},"url":{{ image | jsonify }},"@type":"ImageObject"},{% unless page.title %}"name":{{ cv.name | jsonify }},{% endunless %}"url":{{ url | jsonify }}}
     </script>
+    {%- unless page.title %}
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"Person","name":{{ cv.name | jsonify }},{% if cv.headline %}"jobTitle":{{ cv.headline | jsonify }},{% endif %}{% if cv.custom_connections %}"sameAs":{{ cv.custom_connections | map: "url" | jsonify }},{% endif %}"url":{{ site.url | append: "/" | jsonify }}}
+    </script>
+    {%- endunless %}

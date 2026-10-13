@@ -1,10 +1,10 @@
 // The footer fire: the PlayStation Doom fire effect, after Filipe Deschamps's
 // doom-fire-algorithm (https://github.com/filipedeschamps/doom-fire-algorithm).
-// The spread rule and the fire's size are his; this file draws it in the page's
-// grid squares and the site's colors, filling the footer behind its text. It
-// lights the first time the footer scrolls into view and keeps burning, lights
-// again from nothing when the theme switches, and never runs when the reader
-// has asked for reduced motion.
+// The spread rule is his; this file sizes the fire to fill the footer and
+// draws it in the page's grid squares and the site's colors, behind the
+// footer text. It lights the first time the footer scrolls into view and
+// keeps burning, lights again from nothing when the theme switches, and never
+// runs when the reader has asked for reduced motion.
 //
 // MIT License
 //

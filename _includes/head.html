@@ -1,13 +1,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="#faf9f7" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#131211" media="(prefers-color-scheme: dark)">
+    {%- if page.refresh_to %}
+    <meta http-equiv="refresh" content="0; url={{ page.refresh_to | relative_url }}">
+    {%- endif %}
     {%- include seo.html %}
-    <script>
-        // Runs before the stylesheet applies so a stored theme never flashes the wrong colors
-        try {
-            var t = sessionStorage.getItem('theme');
-            if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t);
-        } catch {}
-    </script>
+    <link rel="author" href="{{ '/humans.txt' | relative_url }}">
+    <link rel="manifest" href="{{ '/site.webmanifest' | relative_url }}">
+    {%- for connection in site.data.cv.cv.custom_connections %}
+    <link rel="me" href="{{ connection.url | escape }}">
+    {%- endfor %}
+    <script src="{{ '/theme.js' | relative_url }}"></script>
     <link rel="preload" href="{{ '/fonts/dejavu-sans.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="{{ '/fonts/dejavu-sans-bold.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="{{ '/styles.css' | relative_url }}">

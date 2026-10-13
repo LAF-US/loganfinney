@@ -1,0 +1,10 @@
+/* TEAM */
+Journalist: Logan Finney
+Contact: loganfinney [at] proton.me
+From: Idaho, USA
+
+/* SITE */
+Language: English
+Standards: HTML5, CSS3, JavaScript
+Components: Jekyll, RenderCV, GitHub Pages
+Fonts: DejaVu Sans, Gelasio, Cousine

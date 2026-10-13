@@ -19,3 +19,4 @@ defaults:
         alt: A rainbow flag reading Love trumps hate held up at the Idaho State Capitol
 plugins:
   - jekyll-redirect-from
+  - jekyll-sitemap
