@@ -46,10 +46,10 @@ const FIRE_ROWS = FIRE_HEAT + 1;
 // To swap in other key colors, change the names here
 const FIRE_KEYS = [
     [0, '--bg'],
-    [6, 'far', '--red-light', '--red-dark'],
+    [6, 'far', '--grey-light', '--grey-dark'],
     [12, 'far', '--blue-light', '--blue-dark'],
     [20, 'far', '--green-light', '--green-dark'],
-    [32, 'far', '--grey-light', '--grey-dark'],
+    [32, 'far', '--red-light', '--red-dark'],
     [36, '--ink'],
 ];
 
