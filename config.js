@@ -206,6 +206,7 @@ function initThemeToggle() {
     themeToggle.addEventListener('click', () => {
         const next = currentTheme() === 'dark' ? 'light' : 'dark';
         root.setAttribute('data-theme', next);
+        setThemeColor(next);
         updateLabel();
         try {
             sessionStorage.setItem('theme', next);
