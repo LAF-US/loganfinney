@@ -27,7 +27,8 @@ Nothing the build makes is committed.
 ## Building locally
 
 You need Python 3.13, Ruby with Jekyll 4 and the `jekyll-redirect-from` and
-`jekyll-sitemap` gems, and Node.js 22 for the accessibility checks.
+`jekyll-sitemap` gems, and, for the accessibility checks, Node.js 22 and Google
+Chrome or Chromium.
 
 ```sh
 pip install "rendercv[full]==2.8" "fonttools[woff]==4.66.1"
@@ -40,11 +41,12 @@ jekyll build
 ```
 
 To run the accessibility checks, serve the built site on port 8000 and run
-pa11y-ci:
+pa11y-ci with the path to your Chrome or Chromium:
 
 ```sh
 python3 -m http.server 8000 -d _site &
-cd tests && npm ci --ignore-scripts && npm test
+cd tests && npm ci --ignore-scripts
+PUPPETEER_EXECUTABLE_PATH=/path/to/chrome npm test
 ```
 
 ## Editing the CV
