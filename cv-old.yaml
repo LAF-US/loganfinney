@@ -558,6 +558,21 @@ cv:
       - name: NICAR 2025
         date: 2025
         summary: Investigative Reporters & Editors
+      - name: ATI 2024 Annual Conference
+        date: 2024-12
+        summary: Associated Taxpayers of Idaho
+      - name: ATI 2023 Annual Conference
+        date: 2023-11
+        summary: Associated Taxpayers of Idaho
+      - name: PNWER 2023 Annual Summit
+        date: 2023-07
+        summary: Pacific NorthWest Economic Region
       - name: NICAR 2023
         date: 2023
         summary: Investigative Reporters & Editors
+      - name: ATI 2022 Annual Conference
+        date: 2022-11
+        summary: Associated Taxpayers of Idaho
+      - name: ATI 2021 Annual Conference
+        date: 2021-12
+        summary: Associated Taxpayers of Idaho
