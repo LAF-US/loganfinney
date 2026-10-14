@@ -1,16 +1,6 @@
 {
   "defaults": {
-    "runners": [
-      "axe"
-    ],
-    "standard": "WCAG2AA",
-    "rules": [
-      "color-contrast-enhanced",
-      "identical-links-same-purpose",
-      "meta-refresh-no-exceptions",
-      "target-size"
-    ],
-    "levelCapWhenNeedsReview": "warning"
+    "standard": "WCAG2AAA"
   },
   "urls": [
     "http://localhost:8000/index.html",
@@ -20,6 +10,7 @@
         "click element #themeToggle"
       ],
       "wait": 1000
-    }
+    },
+    "http://localhost:8000/404.html"
   ]
 }

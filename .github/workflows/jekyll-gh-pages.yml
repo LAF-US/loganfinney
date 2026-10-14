@@ -2,7 +2,7 @@ name: Deploy Jekyll with GitHub Pages dependencies preinstalled
 
 # Builds loganfinney.com and publishes it to GitHub Pages (Settings → Pages →
 # Source: GitHub Actions). Nothing is committed: each run renders cv.yaml with
-# RenderCV, builds the site with Jekyll, checks it against WCAG, and publishes
+# RenderCV, builds the site with Jekyll, tests it against WCAG AAA, and publishes
 # the result. If any step fails, nothing is published and the live site keeps
 # its last good version.
 #
@@ -120,7 +120,7 @@ jobs:
         run: npm ci --ignore-scripts
       - name: Check the runner has Chrome
         run: test -x /usr/bin/google-chrome || { echo "::error::Google Chrome is missing from the runner image at /usr/bin/google-chrome"; exit 1; }
-      - name: Run WCAG checks (pa11y-ci, settings in .github/tests/.pa11yci.json)
+      - name: Test the home and 404 pages against WCAG AAA (pa11y-ci, settings in .github/tests/.pa11yci.json)
         working-directory: .github/tests
         env:
           PUPPETEER_EXECUTABLE_PATH: /usr/bin/google-chrome
