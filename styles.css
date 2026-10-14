@@ -1,3 +1,5 @@
+---
+---
 /* ============================================================
    loganfinney.com — shared stylesheet
    Design tokens live on :root, each with its light and dark value;
@@ -21,16 +23,9 @@
    reader's system unless the theme switch has set data-theme */
 :root {
     color-scheme: light dark;
-    --black: #131211;
-    --white: #faf9f7;
-    --grey-dark: #4a4641;
-    --grey-light: #bab5af;
-    --green-dark: #1f4f39;
-    --green-light: #9ad4b6;
-    --blue-dark: #1d3f6e;
-    --blue-light: #a9c7ee;
-    --red-dark: #702323;
-    --red-light: #edabab;
+{%- for color in site.palette %}
+    --{{ color[0] }}: {{ color[1] }};
+{%- endfor %}
 
     --bg: light-dark(var(--white), var(--black));
     --ink: light-dark(var(--black), var(--white));
@@ -522,8 +517,12 @@ a.contact-handle:hover,
     max-width: 68ch;
     padding-top: 1rlh;
     /* The contacts' rule is as wide as the contact box: its longest line,
-       "Signal signal.me/loganfinney.27", is 31 Cousine characters (0.6em each) at 0.875rem */
-    background: linear-gradient(var(--ink), var(--ink)) top left / min(calc(31 * 0.6 * 0.875rem), 100%) 1px no-repeat;
+       in Cousine characters (0.6em each) at 0.875rem */
+    {%- assign email = "Email " | append: site.contact.email | size %}
+    {%- assign signal = "Signal " | append: site.contact.signal.handle | size %}
+    {%- assign whatsapp = "WhatsApp " | append: site.contact.whatsapp.handle | size %}
+    {%- assign longest = email | at_least: signal | at_least: whatsapp %}
+    background: linear-gradient(var(--ink), var(--ink)) top left / min(calc({{ longest }} * 0.6 * 0.875rem), 100%) 1px no-repeat;
     color: var(--ink-soft);
 }
 

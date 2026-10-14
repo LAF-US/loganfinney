@@ -1,11 +1,12 @@
+---
+---
 BEGIN:VCARD
 VERSION:3.0
 N:Finney;Logan;;;
 FN:Logan Finney
 TITLE:Documentary Journalist
-EMAIL;TYPE=INTERNET:loganfinney@proton.me
-URL:https://loganfinney.com/
-X-SOCIALPROFILE;TYPE=signal:https://signal.me/#eu/oBgA3Z4JO0BiXt--nvJGDDwAK
- T8Zp-DS5Y60BVvvlw7bVK5eV1lMNoBt1WZoZEeY
-X-SOCIALPROFILE;TYPE=whatsapp:https://wa.me/loganfinney
+{% include vcard-line.txt key="EMAIL;TYPE=INTERNET:" value=site.contact.email %}
+{% assign u = site.url | append: "/" %}{% include vcard-line.txt key="URL:" value=u %}
+{% include vcard-line.txt key="X-SOCIALPROFILE;TYPE=signal:" value=site.contact.signal.url %}
+{% include vcard-line.txt key="X-SOCIALPROFILE;TYPE=whatsapp:" value=site.contact.whatsapp.url %}
 END:VCARD

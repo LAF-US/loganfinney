@@ -1,4 +1,6 @@
-Contact: mailto:loganfinney@proton.me
+---
+---
+Contact: mailto:{{ site.contact.email }}
 Expires: 2027-10-12T00:00:00.000Z
-Canonical: https://loganfinney.com/.well-known/security.txt
+Canonical: {{ site.url }}/.well-known/security.txt
 Preferred-Languages: en

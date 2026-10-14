@@ -1,6 +1,8 @@
+---
+---
 /* TEAM */
 Journalist: Logan Finney
-Contact: loganfinney [at] proton.me
+Contact: {{ site.contact.email | replace: "@", " [at] " }}
 From: Idaho, USA
 
 /* SITE */
