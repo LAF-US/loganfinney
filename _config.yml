@@ -23,6 +23,27 @@ palette:
   blue-light: "#a9c7ee"
   red-dark: "#702323"
   red-light: "#edabab"
+# The site's three typefaces and their files in fonts/, read by styles.css, the
+# font preloads in _includes/head.html, humans.txt and the CV's PDF
+# (.github/scripts/fonts-for-rendercv.py and rendercv-options.py)
+fonts:
+  sans:
+    name: DejaVu Sans
+    files:
+      - { file: dejavu-sans.woff2, weight: 400, style: normal, preload: true }
+      - { file: dejavu-sans-oblique.woff2, weight: 400, style: italic }
+      - { file: dejavu-sans-bold.woff2, weight: 700, style: normal, preload: true }
+  serif:
+    name: Gelasio
+    files:
+      - { file: gelasio.woff2, weight: 400 700, style: normal }
+      - { file: gelasio-italic.woff2, weight: 400 700, style: italic }
+  mono:
+    name: Cousine
+    files:
+      - { file: cousine.woff2, weight: 400, style: normal }
+      - { file: cousine-bold.woff2, weight: 700, style: normal }
+      - { file: cousine-italic.woff2, weight: 400, style: italic }
 include:
   - ".well-known"
 exclude:

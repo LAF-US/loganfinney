@@ -184,18 +184,12 @@ cv:
 design:
   theme: classic
   # The site's look (styles.css) without its grid: its fonts, ink and link
-  # colors, left alignment and underlined links. RenderCV reads the fonts from
-  # fonts/, as TTF files that .github/scripts/fonts-for-rendercv.py makes from
-  # the site's WOFF2, and the colors from _config.yml's palette, which
-  # .github/scripts/rendercv-colors.py passes in on each render
+  # colors, left alignment and underlined links. The fonts and colors are
+  # _config.yml's, which .github/scripts/rendercv-options.py passes in on each
+  # render; RenderCV reads the font files from fonts/, as TTF copies that
+  # .github/scripts/fonts-for-rendercv.py makes from the site's WOFF2
   typography:
     alignment: left
-    font_family:
-      body: DejaVu Sans
-      name: DejaVu Sans
-      headline: DejaVu Sans
-      connections: Cousine
-      section_titles: DejaVu Sans
   links:
     underline: true
   header:

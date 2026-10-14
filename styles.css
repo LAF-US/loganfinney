@@ -6,17 +6,12 @@
    [data-theme] (set by config.js) overrides the system theme.
    ============================================================ */
 
-/* Typefaces are served from /fonts so every visitor sees the same type.
-   All three are free to host: DejaVu Sans (Bitstream Vera licence),
-   Gelasio and Cousine (SIL Open Font License). Licences sit beside the files */
-@font-face { font-family: "Site Sans"; src: url("fonts/dejavu-sans.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
-@font-face { font-family: "Site Sans"; src: url("fonts/dejavu-sans-oblique.woff2") format("woff2"); font-weight: 400; font-style: italic; font-display: swap; }
-@font-face { font-family: "Site Sans"; src: url("fonts/dejavu-sans-bold.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
-@font-face { font-family: "Site Serif"; src: url("fonts/gelasio.woff2") format("woff2"); font-weight: 400 700; font-style: normal; font-display: swap; }
-@font-face { font-family: "Site Serif"; src: url("fonts/gelasio-italic.woff2") format("woff2"); font-weight: 400 700; font-style: italic; font-display: swap; }
-@font-face { font-family: "Site Mono"; src: url("fonts/cousine.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
-@font-face { font-family: "Site Mono"; src: url("fonts/cousine-bold.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
-@font-face { font-family: "Site Mono"; src: url("fonts/cousine-italic.woff2") format("woff2"); font-weight: 400; font-style: italic; font-display: swap; }
+/* Typefaces (_config.yml's fonts) are served from /fonts so every visitor
+   sees the same type. All three are free to host; their licences sit beside
+   the files */
+{%- for font in site.fonts %}{% for face in font[1].files %}
+@font-face { font-family: "Site {{ font[0] | capitalize }}"; src: url("fonts/{{ face.file }}") format("woff2"); font-weight: {{ face.weight }}; font-style: {{ face.style }}; font-display: swap; }
+{%- endfor %}{% endfor %}
 
 /* The site's ten colors. Each theme pairs them with light-dark(light, dark):
    what is light in one theme is dark in the other. The theme follows the
