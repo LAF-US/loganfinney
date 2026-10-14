@@ -185,7 +185,7 @@ design:
   theme: classic
   # The site's look (styles.css) without its grid: its fonts, ink and link
   # colors, left alignment and underlined links. Fonts come from fonts/, as
-  # TTF files that scripts/fonts-for-rendercv.py makes from the site's WOFF2
+  # TTF files that .github/scripts/fonts-for-rendercv.py makes from the site's WOFF2
   colors:
     body: rgb(74, 70, 65)
     name: rgb(19, 18, 17)

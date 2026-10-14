@@ -4,11 +4,9 @@ description: Logan Finney is an award-winning reporter who covers politics, elec
 include:
   - ".well-known"
 exclude:
-  - tests
-  - scripts
   - cv-old.yaml
   - cv-template.yaml
-  # TTF copies of the fonts, made for RenderCV's PDF only (scripts/fonts-for-rendercv.py)
+  # TTF copies of the fonts, made for RenderCV's PDF only (.github/scripts/fonts-for-rendercv.py)
   - fonts/*.ttf
 # cv.yaml (RenderCV) at the site root is both the site's data (site.data.cv) and the published /cv.yaml
 data_dir: .

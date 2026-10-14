@@ -10,7 +10,7 @@ from pathlib import Path
 
 from fontTools.ttLib import TTFont
 
-fonts = Path(__file__).resolve().parent.parent / "fonts"
+fonts = Path(__file__).resolve().parents[2] / "fonts"
 for name in [
     "dejavu-sans",
     "dejavu-sans-bold",

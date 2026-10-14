@@ -13,13 +13,13 @@ builds and publishes the site on every push to `main`, once a day and by hand.
 Pull requests run every step except publishing. Each run:
 
 1. Makes TTF copies of the site's fonts for the PDF
-   ([`scripts/fonts-for-rendercv.py`](scripts/fonts-for-rendercv.py)).
+   ([`.github/scripts/fonts-for-rendercv.py`](.github/scripts/fonts-for-rendercv.py)).
 2. Renders `cv.yaml` with RenderCV to HTML, Markdown and PDF.
 3. Puts RenderCV's HTML and Markdown on the site
-   ([`scripts/rendercv-include.py`](scripts/rendercv-include.py)) and its PDF
+   ([`.github/scripts/rendercv-include.py`](.github/scripts/rendercv-include.py)) and its PDF
    at `/cv.pdf`.
 4. Builds the site with Jekyll.
-5. Checks the built site against WCAG with pa11y-ci ([`tests/`](tests)).
+5. Checks the built site against WCAG with pa11y-ci ([`.github/tests/`](.github/tests)).
 6. Publishes it, if every step passed.
 
 Nothing the build makes is committed.
@@ -32,10 +32,10 @@ Chrome or Chromium.
 
 ```sh
 pip install "rendercv[full]==2.8" "fonttools[woff]==4.66.1"
-python3 scripts/fonts-for-rendercv.py
+python3 .github/scripts/fonts-for-rendercv.py
 out=$(mktemp -d)
 rendercv render cv.yaml -nopng -o "$out"
-python3 scripts/rendercv-include.py "$out/Logan_Finney_CV.html"
+python3 .github/scripts/rendercv-include.py "$out/Logan_Finney_CV.html"
 cp "$out/Logan_Finney_CV.pdf" cv.pdf
 jekyll build
 ```
@@ -45,7 +45,7 @@ pa11y-ci with the path to your Chrome or Chromium:
 
 ```sh
 python3 -m http.server 8000 -d _site &
-cd tests && npm ci --ignore-scripts
+cd .github/tests && npm ci --ignore-scripts
 PUPPETEER_EXECUTABLE_PATH=/path/to/chrome npm test
 ```
 
