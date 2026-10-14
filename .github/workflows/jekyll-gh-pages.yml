@@ -35,7 +35,7 @@ jobs:
   # run? A push can go unpublished if this run bumps it from the queue, so
   # first compare the files; if they match, render the CV as of both dates
   # and compare that
-  check:
+  changes:
     if: github.event_name == 'schedule'
     runs-on: ubuntu-latest
     permissions:
@@ -77,11 +77,11 @@ jobs:
           fi
           echo "changed=$changed" >> "$GITHUB_OUTPUT"
 
-  # Runs whenever the check was skipped (a file changed on main) or found a
-  # change
+  # Runs whenever the changes job was skipped (a file changed on main) or
+  # found a change
   build:
-    needs: check
-    if: ${{ !cancelled() && (needs.check.result == 'skipped' || needs.check.outputs.changed == 'true') }}
+    needs: changes
+    if: ${{ !cancelled() && (needs.changes.result == 'skipped' || needs.changes.outputs.changed == 'true') }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -118,7 +118,7 @@ jobs:
       - name: Install pa11y-ci (exact versions from .github/tests/package-lock.json)
         working-directory: .github/tests
         run: npm ci --ignore-scripts
-      - name: Check the runner has Chrome
+      - name: Confirm the runner has Chrome
         run: test -x /usr/bin/google-chrome || { echo "::error::Google Chrome is missing from the runner image at /usr/bin/google-chrome"; exit 1; }
       - name: Test the home and 404 pages against WCAG AAA (pa11y-ci, settings in .github/tests/.pa11yci.json)
         working-directory: .github/tests
@@ -133,8 +133,8 @@ jobs:
           include-hidden-files: true
 
   deploy:
-    # Runs whenever build succeeded, said outright: the check job is skipped on
-    # most runs, and GitHub can skip a job whose earlier jobs were skipped
+    # Runs whenever build succeeded, said outright: the changes job is skipped
+    # on most runs, and GitHub can skip a job whose earlier jobs were skipped
     if: ${{ !cancelled() && needs.build.result == 'success' }}
     needs: build
     runs-on: ubuntu-latest
