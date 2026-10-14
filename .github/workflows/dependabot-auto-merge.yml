@@ -1,0 +1,24 @@
+name: Dependabot auto-merge
+
+# Turns on GitHub's auto-merge for each pull request Dependabot opens, as in
+# GitHub's docs ("Automating Dependabot with GitHub Actions"). GitHub then
+# merges it only once the site's build and accessibility test pass on it.
+# Needs Settings → General → "Allow auto-merge", and a rule on main that
+# requires the build job to pass.
+
+on: pull_request
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  dependabot:
+    if: github.event.pull_request.user.login == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Turn on auto-merge
+        run: gh pr merge --auto --merge "$PR_URL"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ github.token }}

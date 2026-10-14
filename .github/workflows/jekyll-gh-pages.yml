@@ -7,15 +7,18 @@ name: Deploy Jekyll with GitHub Pages dependencies preinstalled
 # its last good version.
 #
 # The site changes two ways, so it runs on each: when a file changes on main,
-# and once a day in case the date has changed what the site says. The daily
-# run builds only if something changed since the last publish: a file, or the
-# date's effect on the CV. RenderCV counts the length of each entry that ends
+# and once a day in case the date has changed what the site says. It also runs
+# on pull requests, short of publishing, so Dependabot's are tested before
+# they auto-merge (dependabot-auto-merge.yml). The daily run builds only if
+# something changed since the last publish: a file, or the date's effect on
+# the CV. RenderCV counts the length of each entry that ends
 # "present" (like "3 years 5 months") up to the day it renders, and the
 # footer's copyright range ends at the build year.
 
 on:
   push:
     branches: [main]
+  pull_request:
   schedule:
     # 15:17 UTC is mid-morning in Idaho, so the date is the same in UTC and in
     # both of Idaho's time zones
@@ -24,10 +27,10 @@ on:
 permissions:
   contents: read
 
-# One run at a time; a newer run waits rather than cancelling one that has
-# started
+# One run at a time per branch; a newer run waits rather than cancelling one
+# that has started
 concurrency:
-  group: pages
+  group: pages-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
@@ -77,8 +80,8 @@ jobs:
           fi
           echo "changed=$changed" >> "$GITHUB_OUTPUT"
 
-  # Runs whenever the changes job was skipped (a file changed on main) or
-  # found a change
+  # Runs whenever the changes job was skipped (every trigger but the daily
+  # one) or found a change
   build:
     needs: changes
     if: ${{ !cancelled() && (needs.changes.result == 'skipped' || needs.changes.outputs.changed == 'true') }}
@@ -135,7 +138,7 @@ jobs:
   deploy:
     # Runs whenever build succeeded, said outright: the changes job is skipped
     # on most runs, and GitHub can skip a job whose earlier jobs were skipped
-    if: ${{ !cancelled() && needs.build.result == 'success' }}
+    if: ${{ !cancelled() && needs.build.result == 'success' && github.event_name != 'pull_request' }}
     needs: build
     runs-on: ubuntu-latest
     permissions:
