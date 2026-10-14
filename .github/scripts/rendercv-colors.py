@@ -20,5 +20,5 @@ ROLES = {
 }
 
 config = Path(__file__).resolve().parents[2] / "_config.yml"
-palette = YAML(typ="safe").load(config)["palette"]
+palette = YAML(typ="safe").load(config.read_text())["palette"]
 print(" ".join(f"--design.colors.{role} {palette[color]}" for role, color in ROLES.items()))

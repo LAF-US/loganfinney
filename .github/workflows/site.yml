@@ -41,7 +41,7 @@ jobs:
       - name: Make TTF copies of the site's fonts for the PDF
         run: python3 .github/scripts/fonts-for-rendercv.py
       - name: Render the CV (HTML, Markdown and PDF)
-        run: rendercv render cv.yaml $(python3 .github/scripts/rendercv-colors.py) -nopng -o "$RUNNER_TEMP/rendercv"
+        run: colors=$(python3 .github/scripts/rendercv-colors.py) && rendercv render cv.yaml $colors -nopng -o "$RUNNER_TEMP/rendercv"
       - name: Put RenderCV's HTML on the site, and its PDF at /cv.pdf
         run: |
           python3 .github/scripts/rendercv-include.py "$RUNNER_TEMP/rendercv/Logan_Finney_CV.html"
