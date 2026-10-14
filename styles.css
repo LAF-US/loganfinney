@@ -120,6 +120,8 @@ body {
 }
 
 .logo,
+.hero .headline span,
+.rendercv h1,
 .contact-line,
 .rendercv h2,
 .rendercv p,
@@ -257,10 +259,10 @@ body {
 }
 
 /* The headline: DOCUMENTARY one line high, JOURNALIST two lines high, each
-   sized so the two words are the same width */
+   five sixths of its line */
 .hero .headline {
     font-family: var(--font-body);
-    font-size: 1.75rem;
+    font-size: 1.25rem;
     font-weight: 700;
     letter-spacing: -0.03em;
     text-transform: uppercase;
@@ -272,17 +274,9 @@ body {
     display: block;
 }
 
-.hero .headline-a {
-    line-height: 1.5rem;
-    position: relative;
-    top: 0.125rem;
-}
-
 .hero .headline-b {
-    font-size: 2.186rem;
+    font-size: 2.5rem;
     line-height: 3rem;
-    position: relative;
-    top: 0.0625rem;
 }
 
 /* ---------- Page scaffolding ---------- */
@@ -309,12 +303,10 @@ body {
    for each entry, then paragraphs and bulleted or numbered lists. Every line
    is one square tall, so it all sits on the grid */
 
-/* Sections: large capitals. At this size the centering nudge is under a
-   pixel, so it is left out */
+/* Sections: capitals one line high */
 .rendercv h1 {
     font-family: var(--font-body);
-    font-size: 2.5rem;
-    line-height: 3rem;
+    font-size: 1.25rem;
     padding-top: 1rlh;
     font-weight: 700;
     letter-spacing: -0.02em;
@@ -405,7 +397,7 @@ body {
     gap: 3rlh 1rlh;
     color: var(--ink-soft);
     font-family: var(--font-mono);
-    font-size: 0.875rem;
+    font-size: 0.75rem;
 }
 
 .footer-content a {
@@ -463,7 +455,7 @@ body {
     flex-wrap: wrap;
     gap: 0 1rlh;
     font-family: var(--font-mono);
-    font-size: 0.875rem;
+    font-size: 0.75rem;
     /* Bold labels; the handles beside them stay regular */
     font-weight: 700;
     color: var(--ink-soft);
@@ -512,12 +504,12 @@ a.contact-handle:hover,
     max-width: 68ch;
     padding-top: 1rlh;
     /* The contacts' rule is as wide as the contact box: its longest line,
-       in Cousine characters (0.6em each) at 0.875rem */
+       in Cousine characters (0.6em each) at 0.75rem */
     {%- assign email = "Email " | append: site.contact.email | size %}
     {%- assign signal = "Signal " | append: site.contact.signal.handle | size %}
     {%- assign whatsapp = "WhatsApp " | append: site.contact.whatsapp.handle | size %}
     {%- assign longest = email | at_least: signal | at_least: whatsapp %}
-    background: linear-gradient(var(--ink), var(--ink)) top left / min(calc({{ longest }} * 0.6 * 0.875rem), 100%) 1px no-repeat;
+    background: linear-gradient(var(--ink), var(--ink)) top left / min(calc({{ longest }} * 0.6 * 0.75rem), 100%) 1px no-repeat;
     color: var(--ink-soft);
 }
 
@@ -550,13 +542,13 @@ a.contact-handle:hover,
     bottom: 1rlh;
     margin: 0 0 1rlh;
     pointer-events: auto;
-    /* Four squares wide, enough for the longest caption (South Fork Payette), so both edges sit on grid lines */
-    width: 4rlh;
+    /* Six squares wide, enough for the longest caption (South Fork Payette), so both edges sit on grid lines */
+    width: 6rlh;
     min-height: 1rlh;
     padding: 0;
     text-align: center;
     font-family: var(--font-mono);
-    font-size: 0.5rem;
+    font-size: 0.75rem;
     line-height: 1.5rem;
     color: var(--ink);
     background-color: color-mix(in srgb, var(--bg) 75%, transparent);
