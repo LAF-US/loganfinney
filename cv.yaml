@@ -184,17 +184,10 @@ cv:
 design:
   theme: classic
   # The site's look (styles.css) without its grid: its fonts, ink and link
-  # colors, left alignment and underlined links. Fonts come from fonts/, as
-  # TTF files that .github/scripts/fonts-for-rendercv.py makes from the site's WOFF2
-  colors:
-    body: rgb(74, 70, 65)
-    name: rgb(19, 18, 17)
-    headline: rgb(19, 18, 17)
-    connections: rgb(74, 70, 65)
-    section_titles: rgb(19, 18, 17)
-    links: rgb(31, 79, 57)
-    footer: rgb(74, 70, 65)
-    top_note: rgb(74, 70, 65)
+  # colors, left alignment and underlined links. RenderCV reads the fonts from
+  # fonts/, as TTF files that .github/scripts/fonts-for-rendercv.py makes from
+  # the site's WOFF2, and the colors from _config.yml's palette, which
+  # .github/scripts/rendercv-colors.py passes in on each render
   typography:
     alignment: left
     font_family:

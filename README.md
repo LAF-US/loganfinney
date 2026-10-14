@@ -34,7 +34,7 @@ Chrome or Chromium.
 pip install "rendercv[full]==2.8" "fonttools[woff]==4.66.1"
 python3 .github/scripts/fonts-for-rendercv.py
 out=$(mktemp -d)
-rendercv render cv.yaml -nopng -o "$out"
+rendercv render cv.yaml $(python3 .github/scripts/rendercv-colors.py) -nopng -o "$out"
 python3 .github/scripts/rendercv-include.py "$out/Logan_Finney_CV.html"
 cp "$out/Logan_Finney_CV.pdf" cv.pdf
 jekyll build
