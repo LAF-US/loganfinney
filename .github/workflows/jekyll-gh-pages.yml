@@ -6,14 +6,20 @@ name: Deploy Jekyll with GitHub Pages dependencies preinstalled
 # the result. If any step fails, nothing is published and the live site keeps
 # its last good version.
 #
-# Runs on every push to main and by hand from the Actions tab, which is how
-# refresh-cv.yml starts it when time alone has changed the CV. Pull requests
-# run every step except publishing.
+# Runs on every push to main, by hand from the Actions tab, and once a day.
+# Pull requests run every step except publishing. The daily run builds only if
+# time alone has changed the site: RenderCV counts the length of each entry
+# that ends "present" (like "3 years 5 months") up to the day it renders, and
+# the footer's copyright range ends at the build year.
 
 on:
   push:
     branches: [main]
   pull_request:
+  schedule:
+    # 15:17 UTC is mid-morning in Idaho, so the date is the same in UTC and in
+    # both of Idaho's time zones
+    - cron: "17 15 * * *"
   workflow_dispatch:
 
 permissions:
@@ -27,7 +33,53 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  # On the daily run only: does the CV read differently today than at the
+  # last successful run? Renders it as of both dates and compares them
+  check:
+    if: github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      # To read this workflow's past runs
+      actions: read
+    outputs:
+      changed: ${{ steps.compare.outputs.changed }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.13"
+      - name: Install RenderCV (versions in .github/requirements.txt)
+        run: pip install -r .github/requirements.txt
+      - name: Compare the CV as of the last successful run with the CV today
+        id: compare
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          last=$(gh run list --workflow jekyll-gh-pages.yml --branch main --status success --limit 1 \
+            --json createdAt --jq '.[0].createdAt // "" | .[:10]')
+          today=$(date -u +%F)
+          changed=true
+          if [ -z "$last" ]; then
+            echo "No successful run found"
+          elif [ "${last:0:4}" != "${today:0:4}" ]; then
+            echo "The year has turned since the last successful run ($last)"
+          else
+            for date in "$last" "$today"; do
+              rendercv render cv.yaml --settings.current_date "$date" -nopdf -nopng -nohtml -o "$RUNNER_TEMP/$date" >/dev/null
+            done
+            if diff "$RUNNER_TEMP/$last/Logan_Finney_CV.md" "$RUNNER_TEMP/$today/Logan_Finney_CV.md"; then
+              echo "The CV reads the same as at the last successful run ($last)"
+              changed=false
+            fi
+          fi
+          echo "changed=$changed" >> "$GITHUB_OUTPUT"
+
+  # Runs whenever the check was skipped (every trigger but the daily one) or
+  # found a change
   build:
+    needs: check
+    if: ${{ !cancelled() && (needs.check.result == 'skipped' || needs.check.outputs.changed == 'true') }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -79,7 +131,9 @@ jobs:
           include-hidden-files: true
 
   deploy:
-    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    # Runs whenever build succeeded, said outright: the check job is skipped on
+    # most runs, and GitHub can skip a job whose earlier jobs were skipped
+    if: ${{ !cancelled() && needs.build.result == 'success' && github.ref == 'refs/heads/main' && github.event_name != 'pull_request' }}
     needs: build
     runs-on: ubuntu-latest
     permissions:
