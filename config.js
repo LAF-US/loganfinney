@@ -5,7 +5,7 @@ const HERO_DIR = 'images/hero/';
 const HERO_IMAGES = [
 {%- assign photos = site.static_files | where_exp: "file", "file.path contains '/images/hero/'" %}
 {%- for photo in photos %}
-    '{{ photo.name }}'{% unless forloop.last %},{% endunless %}
+    {{ photo.name | jsonify }}{% unless forloop.last %},{% endunless %}
 {%- endfor %}
 ];
 
