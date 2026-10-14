@@ -1,1 +1,5 @@
-{"subject":"acct:Logan@syringa.social","aliases":["https://syringa.social/@Logan","https://syringa.social/users/Logan"],"links":[{"rel":"http://webfinger.net/rel/profile-page","type":"text/html","href":"https://syringa.social/@Logan"},{"rel":"self","type":"application/activity+json","href":"https://syringa.social/users/Logan"},{"rel":"http://ostatus.org/schema/1.0/subscribe","template":"https://syringa.social/authorize_interaction?uri={uri}"}]}
+---
+---
+{%- assign user = site.fediverse | split: "@" | first -%}
+{%- assign host = site.fediverse | split: "@" | last -%}
+{"subject":"acct:{{ site.fediverse }}","aliases":["https://{{ host }}/@{{ user }}","https://{{ host }}/users/{{ user }}"],"links":[{"rel":"http://webfinger.net/rel/profile-page","type":"text/html","href":"https://{{ host }}/@{{ user }}"},{"rel":"self","type":"application/activity+json","href":"https://{{ host }}/users/{{ user }}"},{"rel":"http://ostatus.org/schema/1.0/subscribe","template":"https://{{ host }}/authorize_interaction?uri={uri}"}]}

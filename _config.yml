@@ -10,6 +10,8 @@ contact:
   whatsapp:
     handle: wa.me/loganfinney
     url: https://wa.me/loganfinney
+# The Mastodon account that .well-known/webfinger points fediverse lookups to
+fediverse: Logan@syringa.social
 # The site's ten colors, read by styles.css, favicon.svg, the theme-color tags,
 # theme.js and site.webmanifest
 palette:

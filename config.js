@@ -1,18 +1,12 @@
-// Hero Images Configuration
-// Edit this list to change the hero photo rotation
+---
+---
+// Hero photos: every image in images/hero/
 const HERO_DIR = 'images/hero/';
 const HERO_IMAGES = [
-    'priest-lake.jpg',
-    'state-capitol-pride.jpg',
-    'anderson-ranch.jpg',
-    'schweitzer.jpg',
-    'coeur-dalene.jpg',
-    'blackfoot.jpg',
-    'shoshone-falls.jpg',
-    'owyhee-reservoir.jpg',
-    'south-fork-payette.jpg',
-    'bruneau-river.jpg',
-    'state-capitol-protest.jpg'
+{%- assign photos = site.static_files | where_exp: "file", "file.path contains '/images/hero/'" %}
+{%- for photo in photos %}
+    '{{ photo.name }}'{% unless forloop.last %},{% endunless %}
+{%- endfor %}
 ];
 
 // Caption shown with each photo, by file name. Leave a photo out to show no caption.
