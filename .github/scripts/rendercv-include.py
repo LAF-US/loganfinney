@@ -4,9 +4,9 @@ Run after `rendercv render cv.yaml` (RenderCV 2.8). Reads the HTML RenderCV
 generated and writes everything inside its <article class="markdown-body">
 to _includes/rendercv.html, which index.html includes. Copies the Markdown
 RenderCV generated beside it to _includes/rendercv.md, which index.html.md
-and llms-full.txt include. The Site workflow (.github/workflows/site.yml)
-runs both on every build; the files are not committed, so run them yourself
-before building the site locally.
+and llms-full.txt include. The deploy workflow
+(.github/workflows/jekyll-gh-pages.yml) runs both on every build; the files
+are not committed, so run them yourself before building the site locally.
 
 Usage: python3 .github/scripts/rendercv-include.py rendercv_output/Logan_Finney_CV.html
 """

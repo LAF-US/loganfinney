@@ -8,3 +8,7 @@ updates:
     directory: /.github/tests
     schedule:
       interval: weekly
+  - package-ecosystem: pip
+    directory: /.github
+    schedule:
+      interval: weekly

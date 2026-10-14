@@ -2,4 +2,4 @@
 
 ## Checks
 
-- [ ] The Site workflow passes (build, CV render and WCAG checks)
+- [ ] The Deploy Jekyll workflow passes (build, CV render and WCAG checks)
