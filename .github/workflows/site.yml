@@ -36,8 +36,10 @@ jobs:
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: "3.13"
-      - name: Install RenderCV, and fontTools to convert the site's fonts for its PDF
-        run: pip install "rendercv[full]==2.8" "fonttools[woff]==4.66.1"
+      - name: Install RenderCV, fontTools to convert the site's fonts for its PDF, and resvg-py and Pillow to draw the icons
+        run: pip install "rendercv[full]==2.8" "fonttools[woff]==4.66.1" "resvg-py==0.5.0" "pillow==12.3.0"
+      - name: Draw the favicon and app icons from favicon.svg
+        run: python3 .github/scripts/icons.py
       - name: Make TTF copies of the site's fonts for the PDF
         run: python3 .github/scripts/fonts-for-rendercv.py
       - name: Render the CV (HTML, Markdown and PDF)
