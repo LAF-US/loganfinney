@@ -23,7 +23,7 @@ redirect_from:
             </div>
 
             <div class="hero-content">
-                <p class="headline p-job-title"><span class="headline-a">Documentary</span> <span class="headline-b">Journalist</span></p>
+                <p class="headline p-job-title">{% assign words = site.data.cv.cv.headline | split: " " %}<span class="headline-a">{{ words.first }}</span> <span class="headline-b">{{ words | shift | join: " " }}</span></p>
                 {% include contact.html %}
                 <div class="hero-bio"><p class="p-note">{{ site.description }}</p></div>
             </div>

@@ -2,9 +2,9 @@
 ---
 BEGIN:VCARD
 VERSION:3.0
-N:Finney;Logan;;;
-FN:Logan Finney
-TITLE:Documentary Journalist
+{% assign names = site.data.cv.cv.name | split: " " %}N:{{ names.last }};{{ names | pop | join: " " }};;;
+{% include vcard-line.txt property="FN:" value=site.data.cv.cv.name %}
+{% include vcard-line.txt property="TITLE:" value=site.data.cv.cv.headline %}
 {% include vcard-line.txt property="EMAIL;TYPE=INTERNET:" value=site.contact.email %}
 {% assign u = site.url | append: "/" %}{% include vcard-line.txt property="URL:" value=u %}
 {% include vcard-line.txt property="X-SOCIALPROFILE;TYPE=signal:" value=site.contact.signal.url %}
