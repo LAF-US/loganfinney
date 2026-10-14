@@ -1,2 +1,2 @@
-{%- assign l = include.key | append: include.value -%}{{ l | slice: 0, 75 }}{%- assign n = l.size | minus: 2 | divided_by: 74 -%}{%- for i in (1..n) -%}{%- assign s = i | times: 74 | plus: 1 %}
+{%- assign l = include.property | append: include.value -%}{{ l | slice: 0, 75 }}{%- assign n = l.size | minus: 2 | divided_by: 74 -%}{%- for i in (1..n) -%}{%- assign s = i | times: 74 | plus: 1 %}
  {{ l | slice: s, 74 }}{%- endfor -%}

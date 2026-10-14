@@ -5,8 +5,8 @@ VERSION:3.0
 N:Finney;Logan;;;
 FN:Logan Finney
 TITLE:Documentary Journalist
-{% include vcard-line.txt key="EMAIL;TYPE=INTERNET:" value=site.contact.email %}
-{% assign u = site.url | append: "/" %}{% include vcard-line.txt key="URL:" value=u %}
-{% include vcard-line.txt key="X-SOCIALPROFILE;TYPE=signal:" value=site.contact.signal.url %}
-{% include vcard-line.txt key="X-SOCIALPROFILE;TYPE=whatsapp:" value=site.contact.whatsapp.url %}
+{% include vcard-line.txt property="EMAIL;TYPE=INTERNET:" value=site.contact.email %}
+{% assign u = site.url | append: "/" %}{% include vcard-line.txt property="URL:" value=u %}
+{% include vcard-line.txt property="X-SOCIALPROFILE;TYPE=signal:" value=site.contact.signal.url %}
+{% include vcard-line.txt property="X-SOCIALPROFILE;TYPE=whatsapp:" value=site.contact.whatsapp.url %}
 END:VCARD
