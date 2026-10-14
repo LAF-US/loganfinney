@@ -104,31 +104,20 @@ p {
 
 /* ---------- Baselines ---------- */
 
-/* Text sits centered in its squares: each line of type is nudged so its
-   capitals have an equal gap above and below inside the square. The nudge
-   depends on the typeface's ascent minus descent (--ad, in ems) and its cap
-   height (--cap, in ems). Rules and boxes stay where they are */
-body {
-    --ad: 0.346;           /* DejaVu Sans */
-    --cap: 0.729;
-}
-
-.contact-line,
-.footer-content{
-    --ad: 0.266;           /* Cousine */
-    --cap: 0.659;
-}
-
+/* Text sits centered in its squares: each block is trimmed to its first
+   line's capitals and last line's baseline, then given back half of what
+   the line has beyond its capitals above and below, so the capitals have
+   an equal gap above and below inside every square */
 .logo,
 .hero .headline span,
 .rendercv h1,
-.contact-line,
+.contact-line > .fl,
 .rendercv h2,
 .rendercv p,
 .hero-bio p,
 .footer-content p {
-    position: relative;
-    top: calc((var(--cap) / 2 - var(--ad)) * 1em);
+    text-box: trim-both cap alphabetic;
+    padding-block: calc((1lh - 1cap) / 2);
 }
 
 /* ---------- Header ---------- */
@@ -307,7 +296,8 @@ body {
 .rendercv h1 {
     font-family: var(--font-body);
     font-size: 1.25rem;
-    padding-top: 1rlh;
+    /* A blank square above, plus the centering gap */
+    padding-top: calc(1rlh + (1lh - 1cap) / 2);
     font-weight: 700;
     letter-spacing: -0.02em;
     text-transform: uppercase;
@@ -411,12 +401,6 @@ body {
     color: var(--accent);
 }
 
-/* Each footer phrase stays whole: a line that doesn't fit breaks between
-   phrases, never inside one */
-.footer-content .fl {
-    display: inline-block;
-}
-
 /* The colophon is set in italic */
 .colophon {
     font-style: italic;
@@ -502,7 +486,8 @@ a.contact-handle:hover,
 .hero-bio p {
     width: fit-content;
     max-width: 68ch;
-    padding-top: 1rlh;
+    /* A blank square under the rule, plus the centering gap */
+    padding-top: calc(1rlh + (1lh - 1cap) / 2);
     /* The contacts' rule is as wide as the contact box: its longest line,
        in Cousine characters (0.6em each) at 0.75rem */
     {%- assign email = "Email " | append: site.contact.email | size %}

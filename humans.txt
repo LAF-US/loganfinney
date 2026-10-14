@@ -2,7 +2,7 @@
 ---
 /* TEAM */
 Journalist: {{ site.data.cv.cv.name }}
-Contact: {{ site.contact.email | replace: "@", " [at] " }}
+Contact: {{ site.contact.email }}
 From: Idaho, USA
 
 /* SITE */

@@ -5,9 +5,6 @@
     <meta name="color-scheme" content="light dark">
     <meta name="theme-color" content="{{ site.palette.blue-dark }}" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="{{ site.palette.blue-light }}" media="(prefers-color-scheme: dark)">
-    {%- if page.refresh_to %}
-    <meta http-equiv="refresh" content="0; url={{ page.refresh_to | relative_url }}">
-    {%- endif %}
     {%- include seo.html %}
     <link rel="author" href="{{ '/humans.txt' | relative_url }}">
     <link rel="icon" href="{{ '/favicon.ico' | relative_url }}" sizes="any">
