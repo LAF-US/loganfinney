@@ -8,8 +8,8 @@ name: Deploy Jekyll with GitHub Pages dependencies preinstalled
 #
 # The site changes two ways, so it runs on each: when a file changes on main,
 # and once a day in case the date has changed what the site says. It also runs
-# on pull requests, short of publishing, so Dependabot's are tested before
-# they auto-merge (dependabot-auto-merge.yml). The daily run builds only if
+# on pull requests, short of publishing, so each proposed change (Dependabot's
+# included) is tested before a person merges it. The daily run builds only if
 # something changed since the last publish: a file, or the date's effect on
 # the CV. RenderCV counts the length of each entry that ends
 # "present" (like "3 years 5 months") up to the day it renders, and the
