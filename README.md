@@ -8,18 +8,18 @@ Pages.
 
 ## How it is built
 
-The Site workflow ([`.github/workflows/site.yml`](.github/workflows/site.yml))
+The Site workflow ([`.github/workflows/site.yml`](https://github.com/LAF-US/loganfinney/blob/main/.github/workflows/site.yml))
 builds and publishes the site on every push to `main`, once a day and by hand.
 Pull requests run every step except publishing. Each run:
 
 1. Makes TTF copies of the site's fonts for the PDF
-   ([`.github/scripts/fonts-for-rendercv.py`](.github/scripts/fonts-for-rendercv.py)).
+   ([`.github/scripts/fonts-for-rendercv.py`](https://github.com/LAF-US/loganfinney/blob/main/.github/scripts/fonts-for-rendercv.py)).
 2. Renders `cv.yaml` with RenderCV to HTML, Markdown and PDF.
 3. Puts RenderCV's HTML and Markdown on the site
-   ([`.github/scripts/rendercv-include.py`](.github/scripts/rendercv-include.py)) and its PDF
+   ([`.github/scripts/rendercv-include.py`](https://github.com/LAF-US/loganfinney/blob/main/.github/scripts/rendercv-include.py)) and its PDF
    at `/cv.pdf`.
 4. Builds the site with Jekyll.
-5. Checks the built site against WCAG with pa11y-ci ([`.github/tests/`](.github/tests)).
+5. Checks the built site against WCAG with pa11y-ci ([`.github/tests/`](https://github.com/LAF-US/loganfinney/tree/main/.github/tests)).
 6. Publishes it, if every step passed.
 
 Nothing the build makes is committed.
@@ -61,7 +61,7 @@ PDF's look; the site's look is in [`styles.css`](styles.css).
   Deschamps's
   [doom-fire-algorithm](https://github.com/filipedeschamps/doom-fire-algorithm)
   (MIT License; see [`fire.js`](fire.js)).
-- Typefaces: DejaVu Sans, Gelasio and Cousine, served from [`fonts/`](fonts)
+- Typefaces: DejaVu Sans, Gelasio and Cousine, served from [`fonts/`](https://github.com/LAF-US/loganfinney/tree/main/fonts)
   with their licenses.
 
 ## License
