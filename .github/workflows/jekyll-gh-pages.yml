@@ -33,8 +33,10 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  # On the daily run only: does the CV read differently today than at the
-  # last successful run? Renders it as of both dates and compares them
+  # On the daily run only: has anything changed since the last successful
+  # run? A push can go unpublished if this run bumps it from the queue, so
+  # first compare the files; if they match, render the CV as of both dates
+  # and compare that
   check:
     if: github.event_name == 'schedule'
     runs-on: ubuntu-latest
@@ -56,12 +58,14 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          last=$(gh run list --workflow jekyll-gh-pages.yml --branch main --status success --limit 1 \
-            --json createdAt --jq '.[0].createdAt // "" | .[:10]')
+          read -r last commit < <(gh run list --workflow jekyll-gh-pages.yml --branch main --status success --limit 1 \
+            --json createdAt,headSha --jq '.[0] // {} | "\(.createdAt // "" | .[:10]) \(.headSha // "")"')
           today=$(date -u +%F)
           changed=true
           if [ -z "$last" ]; then
             echo "No successful run found"
+          elif [ "$commit" != "$GITHUB_SHA" ]; then
+            echo "The site's files have changed since the last successful run ($last)"
           elif [ "${last:0:4}" != "${today:0:4}" ]; then
             echo "The year has turned since the last successful run ($last)"
           else
