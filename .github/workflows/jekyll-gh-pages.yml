@@ -6,30 +6,28 @@ name: Deploy Jekyll with GitHub Pages dependencies preinstalled
 # the result. If any step fails, nothing is published and the live site keeps
 # its last good version.
 #
-# Runs on every push to main, by hand from the Actions tab, and once a day.
-# Pull requests run every step except publishing. The daily run builds only if
-# time alone has changed the site: RenderCV counts the length of each entry
-# that ends "present" (like "3 years 5 months") up to the day it renders, and
-# the footer's copyright range ends at the build year.
+# The site changes two ways, so it runs on each: when a file changes on main,
+# and once a day in case the date has changed what the site says. The daily
+# run builds only if something changed since the last publish: a file, or the
+# date's effect on the CV. RenderCV counts the length of each entry that ends
+# "present" (like "3 years 5 months") up to the day it renders, and the
+# footer's copyright range ends at the build year.
 
 on:
   push:
     branches: [main]
-  pull_request:
   schedule:
     # 15:17 UTC is mid-morning in Idaho, so the date is the same in UTC and in
     # both of Idaho's time zones
     - cron: "17 15 * * *"
-  workflow_dispatch:
 
 permissions:
   contents: read
 
-# One run at a time per branch, so a pull request's checks never displace a
-# waiting publish from main; a newer run waits rather than cancelling one that
-# has started
+# One run at a time; a newer run waits rather than cancelling one that has
+# started
 concurrency:
-  group: pages-${{ github.ref }}
+  group: pages
   cancel-in-progress: false
 
 jobs:
@@ -79,8 +77,8 @@ jobs:
           fi
           echo "changed=$changed" >> "$GITHUB_OUTPUT"
 
-  # Runs whenever the check was skipped (every trigger but the daily one) or
-  # found a change
+  # Runs whenever the check was skipped (a file changed on main) or found a
+  # change
   build:
     needs: check
     if: ${{ !cancelled() && (needs.check.result == 'skipped' || needs.check.outputs.changed == 'true') }}
@@ -137,7 +135,7 @@ jobs:
   deploy:
     # Runs whenever build succeeded, said outright: the check job is skipped on
     # most runs, and GitHub can skip a job whose earlier jobs were skipped
-    if: ${{ !cancelled() && needs.build.result == 'success' && github.ref == 'refs/heads/main' && github.event_name != 'pull_request' }}
+    if: ${{ !cancelled() && needs.build.result == 'success' }}
     needs: build
     runs-on: ubuntu-latest
     permissions:
