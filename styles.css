@@ -107,17 +107,20 @@ p {
 /* Text sits centered in its squares: each block is trimmed to its first
    line's capitals and last line's baseline, then given back half of what
    the line has beyond its capitals above and below, so the capitals have
-   an equal gap above and below inside every square */
-.logo,
-.hero .headline span,
-.rendercv h1,
-.contact-line > .fl,
-.rendercv h2,
-.rendercv p,
-.hero-bio p,
-.footer-content p {
-    text-box: trim-both cap alphabetic;
-    padding-block: calc((1lh - 1cap) / 2);
+   an equal gap above and below inside every square. Browsers without
+   text-box trimming leave the text at its normal place in its squares */
+@supports (text-box: trim-both cap alphabetic) {
+    .logo,
+    .hero .headline span,
+    .rendercv h1,
+    .contact-line > .fl,
+    .rendercv h2,
+    .rendercv p,
+    .hero-bio p,
+    .footer-content p {
+        text-box: trim-both cap alphabetic;
+        padding-block: calc((1lh - 1cap) / 2);
+    }
 }
 
 /* ---------- Header ---------- */
@@ -296,14 +299,20 @@ p {
 .rendercv h1 {
     font-family: var(--font-body);
     font-size: 1.25rem;
-    /* A blank square above, plus the centering gap */
-    padding-top: calc(1rlh + (1lh - 1cap) / 2);
+    padding-top: 1rlh;
     font-weight: 700;
     letter-spacing: -0.02em;
     text-transform: uppercase;
     margin: 2rlh 0 1rlh;
     hyphens: auto;
     overflow-wrap: break-word;
+}
+
+/* With text-box trimming: the blank square plus the centering gap */
+@supports (text-box: trim-both cap alphabetic) {
+    .rendercv h1 {
+        padding-top: calc(1rlh + (1lh - 1cap) / 2);
+    }
 }
 
 .rendercv h1:first-child {
@@ -486,8 +495,7 @@ a.contact-handle:hover,
 .hero-bio p {
     width: fit-content;
     max-width: 68ch;
-    /* A blank square under the rule, plus the centering gap */
-    padding-top: calc(1rlh + (1lh - 1cap) / 2);
+    padding-top: 1rlh;
     /* The contacts' rule is as wide as the contact box: its longest line,
        in Cousine characters (0.6em each) at 0.75rem */
     {%- assign email = "Email " | append: site.contact.email | size %}
@@ -496,6 +504,13 @@ a.contact-handle:hover,
     {%- assign longest = email | at_least: signal | at_least: whatsapp %}
     background: linear-gradient(var(--ink), var(--ink)) top left / min(calc({{ longest }} * 0.6 * 0.75rem), 100%) 1px no-repeat;
     color: var(--ink-soft);
+}
+
+/* With text-box trimming: the blank square plus the centering gap */
+@supports (text-box: trim-both cap alphabetic) {
+    .hero-bio p {
+        padding-top: calc(1rlh + (1lh - 1cap) / 2);
+    }
 }
 
 /* The photo's frame, the same box as the photo, with the content column inside */
