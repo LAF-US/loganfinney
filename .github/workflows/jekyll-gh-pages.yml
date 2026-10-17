@@ -27,6 +27,14 @@ on:
 permissions:
   contents: read
 
+# Every pip install takes only versions uploaded at least 7 days ago, the same
+# wait Dependabot keeps (.github/dependabot.yml), including the packages that
+# no file pins because RenderCV and the others bring them in. pip 26.1 and
+# newer follow this; older ones ignore it, so each job installs that pip first
+# (.github/requirements-pip.txt)
+env:
+  PIP_UPLOADED_PRIOR_TO: P7D
+
 # One run at a time per branch; a newer run waits rather than cancelling one
 # that has started
 concurrency:
@@ -52,6 +60,8 @@ jobs:
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: "3.13"
+      - name: Install pip (version in .github/requirements-pip.txt)
+        run: python3 -m pip install -r .github/requirements-pip.txt
       - name: Install RenderCV (versions in .github/requirements.txt)
         run: pip install -r .github/requirements.txt
       - name: Use LAF-US's copy of RenderCV if the regular one can't read cv.yaml (.github/scripts/rendercv-copy.py)
@@ -93,6 +103,8 @@ jobs:
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: "3.13"
+      - name: Install pip (version in .github/requirements-pip.txt)
+        run: python3 -m pip install -r .github/requirements-pip.txt
       - name: Install RenderCV, fontTools, resvg-py and Pillow (versions in .github/requirements.txt)
         run: pip install -r .github/requirements.txt
       - name: Use LAF-US's copy of RenderCV if the regular one can't read cv.yaml (.github/scripts/rendercv-copy.py)
