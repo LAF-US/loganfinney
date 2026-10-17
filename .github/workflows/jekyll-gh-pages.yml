@@ -54,6 +54,8 @@ jobs:
           python-version: "3.13"
       - name: Install RenderCV (versions in .github/requirements.txt)
         run: pip install -r .github/requirements.txt
+      - name: Use LAF-US's copy of RenderCV if the regular one can't read cv.yaml (.github/scripts/rendercv-copy.py)
+        run: python3 .github/scripts/rendercv-copy.py
       - name: Compare the CV as of the last successful run with the CV today
         id: compare
         env:
@@ -93,6 +95,8 @@ jobs:
           python-version: "3.13"
       - name: Install RenderCV, fontTools, resvg-py and Pillow (versions in .github/requirements.txt)
         run: pip install -r .github/requirements.txt
+      - name: Use LAF-US's copy of RenderCV if the regular one can't read cv.yaml (.github/scripts/rendercv-copy.py)
+        run: python3 .github/scripts/rendercv-copy.py
       - name: Draw the favicon and app icons from favicon.svg
         run: python3 .github/scripts/icons.py
       - name: Make TTF copies of the site's fonts for the PDF
