@@ -1,0 +1,20 @@
+---
+---
+# {{ site.data.cv.cv.name }}
+
+> {{ site.description }}
+
+## CV
+
+- [{{ site.data.cv.cv.name }}'s CV]({{ "/index.html.md" | absolute_url }}): the CV on the home page, in Markdown
+{%- if site.data.cv.cv.custom_connections %}
+
+## Profiles
+{% for connection in site.data.cv.cv.custom_connections %}
+- [{{ connection.placeholder }}]({{ connection.url }})
+{%- endfor %}
+{%- endif %}
+
+## Optional
+
+- [Full text]({{ "/llms-full.txt" | absolute_url }}): this summary and the whole CV in one file

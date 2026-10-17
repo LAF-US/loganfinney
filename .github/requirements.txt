@@ -1,0 +1,12 @@
+# The Python packages the workflows install, at exact versions; Dependabot
+# keeps them current (.github/dependabot.yml). The packages these bring in
+# aren't pinned, but pip takes only versions at least 7 days old
+# (PIP_UPLOADED_PRIOR_TO in .github/workflows/jekyll-gh-pages.yml)
+
+# Renders cv.yaml as the site's CV and its PDF
+rendercv[full]==2.8
+# Converts the site's WOFF2 fonts to TTF for the PDF
+fonttools[woff]==4.66.1
+# Draw the favicon and app icons from favicon.svg
+resvg-py==0.5.0
+pillow==12.3.0

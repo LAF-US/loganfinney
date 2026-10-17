@@ -1,0 +1,4 @@
+# pip itself, installed before .github/requirements.txt: pip 26.1 and newer
+# follow PIP_UPLOADED_PRIOR_TO (.github/workflows/jekyll-gh-pages.yml), and
+# older ones ignore it. Dependabot keeps it current (.github/dependabot.yml)
+pip==26.2.1

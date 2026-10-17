@@ -17,3 +17,15 @@ node_modules/
 # Build artifacts
 dist/
 build/
+
+# Made at build time by RenderCV (.github/scripts/rendercv-include.py and the Site workflow)
+_includes/rendercv.html
+_includes/rendercv.md
+cv.pdf
+fonts/*.ttf
+
+# Drawn from favicon.svg at build time (.github/scripts/icons.py)
+favicon.ico
+apple-touch-icon.png
+icon-192.png
+icon-512.png

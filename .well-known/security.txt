@@ -1,0 +1,6 @@
+---
+---
+Contact: mailto:{{ site.contact.email }}
+Expires: 2027-10-12T00:00:00.000Z
+Canonical: {{ site.url }}/.well-known/security.txt
+Preferred-Languages: en

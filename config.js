@@ -1,21 +1,72 @@
-// Hero Images Configuration
-// Edit this list to change the hero photo rotation
+---
+---
+// Hero photos: every image in images/hero/
 const HERO_DIR = 'images/hero/';
 const HERO_IMAGES = [
-    '278.jpg',
-    '334.jpg',
-    '260.jpg',
-    '177.jpg'
+{%- assign photos = site.static_files | where_exp: "file", "file.path contains '/images/hero/'" %}
+{%- for photo in photos %}
+    {{ photo.name | jsonify }}{% unless forloop.last %},{% endunless %}
+{%- endfor %}
 ];
+
+// Caption shown with each photo, by file name. Leave a photo out to show no caption.
+const HERO_CAPTIONS = {
+    'priest-lake.jpg': 'Priest Lake',
+    'state-capitol-pride.jpg': 'State Capitol',
+    'anderson-ranch.jpg': 'Anderson Ranch',
+    'schweitzer.jpg': 'Schweitzer',
+    'coeur-dalene.jpg': "Coeur d'Alene",
+    'blackfoot.jpg': 'Blackfoot',
+    'shoshone-falls.jpg': 'Shoshone Falls',
+    'owyhee-reservoir.jpg': 'Owyhee Reservoir',
+    'south-fork-payette.jpg': 'South Fork Payette',
+    'bruneau-river.jpg': 'Bruneau River',
+    'state-capitol-protest.jpg': 'State Capitol'
+};
+
+// Shuffle the photo order once per visit (Fisher-Yates), so every photo shows
+// once per cycle. The order is kept for the rest of the visit and reshuffled
+// on the next one.
+function shuffleHeroImages() {
+    const key = 'heroOrder';
+    let saved = null;
+    try {
+        saved = JSON.parse(sessionStorage.getItem(key));
+    } catch {
+        saved = null;
+    }
+    const sameSet = Array.isArray(saved)
+        && saved.length === HERO_IMAGES.length
+        && new Set(saved).size === HERO_IMAGES.length
+        && saved.every((name) => HERO_IMAGES.includes(name));
+    let order = HERO_IMAGES.slice();
+    if (sameSet) {
+        order = saved;
+    } else {
+        for (let i = order.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [order[i], order[j]] = [order[j], order[i]];
+        }
+        try {
+            sessionStorage.setItem(key, JSON.stringify(order));
+        } catch {
+            // Storage unavailable: the order still holds for this page view
+        }
+    }
+    HERO_IMAGES.splice(0, HERO_IMAGES.length, ...order);
+}
 
 // Initialize hero image rotation
 function initHeroRotation() {
     const layers = document.querySelectorAll('.hero-bg');
+    const captions = document.querySelectorAll('.photo-caption');
 
-    // Pages without a hero section (resume, work) load this script too
+    // Nothing to rotate without the hero layers and photos
     if (layers.length < 2 || HERO_IMAGES.length === 0) {
         return;
     }
+
+    shuffleHeroImages();
 
     let current = 0;
     let front = 0;
@@ -25,13 +76,16 @@ function initHeroRotation() {
     function show(index, layer) {
         const name = HERO_IMAGES[index];
         layers[layer].style.setProperty('--photo', `url('${HERO_DIR}${name}')`);
+        captions.forEach((c) => {
+            c.textContent = HERO_CAPTIONS[name] || '';
+        });
     }
 
     // Show the first photo that loads, so a missing file never leaves the hero empty
     function showFirst(index) {
         const img = new Image();
         let settled = false;
-        // A photo that fails, or doesn't answer within 10 seconds, hands off to the next one
+        // A photo that fails, or doesn't answer within 7 seconds, hands off to the next one
         const tryNext = () => {
             if (settled) {
                 return;
@@ -41,7 +95,7 @@ function initHeroRotation() {
                 showFirst(index + 1);
             }
         };
-        const timedOut = setTimeout(tryNext, 10000);
+        const timedOut = setTimeout(tryNext, 7000);
         img.onload = () => {
             clearTimeout(timedOut);
             if (settled) {
@@ -68,7 +122,7 @@ function initHeroRotation() {
     let timer = null;
     let loading = false;
 
-    // Load the next photo first so the crossfade never reveals a blank layer.
+    // Load the next photo first so the switch never reveals a blank layer.
     // Only one load runs at a time, and a photo that fails to load is skipped.
     function rotate() {
         if (!ready || loading) {
@@ -134,16 +188,23 @@ function initThemeToggle() {
     const root = document.documentElement;
     const currentTheme = () => root.getAttribute('data-theme') ||
         (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-    const syncPressed = () => themeToggle.setAttribute('aria-pressed', String(currentTheme() === 'dark'));
-    syncPressed();
+
+    // The label names the theme the button switches to, for screen readers
+    const updateLabel = () => {
+        const next = currentTheme() === 'dark' ? 'light' : 'dark';
+        themeToggle.setAttribute('aria-label', `Switch to ${next} theme`);
+    };
+    updateLabel();
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateLabel);
 
     themeToggle.addEventListener('click', () => {
         const next = currentTheme() === 'dark' ? 'light' : 'dark';
         root.setAttribute('data-theme', next);
-        syncPressed();
+        setThemeColor(next);
+        updateLabel();
         try {
-            localStorage.setItem('theme', next);
-        } catch (e) {
+            sessionStorage.setItem('theme', next);
+        } catch {
             // Ignore storage failures; the toggle still works for this page view.
         }
     });

@@ -1,51 +1,169 @@
-# Sample workflow for building and deploying a Jekyll site to GitHub Pages
 name: Deploy Jekyll with GitHub Pages dependencies preinstalled
 
+# Builds loganfinney.com and publishes it to GitHub Pages (Settings → Pages →
+# Source: GitHub Actions). Nothing is committed: each run renders cv.yaml with
+# RenderCV, builds the site with Jekyll, tests it against WCAG AAA, and publishes
+# the result. If any step fails, nothing is published and the live site keeps
+# its last good version.
+#
+# The site changes two ways, so it runs on each: when a file changes on main,
+# and once a day in case the date has changed what the site says. It also runs
+# on pull requests, short of publishing, so each proposed change (Dependabot's
+# included) is tested before a person merges it. The daily run builds only if
+# something changed since the last publish: a file, or the date's effect on
+# the CV. RenderCV counts the length of each entry that ends
+# "present" (like "3 years 5 months") up to the day it renders, and the
+# footer's copyright range ends at the build year.
+
 on:
-  # Runs on pushes targeting the default branch
   push:
-    branches: ["main"]
+    branches: [main]
+  pull_request:
+  schedule:
+    # 15:17 UTC is mid-morning in Idaho, so the date is the same in UTC and in
+    # both of Idaho's time zones
+    - cron: "17 15 * * *"
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+# Every pip install takes only versions uploaded at least 7 days ago, the same
+# wait Dependabot keeps (.github/dependabot.yml), including the packages that
+# no file pins because RenderCV and the others bring them in. pip 26.1 and
+# newer follow this; older ones ignore it, so each job installs that pip first
+# (.github/requirements-pip.txt)
+env:
+  PIP_UPLOADED_PRIOR_TO: P7D
+
+# One run at a time per branch; a newer run waits rather than cancelling one
+# that has started
 concurrency:
-  group: "pages"
+  group: pages-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
-  # Build job
+  # On the daily run only: has anything changed since the last successful
+  # run? A push can go unpublished if this run bumps it from the queue, so
+  # first compare the files; if they match, render the CV as of both dates
+  # and compare that
+  changes:
+    if: github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      # To read this workflow's past runs
+      actions: read
+    outputs:
+      changed: ${{ steps.compare.outputs.changed }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.13"
+      - name: Install pip (version in .github/requirements-pip.txt)
+        run: python3 -m pip install -r .github/requirements-pip.txt
+      - name: Install RenderCV (versions in .github/requirements.txt)
+        run: pip install -r .github/requirements.txt
+      - name: Use LAF-US's copy of RenderCV if the regular one can't read cv.yaml (.github/scripts/rendercv-copy.py)
+        run: python3 .github/scripts/rendercv-copy.py
+      - name: Compare the CV as of the last successful run with the CV today
+        id: compare
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          read -r last commit < <(gh run list --workflow jekyll-gh-pages.yml --branch main --status success --limit 1 \
+            --json createdAt,headSha --jq '.[0] // {} | "\(.createdAt // "" | .[:10]) \(.headSha // "")"')
+          today=$(date -u +%F)
+          changed=true
+          if [ -z "$last" ]; then
+            echo "No successful run found"
+          elif [ "$commit" != "$GITHUB_SHA" ]; then
+            echo "The site's files have changed since the last successful run ($last)"
+          elif [ "${last:0:4}" != "${today:0:4}" ]; then
+            echo "The year has turned since the last successful run ($last)"
+          else
+            for date in "$last" "$today"; do
+              rendercv render cv.yaml --settings.current_date "$date" -nopdf -nopng -nohtml -o "$RUNNER_TEMP/$date" >/dev/null
+            done
+            if diff "$RUNNER_TEMP/$last/Logan_Finney_CV.md" "$RUNNER_TEMP/$today/Logan_Finney_CV.md"; then
+              echo "The CV reads the same as at the last successful run ($last)"
+              changed=false
+            fi
+          fi
+          echo "changed=$changed" >> "$GITHUB_OUTPUT"
+
+  # Runs whenever the changes job was skipped (every trigger but the daily
+  # one) or found a change
   build:
+    needs: changes
+    if: ${{ !cancelled() && (needs.changes.result == 'skipped' || needs.changes.outputs.changed == 'true') }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-      - name: Build with Jekyll
-        uses: actions/jekyll-build-pages@v1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.13"
+      - name: Install pip (version in .github/requirements-pip.txt)
+        run: python3 -m pip install -r .github/requirements-pip.txt
+      - name: Install RenderCV, fontTools, resvg-py and Pillow (versions in .github/requirements.txt)
+        run: pip install -r .github/requirements.txt
+      - name: Use LAF-US's copy of RenderCV if the regular one can't read cv.yaml (.github/scripts/rendercv-copy.py)
+        run: python3 .github/scripts/rendercv-copy.py
+      - name: Draw the favicon and app icons from favicon.svg
+        run: python3 .github/scripts/icons.py
+      - name: Make TTF copies of the site's fonts for the PDF
+        run: python3 .github/scripts/fonts-for-rendercv.py
+      - name: Render the CV (HTML, Markdown and PDF)
+        run: |
+          options=$(python3 .github/scripts/rendercv-options.py)
+          mapfile -t options <<< "$options"
+          rendercv render cv.yaml "${options[@]}" -nopng -o "$RUNNER_TEMP/rendercv"
+      - name: Put RenderCV's HTML on the site, and its PDF at /cv.pdf
+        run: |
+          python3 .github/scripts/rendercv-include.py "$RUNNER_TEMP/rendercv/Logan_Finney_CV.html"
+          cp "$RUNNER_TEMP/rendercv/Logan_Finney_CV.pdf" cv.pdf
+      - name: Build site (same as GitHub Pages)
+        uses: actions/jekyll-build-pages@44a6e6beabd48582f863aeeb6cb2151cc1716697 # v1.0.13
         with:
           source: ./
           destination: ./_site
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: Serve built site
+        run: |
+          (python3 -m http.server 8000 -d _site >/dev/null 2>&1 &)
+          timeout 30 bash -c 'until curl -sf http://localhost:8000/ >/dev/null; do sleep 0.5; done'
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22
+      - name: Install pa11y-ci (exact versions from .github/tests/package-lock.json)
+        working-directory: .github/tests
+        run: npm ci --ignore-scripts
+      - name: Confirm the runner has Chrome
+        run: test -x /usr/bin/google-chrome || { echo "::error::Google Chrome is missing from the runner image at /usr/bin/google-chrome"; exit 1; }
+      - name: Test the home and 404 pages against WCAG AAA (pa11y-ci, settings in .github/tests/.pa11yci.json)
+        working-directory: .github/tests
+        env:
+          PUPPETEER_EXECUTABLE_PATH: /usr/bin/google-chrome
+        run: npm test
+      - name: Package the site for Pages
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: ./_site
+          # .well-known starts with a dot
+          include-hidden-files: true
 
-  # Deployment job
   deploy:
+    # Runs whenever build succeeded, said outright: the changes job is skipped
+    # on most runs, and GitHub can skip a job whose earlier jobs were skipped
+    if: ${{ !cancelled() && needs.build.result == 'success' && github.event_name != 'pull_request' }}
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
     steps:
-      - name: Deploy to GitHub Pages
+      - name: Publish to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v5
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1

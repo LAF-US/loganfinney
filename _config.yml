@@ -1,2 +1,64 @@
+url: https://loganfinney.com
+# Default page description for search results and link previews; a page's own front matter description overrides it
+description: Logan Finney is an award-winning reporter who covers politics, elections, and government. He grew up hunting, hiking, and skiing in the Idaho Panhandle and remains forever fascinated by the people, history, and culture of his home state.
+# Read by the contact line, logan.vcf, security.txt and humans.txt
+contact:
+  email: loganfinney@proton.me
+  signal:
+    handle: signal.me/loganfinney.27
+    url: https://signal.me/#eu/oBgA3Z4JO0BiXt--nvJGDDwAKT8Zp-DS5Y60BVvvlw7bVK5eV1lMNoBt1WZoZEeY
+  whatsapp:
+    handle: wa.me/loganfinney
+    url: https://wa.me/loganfinney
+# The Mastodon account that .well-known/webfinger points fediverse lookups to
+fediverse: Logan@syringa.social
+# The site's ten colors, read by styles.css, favicon.svg, the theme-color tags,
+# theme.js and site.webmanifest
+palette:
+  black: "#131211"
+  white: "#faf9f7"
+  grey-dark: "#4a4641"
+  grey-light: "#bab5af"
+  green-dark: "#1f4f39"
+  green-light: "#9ad4b6"
+  blue-dark: "#1d3f6e"
+  blue-light: "#a9c7ee"
+  red-dark: "#702323"
+  red-light: "#edabab"
+# The site's three typefaces and their files in fonts/, read by styles.css, the
+# font preloads in _includes/head.html, humans.txt and the CV's PDF
+# (.github/scripts/fonts-for-rendercv.py and rendercv-options.py)
+fonts:
+  sans:
+    name: DejaVu Sans
+    files:
+      - { file: dejavu-sans.woff2, weight: 400, style: normal, preload: true }
+      - { file: dejavu-sans-oblique.woff2, weight: 400, style: italic }
+      - { file: dejavu-sans-bold.woff2, weight: 700, style: normal, preload: true }
+  serif:
+    name: Gelasio
+    files:
+      - { file: gelasio.woff2, weight: 400 700, style: normal }
+      - { file: gelasio-italic.woff2, weight: 400 700, style: italic }
+  mono:
+    name: Cousine
+    files:
+      - { file: cousine.woff2, weight: 400, style: normal }
+      - { file: cousine-bold.woff2, weight: 700, style: normal }
+      - { file: cousine-italic.woff2, weight: 400, style: italic }
 include:
   - ".well-known"
+# cv.yaml (RenderCV) at the site root is both the site's data (site.data.cv) and the published /cv.yaml
+data_dir: .
+defaults:
+  - scope:
+      path: ""
+    values:
+      image:
+        path: /images/hero/state-capitol-pride.jpg
+        width: 1024
+        height: 683
+        alt: A rainbow flag reading Love trumps hate held up at the Idaho State Capitol
+plugins:
+  - jekyll-redirect-from
+  - jekyll-sitemap
