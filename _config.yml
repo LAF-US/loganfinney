@@ -1,9 +1,7 @@
-# The site's address, and the CV's website (.github/scripts/rendercv-render.py)
 url: https://loganfinney.com
 # Default page description for search results and link previews; a page's own front matter description overrides it
 description: Logan Finney is an award-winning reporter who covers politics, elections, and government. He grew up hunting, hiking, and skiing in the Idaho Panhandle and remains forever fascinated by the people, history, and culture of his home state.
-# Read by the contact line, logan.vcf, security.txt and humans.txt; the email
-# is also the CV's (.github/scripts/rendercv-render.py)
+# Read by the contact line, logan.vcf, security.txt and humans.txt
 contact:
   email: loganfinney@proton.me
   signal:
@@ -27,7 +25,7 @@ palette:
   red-light: "#edabab"
 # The site's three typefaces and their files in fonts/, read by styles.css, the
 # font preloads in _includes/head.html, humans.txt and the CV's PDF
-# (.github/scripts/fonts-for-rendercv.py and rendercv-render.py)
+# (.github/scripts/fonts-for-rendercv.py; cv.yaml names the PDF's typefaces)
 fonts:
   sans:
     name: DejaVu Sans

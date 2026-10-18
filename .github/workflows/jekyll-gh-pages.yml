@@ -74,9 +74,9 @@ jobs:
             echo "The year has turned since the last successful run ($last)"
           else
             for date in "$last" "$today"; do
-              python3 .github/scripts/rendercv-render.py "$RUNNER_TEMP/$date" --settings.current_date "$date" -nopdf -nohtml >/dev/null
+              rendercv render cv.yaml --settings.current_date "$date" -nopdf -nopng -nohtml -o "$RUNNER_TEMP/$date" >/dev/null
             done
-            if diff "$RUNNER_TEMP/$last/cv.md" "$RUNNER_TEMP/$today/cv.md"; then
+            if diff "$RUNNER_TEMP/$last"/*.md "$RUNNER_TEMP/$today"/*.md; then
               echo "The CV reads the same as at the last successful run ($last)"
               changed=false
             fi
@@ -96,10 +96,12 @@ jobs:
         run: python3 .github/scripts/icons.py
       - name: Make TTF copies of the site's fonts for the PDF
         run: python3 .github/scripts/fonts-for-rendercv.py
-      - name: Render the CV (HTML, Markdown, and the PDF at /cv.pdf)
-        run: python3 .github/scripts/rendercv-render.py "$RUNNER_TEMP/rendercv"
-      - name: Put RenderCV's HTML, Markdown and profile addresses on the site
-        run: python3 .github/scripts/rendercv-include.py "$RUNNER_TEMP/rendercv"
+      - name: Render the CV (HTML, Markdown and PDF)
+        run: rendercv render cv.yaml -nopng -o "$RUNNER_TEMP/rendercv"
+      - name: Put RenderCV's HTML on the site, and its PDF at /cv.pdf
+        run: |
+          python3 .github/scripts/rendercv-include.py "$RUNNER_TEMP"/rendercv/*.html
+          cp "$RUNNER_TEMP"/rendercv/*.pdf cv.pdf
       - name: Build site (same as GitHub Pages)
         uses: actions/jekyll-build-pages@44a6e6beabd48582f863aeeb6cb2151cc1716697 # v1.0.13
         with:

@@ -3,10 +3,8 @@ cv:
   name: Logan Finney
   headline: Documentary Journalist
   location: Idaho, USA
-  # Left empty: .github/scripts/rendercv-render.py sets them from _config.yml
-  # (contact.email and url), and they keep this place in the PDF's header
-  email:
-  website:
+  email: loganfinney@proton.me
+  website: https://loganfinney.com
   social_networks:
     - network: Instagram
       username: loganfinney27
@@ -540,12 +538,27 @@ cv:
 design:
   theme: classic
   # The site's look (styles.css) without its grid: its fonts, ink and link
-  # colors, left alignment and underlined links. The fonts and colors are
-  # _config.yml's, which .github/scripts/rendercv-render.py passes in on each
-  # render; RenderCV reads the font files from fonts/, as TTF copies that
-  # .github/scripts/fonts-for-rendercv.py makes from the site's WOFF2
+  # colors, left alignment and underlined links. The colors and typefaces are
+  # copies of _config.yml's palette and fonts. RenderCV reads the font files
+  # from fonts/, as TTF copies that .github/scripts/fonts-for-rendercv.py makes
+  # from the site's WOFF2
+  colors:
+    body: '#4a4641'
+    name: '#131211'
+    headline: '#131211'
+    connections: '#4a4641'
+    section_titles: '#131211'
+    links: '#1f4f39'
+    footer: '#4a4641'
+    top_note: '#4a4641'
   typography:
     alignment: left
+    font_family:
+      body: DejaVu Sans
+      name: DejaVu Sans
+      headline: DejaVu Sans
+      connections: Cousine
+      section_titles: DejaVu Sans
   links:
     underline: true
   header:
