@@ -3,8 +3,10 @@ cv:
   name: Logan Finney
   headline: Documentary Journalist
   location: Idaho, USA
-  email: loganfinney@proton.me
-  website: https://loganfinney.com
+  # Left empty: .github/scripts/rendercv-render.py sets them from _config.yml
+  # (contact.email and url), and they keep this place in the PDF's header
+  email:
+  website:
   social_networks:
     - network: Instagram
       username: loganfinney27
@@ -533,11 +535,13 @@ cv:
       - name: Spring 2016 National High School Journalism Convention
         date: 2016-04
         summary: Journalism Education Association & National Scholastic Press Association
+# Only what differs from RenderCV's defaults, and the theme, which RenderCV
+# needs whenever design is given
 design:
   theme: classic
   # The site's look (styles.css) without its grid: its fonts, ink and link
   # colors, left alignment and underlined links. The fonts and colors are
-  # _config.yml's, which .github/scripts/rendercv-options.py passes in on each
+  # _config.yml's, which .github/scripts/rendercv-render.py passes in on each
   # render; RenderCV reads the font files from fonts/, as TTF copies that
   # .github/scripts/fonts-for-rendercv.py makes from the site's WOFF2
   typography:
@@ -682,57 +686,3 @@ design:
   #       AUTHORS
   #       URL (JOURNAL)
   #     date_and_location_column: DATE
-locale:
-  language: english
-  # last_updated: Last updated in
-  # month: month
-  # months: months
-  # year: year
-  # years: years
-  # present: present
-  # phrases:
-  #   degree_with_area: DEGREE in AREA
-  # month_abbreviations:
-  #   - Jan
-  #   - Feb
-  #   - Mar
-  #   - Apr
-  #   - May
-  #   - June
-  #   - July
-  #   - Aug
-  #   - Sept
-  #   - Oct
-  #   - Nov
-  #   - Dec
-  # month_names:
-  #   - January
-  #   - February
-  #   - March
-  #   - April
-  #   - May
-  #   - June
-  #   - July
-  #   - August
-  #   - September
-  #   - October
-  #   - November
-  #   - December
-settings:
-  current_date: today
-  render_command:
-    output_folder: rendercv_output
-    design:
-    locale:
-    typst_path: OUTPUT_FOLDER/NAME_IN_SNAKE_CASE_CV.typ
-    pdf_path: OUTPUT_FOLDER/NAME_IN_SNAKE_CASE_CV.pdf
-    markdown_path: OUTPUT_FOLDER/NAME_IN_SNAKE_CASE_CV.md
-    html_path: OUTPUT_FOLDER/NAME_IN_SNAKE_CASE_CV.html
-    png_path: OUTPUT_FOLDER/NAME_IN_SNAKE_CASE_CV.png
-    dont_generate_markdown: false
-    dont_generate_html: false
-    dont_generate_typst: false
-    dont_generate_pdf: false
-    dont_generate_png: false
-  bold_keywords: []
-  pdf_title: NAME - CV

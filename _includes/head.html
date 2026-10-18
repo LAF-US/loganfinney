@@ -11,8 +11,8 @@
     <link rel="icon" href="{{ '/favicon.svg' | relative_url }}" type="image/svg+xml">
     <link rel="apple-touch-icon" href="{{ '/apple-touch-icon.png' | relative_url }}">
     <link rel="manifest" href="{{ '/site.webmanifest' | relative_url }}">
-    {%- for connection in site.data.cv.cv.custom_connections %}
-    <link rel="me" href="{{ connection.url | escape }}">
+    {%- for profile in site.data._profiles %}
+    <link rel="me" href="{{ profile.url | escape }}">
     {%- endfor %}
     <script src="{{ '/theme.js' | relative_url }}"></script>
     {%- for font in site.fonts %}{% for face in font[1].files %}{% if face.preload %}

@@ -7,11 +7,11 @@
 ## CV
 
 - [{{ site.data.cv.cv.name }}'s CV]({{ "/index.html.md" | absolute_url }}): the CV on the home page, in Markdown
-{%- if site.data.cv.cv.custom_connections %}
+{%- if site.data._profiles %}
 
 ## Profiles
-{% for connection in site.data.cv.cv.custom_connections %}
-- [{{ connection.placeholder }}]({{ connection.url }})
+{% for profile in site.data._profiles %}
+- [{{ profile.name }}]({{ profile.url }})
 {%- endfor %}
 {%- endif %}
 

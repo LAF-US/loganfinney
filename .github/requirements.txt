@@ -1,7 +1,6 @@
 # The Python packages the workflows install, at exact versions; Dependabot
 # keeps them current (.github/dependabot.yml). The packages these bring in
-# aren't pinned, but pip takes only versions at least 7 days old
-# (PIP_UPLOADED_PRIOR_TO in .github/workflows/jekyll-gh-pages.yml)
+# follow the 7-day rule in .github/workflows/jekyll-gh-pages.yml
 
 # Renders cv.yaml as the site's CV and its PDF
 rendercv[full]==2.8

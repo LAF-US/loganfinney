@@ -30,8 +30,7 @@ permissions:
 # Every pip install takes only versions uploaded at least 7 days ago, the same
 # wait Dependabot keeps (.github/dependabot.yml), including the packages that
 # no file pins because RenderCV and the others bring them in. pip 26.1 and
-# newer follow this; older ones ignore it, so each job installs that pip first
-# (.github/requirements-pip.txt)
+# newer follow this, and the runner's Python comes with one; older ones ignore it
 env:
   PIP_UPLOADED_PRIOR_TO: P7D
 
@@ -57,15 +56,7 @@ jobs:
       changed: ${{ steps.compare.outputs.changed }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
-        with:
-          python-version: "3.13"
-      - name: Install pip (version in .github/requirements-pip.txt)
-        run: python3 -m pip install -r .github/requirements-pip.txt
-      - name: Install RenderCV (versions in .github/requirements.txt)
-        run: pip install -r .github/requirements.txt
-      - name: Use LAF-US's copy of RenderCV if the regular one can't read cv.yaml (.github/scripts/rendercv-copy.py)
-        run: python3 .github/scripts/rendercv-copy.py
+      - uses: ./.github/actions/rendercv
       - name: Compare the CV as of the last successful run with the CV today
         id: compare
         env:
@@ -83,9 +74,9 @@ jobs:
             echo "The year has turned since the last successful run ($last)"
           else
             for date in "$last" "$today"; do
-              rendercv render cv.yaml --settings.current_date "$date" -nopdf -nopng -nohtml -o "$RUNNER_TEMP/$date" >/dev/null
+              python3 .github/scripts/rendercv-render.py "$RUNNER_TEMP/$date" --settings.current_date "$date" -nopdf -nohtml >/dev/null
             done
-            if diff "$RUNNER_TEMP/$last/Logan_Finney_CV.md" "$RUNNER_TEMP/$today/Logan_Finney_CV.md"; then
+            if diff "$RUNNER_TEMP/$last/cv.md" "$RUNNER_TEMP/$today/cv.md"; then
               echo "The CV reads the same as at the last successful run ($last)"
               changed=false
             fi
@@ -100,28 +91,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
-        with:
-          python-version: "3.13"
-      - name: Install pip (version in .github/requirements-pip.txt)
-        run: python3 -m pip install -r .github/requirements-pip.txt
-      - name: Install RenderCV, fontTools, resvg-py and Pillow (versions in .github/requirements.txt)
-        run: pip install -r .github/requirements.txt
-      - name: Use LAF-US's copy of RenderCV if the regular one can't read cv.yaml (.github/scripts/rendercv-copy.py)
-        run: python3 .github/scripts/rendercv-copy.py
+      - uses: ./.github/actions/rendercv
       - name: Draw the favicon and app icons from favicon.svg
         run: python3 .github/scripts/icons.py
       - name: Make TTF copies of the site's fonts for the PDF
         run: python3 .github/scripts/fonts-for-rendercv.py
-      - name: Render the CV (HTML, Markdown and PDF)
-        run: |
-          options=$(python3 .github/scripts/rendercv-options.py)
-          mapfile -t options <<< "$options"
-          rendercv render cv.yaml "${options[@]}" -nopng -o "$RUNNER_TEMP/rendercv"
-      - name: Put RenderCV's HTML on the site, and its PDF at /cv.pdf
-        run: |
-          python3 .github/scripts/rendercv-include.py "$RUNNER_TEMP/rendercv/Logan_Finney_CV.html"
-          cp "$RUNNER_TEMP/rendercv/Logan_Finney_CV.pdf" cv.pdf
+      - name: Render the CV (HTML, Markdown, and the PDF at /cv.pdf)
+        run: python3 .github/scripts/rendercv-render.py "$RUNNER_TEMP/rendercv"
+      - name: Put RenderCV's HTML, Markdown and profile addresses on the site
+        run: python3 .github/scripts/rendercv-include.py "$RUNNER_TEMP/rendercv"
       - name: Build site (same as GitHub Pages)
         uses: actions/jekyll-build-pages@44a6e6beabd48582f863aeeb6cb2151cc1716697 # v1.0.13
         with:
