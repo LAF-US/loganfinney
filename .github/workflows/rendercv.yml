@@ -14,4 +14,4 @@ jobs:
         with:
           python-version: "3.13"
       - run: pip install "rendercv[full]==2.8"
-      - run: rendercv render Logan_Finney_CV.yaml
+      - run: rendercv render cv.yaml
