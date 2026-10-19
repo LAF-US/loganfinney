@@ -3,10 +3,7 @@ version: 2
 # is likelier to be caught and pulled first
 updates:
   - package-ecosystem: github-actions
-    # The workflows, and the local actions they use
-    directories:
-      - /
-      - /.github/actions/*
+    directory: /
     schedule:
       interval: weekly
     cooldown:

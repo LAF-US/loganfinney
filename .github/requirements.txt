@@ -1,11 +1,8 @@
-# The Python packages the workflows install, at exact versions; Dependabot
+# The Python packages the site build installs, at exact versions; Dependabot
 # keeps them current (.github/dependabot.yml). The packages these bring in
-# follow the 7-day rule in .github/workflows/jekyll-gh-pages.yml
+# follow the 7-day rule in .github/workflows/jekyll-gh-pages.yml.
+# RenderCV itself is pinned where it runs, .github/workflows/rendercv.yml
 
-# Renders cv.yaml as the site's CV and its PDF
-rendercv[full]==2.8
-# Converts the site's WOFF2 fonts to TTF for the PDF
-fonttools[woff]==4.66.1
 # Draw the favicon and app icons from favicon.svg
 resvg-py==0.5.0
 pillow==12.3.0

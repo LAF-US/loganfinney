@@ -24,8 +24,8 @@ palette:
   red-dark: "#702323"
   red-light: "#edabab"
 # The site's three typefaces and their files in fonts/, read by styles.css, the
-# font preloads in _includes/head.html, humans.txt and the CV's PDF
-# (.github/scripts/fonts-for-rendercv.py; cv.yaml names the PDF's typefaces)
+# font preloads in _includes/head.html and humans.txt. The CV's PDF uses the
+# same typefaces: cv.yaml names them, and RenderCV reads the TTFs in fonts/
 fonts:
   sans:
     name: DejaVu Sans

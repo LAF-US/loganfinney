@@ -3,6 +3,13 @@ name: RenderCV
 on:
   push:
     branches: ["**"]
+  schedule:
+    # Daily, so date-derived text ("Last updated", durations ending "present")
+    # stays current: a render that changes nothing commits nothing, and the
+    # site workflow runs after each run on main.
+    # 15:17 UTC is mid-morning in Idaho, so the date is the same in UTC and in
+    # both of Idaho's time zones
+    - cron: "17 15 * * *"
 
 permissions:
   contents: read
