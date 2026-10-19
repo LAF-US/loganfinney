@@ -75,6 +75,13 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
+/* Display text carries the serif: every heading, the masthead and the headline */
+h1, h2, h3, h4, h5, h6,
+.logo,
+.hero .headline {
+    font-family: var(--font-display);
+}
+
 /* Paragraphs never end on a lone word: the browser evens out the last lines */
 p {
     text-wrap: pretty;
@@ -148,7 +155,6 @@ p {
 }
 
 .logo {
-    font-family: var(--font-body);
     font-size: 1.25rem;
     font-weight: 700;
     text-transform: uppercase;
@@ -253,7 +259,6 @@ p {
 /* The headline: DOCUMENTARY one line high, JOURNALIST two lines high, each
    five sixths of its line */
 .hero .headline {
-    font-family: var(--font-body);
     font-size: 1.25rem;
     font-weight: 700;
     letter-spacing: -0.03em;
@@ -297,7 +302,6 @@ p {
 
 /* Sections: capitals one line high */
 .rendercv h1 {
-    font-family: var(--font-body);
     font-size: 1.25rem;
     padding-top: 1rlh;
     font-weight: 700;
