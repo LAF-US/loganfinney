@@ -178,40 +178,4 @@ function initHeroRotation() {
     reducedMotion.addEventListener('change', updateRotation);
 }
 
-// Initialize theme toggle
-function initThemeToggle() {
-    const themeToggle = document.getElementById('themeToggle');
-    if (!themeToggle) {
-        return;
-    }
-
-    const root = document.documentElement;
-    const currentTheme = () => root.getAttribute('data-theme') ||
-        (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-
-    // The label names the theme the button switches to, for screen readers
-    const updateLabel = () => {
-        const next = currentTheme() === 'dark' ? 'light' : 'dark';
-        themeToggle.setAttribute('aria-label', `Switch to ${next} theme`);
-    };
-    updateLabel();
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateLabel);
-
-    themeToggle.addEventListener('click', () => {
-        const next = currentTheme() === 'dark' ? 'light' : 'dark';
-        root.setAttribute('data-theme', next);
-        setThemeColor(next);
-        updateLabel();
-        try {
-            sessionStorage.setItem('theme', next);
-        } catch {
-            // Ignore storage failures; the toggle still works for this page view.
-        }
-    });
-}
-
-// Run on page load
-document.addEventListener('DOMContentLoaded', () => {
-    initHeroRotation();
-    initThemeToggle();
-});
+document.addEventListener('DOMContentLoaded', initHeroRotation);

@@ -3,7 +3,7 @@
 /* ============================================================
    loganfinney.com — shared stylesheet
    Design tokens live on :root, each with its light and dark value;
-   [data-theme] (set by config.js) overrides the system theme.
+   [data-theme] (set by theme.js) overrides the system theme.
    ============================================================ */
 
 /* Typefaces (_config.yml's fonts) are served from /fonts so every visitor
