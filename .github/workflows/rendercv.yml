@@ -1,20 +1,43 @@
 name: RenderCV
 
-on: push
+on:
+  push:
+    branches: ["**"]
 
 permissions:
-  contents: write
+  contents: read
+
+concurrency:
+  group: rendercv-${{ github.ref }}
 
 jobs:
-  rendercv:
+  render:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: "3.13"
       - run: pip install "rendercv[full]==2.8"
       - run: rendercv render cv.yaml
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: rendercv-output
+          path: rendercv_output/
+
+  save:
+    needs: render
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: rendercv-output
+          path: rendercv_output/
       - run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
