@@ -5,14 +5,23 @@ on:
     branches: ["**"]
   schedule:
     # Daily, so date-derived text ("Last updated", durations ending "present")
-    # stays current: a render that changes nothing commits nothing, and the
-    # site workflow runs after each run on main.
+    # stays current the day it changes; the save step below commits nothing
+    # when only the embedded render date moved.
     # 15:17 UTC is mid-morning in Idaho, so the date is the same in UTC and in
     # both of Idaho's time zones
     - cron: "17 15 * * *"
+  # A "Run workflow" button in the Actions tab; a manual run on main chains
+  # into a site build and deploy (.github/workflows/jekyll-gh-pages.yml)
+  workflow_dispatch:
 
 permissions:
   contents: read
+
+# Every pip install takes only versions uploaded at least 7 days ago, the same
+# wait Dependabot keeps (.github/dependabot.yml). pip 26.1 and newer follow
+# this, and the runner's Python comes with one; older ones ignore it
+env:
+  PIP_UPLOADED_PRIOR_TO: P7D
 
 concurrency:
   group: rendercv-${{ github.ref }}
@@ -27,7 +36,11 @@ jobs:
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: "3.13"
-      - run: pip install "rendercv[full]==2.8"
+      - run: pip install -r .github/requirements-rendercv.txt
+      # Render from nothing: RenderCV never deletes files it no longer
+      # produces, so rendering over the committed output would keep stale
+      # files around (the old names, after cv.yaml's name changes)
+      - run: rm -rf rendercv_output
       - run: rendercv render cv.yaml
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
@@ -46,11 +59,34 @@ jobs:
         with:
           name: rendercv-output
           path: rendercv_output/
+      # Commit only when something besides the render's embedded date changed.
+      # The HTML, Markdown and page images carry all the visible text, so any
+      # content change shows in at least one of them; the Typst source is
+      # compared with its date block ignored, so a metadata-only change (say,
+      # the PDF's title) still counts; the PDF is built from the Typst source,
+      # so its bytes alone never decide. A render that changes nothing but the
+      # date commits nothing.
       - run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add rendercv_output/
-          if ! git diff --cached --quiet; then
+          changed=$(git diff --cached --name-only)
+          real=false
+          if [ -n "$changed" ]; then
+            if echo "$changed" | grep -qv -e '\.typ$' -e '\.pdf$'; then
+              real=true
+            else
+              while read -r t; do
+                case "$t" in *.typ) ;; *) continue ;; esac
+                if ! git show "HEAD:$t" 2>/dev/null \
+                    | sed '/date: datetime(/,/),/d' \
+                    | diff -q - <(sed '/date: datetime(/,/),/d' "$t") >/dev/null; then
+                  real=true
+                fi
+              done <<< "$changed"
+            fi
+          fi
+          if [ "$real" = true ]; then
             git commit -m "Save RenderCV's output"
             git push
           fi
