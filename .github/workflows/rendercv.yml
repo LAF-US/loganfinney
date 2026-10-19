@@ -3,7 +3,7 @@ name: RenderCV
 on: push
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   rendercv:
@@ -15,7 +15,11 @@ jobs:
           python-version: "3.13"
       - run: pip install "rendercv[full]==2.8"
       - run: rendercv render cv.yaml
-      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
-        with:
-          name: rendercv-output
-          path: rendercv_output/
+      - run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add rendercv_output/
+          if ! git diff --cached --quiet; then
+            git commit -m "Save RenderCV's output"
+            git push
+          fi
