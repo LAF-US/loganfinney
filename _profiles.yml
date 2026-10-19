@@ -1,0 +1,21 @@
+# The profiles this site vouches for, read by the rel="me" links in
+# _includes/head.html (Mastodon shows a verified check for a profile that
+# links back here), the sameAs list in _includes/seo.html, and llms.txt.
+# The leading underscore keeps the file itself off the published site.
+# URLs match the ones RenderCV builds from cv.yaml's social_networks.
+- name: Instagram
+  url: https://instagram.com/loganfinney27
+- name: Bluesky
+  url: https://bsky.app/profile/loganfinney.com
+- name: X
+  url: https://x.com/lfinneytweets
+- name: Mastodon
+  url: https://syringa.social/@Logan
+- name: LinkedIn
+  url: https://linkedin.com/in/loganfinney
+- name: YouTube
+  url: https://youtube.com/@LoganFinney
+- name: GitHub
+  url: https://github.com/loganfinney27
+- name: ORCID
+  url: https://orcid.org/0009-0009-9584-0048
