@@ -70,8 +70,6 @@ fonts:
       - { file: cousine-italic.woff2, weight: 400, style: italic }
 include:
   - ".well-known"
-# cv.yaml (RenderCV) at the site root is both the site's data (site.data.cv) and the published /cv.yaml
-data_dir: .
 defaults:
   - scope:
       path: ""
