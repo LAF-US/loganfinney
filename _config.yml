@@ -1,6 +1,28 @@
 url: https://loganfinney.com
+# The site's identity, in the keys Jekyll's SEO plugin (jekyll-seo-tag) reads;
+# the templates read them too. cv.yaml holds the same name and headline for the CV
+title: Logan Finney
+tagline: Documentary Journalist
+author:
+  name: Logan Finney
+  # The name's parts, for logan.vcf
+  given_name: Logan
+  family_name: Finney
 # Default page description for search results and link previews; a page's own front matter description overrides it
 description: Logan Finney is an award-winning reporter who covers politics, elections, and government. He grew up hunting, hiking, and skiing in the Idaho Panhandle and remains forever fascinated by the people, history, and culture of his home state.
+# The profiles the site vouches for: the SEO plugin lists them as the person's
+# sameAs, and head.html links each with rel="me" (Mastodon shows a verified
+# check on a profile that links back here)
+social:
+  links:
+    - https://instagram.com/loganfinney27
+    - https://bsky.app/profile/loganfinney.com
+    - https://x.com/lfinneytweets
+    - https://syringa.social/@Logan
+    - https://linkedin.com/in/loganfinney
+    - https://youtube.com/@LoganFinney
+    - https://github.com/loganfinney27
+    - https://orcid.org/0009-0009-9584-0048
 # Read by the contact line, logan.vcf, security.txt and humans.txt
 contact:
   email: loganfinney@proton.me
@@ -59,4 +81,5 @@ defaults:
         alt: A rainbow flag reading Love trumps hate held up at the Idaho State Capitol
 plugins:
   - jekyll-redirect-from
+  - jekyll-seo-tag
   - jekyll-sitemap
