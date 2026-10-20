@@ -1,11 +1,12 @@
 # The Python packages the site build installs, at exact versions; Dependabot
 # keeps them current (.github/dependabot.yml). The packages these bring in
 # follow the 7-day rule in .github/workflows/jekyll-gh-pages.yml.
-# RenderCV itself is pinned in .github/requirements-rendercv.txt
 
+# Render the CV from cv.yaml
+rendercv[full]==2.8
 # Draw the favicon and app icons from favicon.svg
 resvg-py==0.5.0
 pillow==12.3.0
-# Reads _config.yml's palette for the icons (used to arrive as a RenderCV
-# dependency; named here since the render moved to its own workflow)
+# Reads _config.yml's palette for the icons; RenderCV brings it in too, but
+# icons.py imports it directly, so it is pinned here
 ruamel.yaml==0.19.1

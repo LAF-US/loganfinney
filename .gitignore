@@ -18,7 +18,8 @@ node_modules/
 dist/
 build/
 
-# Made at build time by RenderCV (.github/scripts/rendercv-include.py and the Site workflow)
+# Made at build time by RenderCV and .github/scripts/rendercv-include.py
+rendercv_output/
 _includes/rendercv.html
 _includes/rendercv.md
 cv.pdf

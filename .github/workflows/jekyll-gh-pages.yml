@@ -1,24 +1,25 @@
 name: Deploy Jekyll with GitHub Pages dependencies preinstalled
 
 # Builds loganfinney.com and publishes it to GitHub Pages (Settings → Pages →
-# Source: GitHub Actions). The CV itself is rendered by one workflow only
-# (.github/workflows/rendercv.yml), which commits the result to
-# rendercv_output/; this workflow consumes that committed output, builds the
-# site with Jekyll, tests it against WCAG AAA, and publishes the result. If
-# any step fails, nothing is published and the live site keeps its last good
-# version.
+# Source: GitHub Actions): renders the CV from cv.yaml with RenderCV, builds
+# the site with Jekyll, tests it against WCAG AAA, and publishes the result.
+# If any step fails, nothing is published and the live site keeps its last
+# good version.
 #
-# It runs after each RenderCV run on main — a push, or the daily render that
-# keeps date-derived text current — and on pull requests, short of
-# publishing, so each proposed change (Dependabot's included) is tested
-# before a person merges it.
+# It runs on each push to main, daily so date-derived text in the CV ("Last
+# updated", durations ending "present") stays current, by hand from the
+# Actions tab, and on pull requests, short of publishing, so each proposed
+# change (Dependabot's included) is tested before a person merges it.
 
 on:
-  workflow_run:
-    workflows: [RenderCV]
-    types: [completed]
+  push:
     branches: [main]
   pull_request:
+  schedule:
+    # 15:17 UTC is mid-morning in Idaho, so the date is the same in UTC and in
+    # both of Idaho's time zones
+    - cron: "17 15 * * *"
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -38,19 +39,19 @@ concurrency:
 
 jobs:
   build:
-    # On workflow_run, only after a RenderCV run that succeeded
-    if: ${{ github.event_name == 'pull_request' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: "3.13"
-      - name: Install resvg-py and Pillow (versions in .github/requirements.txt)
+      - name: Install RenderCV, resvg-py and Pillow (versions in .github/requirements.txt)
         run: pip install -r .github/requirements.txt
+      - name: Render the CV from cv.yaml
+        run: rendercv render cv.yaml
       - name: Draw the favicon and app icons from favicon.svg
         run: python3 .github/scripts/icons.py
-      - name: Put the committed CV on the site, and its PDF at /cv.pdf
+      - name: Put the CV on the site, and its PDF at /cv.pdf
         run: |
           python3 .github/scripts/rendercv-include.py rendercv_output/*.html
           cp rendercv_output/*.pdf cv.pdf
@@ -84,8 +85,8 @@ jobs:
           include-hidden-files: true
 
   deploy:
-    # Publishes on the main chain only, never for a pull request's test build
-    if: ${{ !cancelled() && needs.build.result == 'success' && github.event_name == 'workflow_run' }}
+    # Publishes everything but a pull request's test build
+    if: ${{ github.event_name != 'pull_request' }}
     needs: build
     runs-on: ubuntu-latest
     permissions:

@@ -1,4 +1,0 @@
-# The CV renderer, installed by .github/workflows/rendercv.yml; Dependabot
-# keeps it current (.github/dependabot.yml), and the packages it brings in
-# follow that workflow's 7-day rule
-rendercv[full]==2.8
