@@ -85,8 +85,8 @@ jobs:
           include-hidden-files: true
 
   deploy:
-    # Publishes everything but a pull request's test build
-    if: ${{ github.event_name != 'pull_request' }}
+    # Publishes main only, and never a pull request's test build
+    if: ${{ github.ref == 'refs/heads/main' && github.event_name != 'pull_request' }}
     needs: build
     runs-on: ubuntu-latest
     permissions:

@@ -15,8 +15,8 @@ import re
 import sys
 from pathlib import Path
 
-if len(sys.argv) != 2:
-    sys.exit(f"Expected exactly one HTML file from RenderCV, got {len(sys.argv) - 1}: {sys.argv[1:]}")
+if len(sys.argv) != 2 or not Path(sys.argv[1]).is_file():
+    sys.exit(f"Expected exactly one HTML file from RenderCV, got: {sys.argv[1:]}")
 html_path = Path(sys.argv[1])
 source = html_path.read_text(encoding="utf-8")
 
