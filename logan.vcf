@@ -2,9 +2,9 @@
 ---
 BEGIN:VCARD
 VERSION:4.0
-{% assign names = site.data.cv.cv.name | split: " " %}N:{{ names.last }};{{ names | pop | join: " " }};;;
-{% include vcard-line.txt property="FN:" value=site.data.cv.cv.name %}
-{% include vcard-line.txt property="TITLE:" value=site.data.cv.cv.headline %}
+N:{{ site.author.family_name }};{{ site.author.given_name }};;;
+{% include vcard-line.txt property="FN:" value=site.author.name %}
+{% include vcard-line.txt property="TITLE:" value=site.tagline %}
 {% include vcard-line.txt property="EMAIL:" value=site.contact.email %}
 {% assign u = site.url | append: "/" %}{% include vcard-line.txt property="URL:" value=u %}
 {% include vcard-line.txt property="IMPP:" value=site.contact.signal.url %}

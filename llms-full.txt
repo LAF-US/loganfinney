@@ -1,6 +1,6 @@
 ---
 ---
-# {{ site.data.cv.cv.name }}
+# {{ site.title }}
 
 > {{ site.description }}
 

@@ -1,7 +1,7 @@
 ---
 ---
 /* TEAM */
-Journalist: {{ site.data.cv.cv.name }}
+Journalist: {{ site.author.name }}
 Contact: {{ site.contact.email }}
 From: Idaho, USA
 

@@ -23,6 +23,8 @@ social:
     - https://youtube.com/@LoganFinney
     - https://github.com/loganfinney27
     - https://orcid.org/0009-0009-9584-0048
+# The fediverse account a search for anything@loganfinney.com finds (.well-known/webfinger)
+mastodon: Logan@syringa.social
 # Read by the contact line, logan.vcf, security.txt and humans.txt
 contact:
   email: loganfinney@proton.me

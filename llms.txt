@@ -1,17 +1,17 @@
 ---
 ---
-# {{ site.data.cv.cv.name }}
+# {{ site.title }}
 
 > {{ site.description }}
 
 ## CV
 
-- [{{ site.data.cv.cv.name }}'s CV]({{ "/index.html.md" | absolute_url }}): the CV on the home page, in Markdown
-{%- if site.data._profiles %}
+- [{{ site.author.name }}'s CV]({{ "/index.html.md" | absolute_url }}): the CV on the home page, in Markdown
+{%- if site.social.links %}
 
 ## Profiles
-{% for profile in site.data._profiles %}
-- [{{ profile.name }}]({{ profile.url }})
+{% for link in site.social.links %}
+- [{{ link | remove_first: "https://" }}]({{ link }})
 {%- endfor %}
 {%- endif %}
 
