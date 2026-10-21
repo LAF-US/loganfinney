@@ -110,7 +110,7 @@ p {
    an equal gap above and below inside every square. Browsers without
    text-box trimming leave the text at its normal place in its squares */
 @supports (text-box: trim-both cap alphabetic) {
-    .logo,
+    header a,
     .hero .headline span,
     h1,
     h2,
@@ -129,7 +129,7 @@ p {
 /* A plain masthead: name on the left, the theme switch on the right, one hard rule
    underneath. The frosted glass stays so the photo reads through it; 0.9 is
    the thinnest frost that keeps the header text at 7:1 over every hero photo */
-.site-header {
+header {
     position: sticky;
     top: 0;
     z-index: 100;
@@ -148,8 +148,8 @@ p {
     gap: 1rlh;
 }
 
-.logo {
-    font-family: var(--font-body);
+/* Your name, linking home */
+header a {
     font-size: 1.25rem;
     font-weight: 700;
     text-transform: uppercase;
@@ -196,7 +196,7 @@ p {
 /* ---------- Hero (home) ---------- */
 
 /* No rule between the header and the photo on the home page */
-.home .site-header {
+.home header {
     box-shadow: none;
 }
 
@@ -572,7 +572,7 @@ address a:hover {
         background: none;
     }
 
-    .site-header {
+    header {
         position: static;
         background: none;
         backdrop-filter: none;
