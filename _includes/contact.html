@@ -1,1 +1,7 @@
-<p class="contact-line hero-contact"><span class="fl">Email <a class="contact-handle u-email" href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a></span><span class="fl">Signal <a class="contact-handle" rel="noopener noreferrer" href="{{ site.contact.signal.url }}">{{ site.contact.signal.handle }}</a></span><span class="fl">WhatsApp <a class="contact-handle" rel="noopener noreferrer" href="{{ site.contact.whatsapp.url }}">{{ site.contact.whatsapp.handle }}</a></span></p>
+<address>
+    <dl>
+        <div><dt>Email</dt> <dd><a class="u-email" href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a></dd></div>
+        <div><dt>Signal</dt> <dd><a rel="noopener noreferrer" href="{{ site.contact.signal.url }}">{{ site.contact.signal.handle }}</a></dd></div>
+        <div><dt>WhatsApp</dt> <dd><a rel="noopener noreferrer" href="{{ site.contact.whatsapp.url }}">{{ site.contact.whatsapp.handle }}</a></dd></div>
+    </dl>
+</address>

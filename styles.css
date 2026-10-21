@@ -113,7 +113,7 @@ p {
     .logo,
     .hero .headline span,
     .rendercv h1,
-    .contact-line > .fl,
+    address div,
     .rendercv h2,
     .rendercv p,
     .hero-bio p,
@@ -447,28 +447,38 @@ p {
 
 /* ---------- Contact ---------- */
 
-.contact-line {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0 1rlh;
+/* One contact per line, left-aligned, in a box on the right side of the
+   page, beside the headline, under a rule as wide as the box */
+address {
+    /* Stays at the right side when it goes under the headline */
+    margin-left: auto;
+    padding-top: 1rlh;
+    box-shadow: inset 0 1px 0 var(--ink);
     font-family: var(--font-mono);
     font-size: 0.75rem;
-    /* Bold labels; the handles beside them stay regular */
-    font-weight: 700;
+    /* Browsers set <address> in italic unless told otherwise */
+    font-style: normal;
     color: var(--ink-soft);
 }
 
-.contact-line a,
-a.contact-handle {
-    font-weight: 400;
+/* Each label and its handle share a line: the label bold, the handle regular */
+address dt,
+address dd {
+    display: inline;
+}
+
+address dt {
+    font-weight: 700;
+}
+
+address a {
     color: var(--main);
     text-decoration: underline;
     text-underline-offset: 0.2em;
     text-decoration-thickness: 1px;
 }
 
-a.contact-handle:hover,
-.contact-line a:hover {
+address a:hover {
     color: var(--accent);
 }
 
@@ -478,16 +488,6 @@ a.contact-handle:hover,
     display: flex;
     align-items: center;
     height: 1rlh;
-}
-
-/* One contact per line, left-aligned, in a box on the right side of the
-   page, beside the headline, under a rule as wide as the box */
-.hero-contact {
-    flex-direction: column;
-    /* Stays at the right side when it goes under the headline */
-    margin-left: auto;
-    padding-top: 1rlh;
-    box-shadow: inset 0 1px 0 var(--ink);
 }
 
 /* The bio (the site description in _config.yml) on its own line under the
