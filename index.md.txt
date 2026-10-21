@@ -1,4 +1,8 @@
 ---
 permalink: /index.html.md
 ---
+# {{ site.title }}
+
+{{ site.tagline }}
+
 {% include rendercv.md %}

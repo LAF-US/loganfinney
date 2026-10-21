@@ -26,7 +26,10 @@ redirect_from:
             </div>
 
             <div class="hero-content">
-                <p class="headline p-job-title">{% assign words = site.tagline | split: " " %}<span class="headline-a">{{ words.first }}</span> <span class="headline-b">{{ words | shift | join: " " }}</span></p>
+                <hgroup>
+                    <h1>{{ site.title }}</h1>
+                    <p class="p-job-title">{{ site.tagline }}</p>
+                </hgroup>
                 {% include contact.html %}
                 <div class="hero-bio"><p class="p-note">{{ site.description }}</p></div>
             </div>

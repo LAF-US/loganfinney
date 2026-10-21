@@ -111,10 +111,11 @@ p {
    text-box trimming leave the text at its normal place in its squares */
 @supports (text-box: trim-both cap alphabetic) {
     header a,
-    .hero .headline span,
+    hgroup p,
     h1,
     h2,
     h3,
+    h4,
     address div,
     .rendercv p,
     .hero-bio p,
@@ -246,8 +247,8 @@ header a {
     /* Text starts on the first grid row below the photo */
     padding: calc(100vw * 2 / 3) 0 0;
     padding: round(up, 100vw * 2 / 3, 1rlh) 0 0;
-    /* The headline on the left, the contacts on the right; on a narrow
-       screen the contacts go under the headline */
+    /* Your name and tagline on the left, the contacts on the right; on a
+       narrow screen the contacts go under them */
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -255,25 +256,20 @@ header a {
     gap: 1rlh;
 }
 
-/* The headline: DOCUMENTARY one line high, JOURNALIST two lines high, each
-   five sixths of its line */
-.hero .headline {
-    font-family: var(--font-body);
+/* Your name and tagline under the photo: the name two squares high, the
+   tagline one. Like every h1 (below), the name starts one blank square down,
+   level with the contacts under their rule */
+hgroup h1 {
+    font-size: 2.5rem;
+    line-height: 3rem;
+    margin: 0;
+}
+
+hgroup p {
     font-size: 1.25rem;
     font-weight: 700;
     letter-spacing: -0.03em;
     text-transform: uppercase;
-    /* Level with the contacts, below their rule */
-    padding-top: 1rlh;
-}
-
-.hero .headline span {
-    display: block;
-}
-
-.hero .headline-b {
-    font-size: 2.5rem;
-    line-height: 3rem;
 }
 
 /* ---------- Page scaffolding ---------- */
@@ -296,14 +292,17 @@ header a {
 /* ---------- CV (RenderCV) ---------- */
 
 /* Everything between the bio and the footer is RenderCV's own HTML
-   (_includes/rendercv.html), unchanged: h1 for the CV's title, h2 for each
-   section, h3 for each entry (those levels come from the copies of RenderCV's
-   templates in markdown/), then paragraphs and bulleted or numbered lists.
-   Every line is one square tall, so it all sits on the grid */
+   (_includes/rendercv.html), unchanged: h2 for the CV's title, h3 for each
+   section, h4 for each entry (those levels come from the copies of RenderCV's
+   templates in markdown/; the page's h1 is your name), then paragraphs and
+   bulleted or numbered lists. Every line is one square tall, so it all sits
+   on the grid */
 
-/* The CV's title and its sections: capitals one line high */
+/* Headings (the 404 page's title, the CV's title and its sections):
+   capitals one line high */
 h1,
-h2 {
+h2,
+h3 {
     font-size: 1.25rem;
     padding-top: 1rlh;
     font-weight: 700;
@@ -317,29 +316,32 @@ h2 {
 /* With text-box trimming: the blank square plus the centering gap */
 @supports (text-box: trim-both cap alphabetic) {
     h1,
-    h2 {
+    h2,
+    h3 {
         padding-top: calc(1rlh + (1lh - 1cap) / 2);
     }
 }
 
-/* The title opens the CV, with no space above it */
-h1 {
+/* A title (the 404 page's, the CV's) opens its page or CV, with no space
+   above it */
+h1,
+h2 {
     margin-top: 0;
 }
 
 /* Each section starts under a rule */
-h2 {
+h3 {
     box-shadow: inset 0 1px 0 var(--ink);
 }
 
 /* Entries: one blank square above each, body size; RenderCV bolds the name */
-h3 {
+h4 {
     font-size: 1rem;
     font-weight: 400;
     margin-top: 1rlh;
 }
 
-h2 + h3 {
+h3 + h4 {
     margin-top: 0;
 }
 
@@ -444,9 +446,9 @@ footer i:first-child {
 /* ---------- Contact ---------- */
 
 /* One contact per line, left-aligned, in a box on the right side of the
-   page, beside the headline, under a rule as wide as the box */
+   page, beside your name and tagline, under a rule as wide as the box */
 address {
-    /* Stays at the right side when it goes under the headline */
+    /* Stays at the right side when it goes under your name and tagline */
     margin-left: auto;
     padding-top: 1rlh;
     box-shadow: inset 0 1px 0 var(--ink);
@@ -487,7 +489,7 @@ address a:hover {
 }
 
 /* The bio (the site description in _config.yml) on its own line under the
-   headline and contacts, on the left, under a rule as wide as the contacts' rule */
+   name, tagline and contacts, on the left, under a rule as wide as the contacts' rule */
 .hero-bio {
     flex-basis: 100%;
 }
@@ -560,7 +562,7 @@ address a:hover {
 
 /* ---------- Print ---------- */
 
-/* On paper: the name, headline, contacts, bio and CV in the light theme's
+/* On paper: the name, tagline, contacts, bio and CV in the light theme's
    ink, with no grid, photos, theme switch or fire */
 @media print {
     :root,
@@ -587,7 +589,7 @@ address a:hover {
         display: none;
     }
 
-    /* No photo above the headline, so the text starts one square down */
+    /* No photo above your name, so the text starts one square down */
     .hero-content {
         padding-top: 1rlh;
     }
@@ -598,7 +600,8 @@ address a:hover {
 
     h1,
     h2,
-    h3 {
+    h3,
+    h4 {
         break-after: avoid;
     }
 
