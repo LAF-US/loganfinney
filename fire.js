@@ -121,7 +121,7 @@ function firePalette() {
 
 function initFooterFire() {
     const canvas = document.querySelector('.footer-fire');
-    const footer = canvas && canvas.closest('.site-footer');
+    const footer = canvas && canvas.closest('footer');
     if (!footer || !('IntersectionObserver' in window)) {
         return;
     }

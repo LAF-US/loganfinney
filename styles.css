@@ -117,7 +117,7 @@ p {
     .rendercv h2,
     .rendercv p,
     .hero-bio p,
-    .footer-content p {
+    footer p {
         text-box: trim-both cap alphabetic;
         padding-block: calc((1lh - 1cap) / 2);
     }
@@ -351,7 +351,8 @@ p {
 
 /* ---------- Footer ---------- */
 
-.site-footer {
+/* Small print in the mono font, under a rule across the page */
+footer {
     box-shadow: inset 0 1px 0 var(--ink);
     /* Three squares above the rule and three below it. The footer is 37
        squares tall, the height of the fire */
@@ -359,6 +360,20 @@ p {
     padding-top: 3rlh;
     height: 37rlh;
     position: relative;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--ink-soft);
+}
+
+/* The copyright is marked as small print, and the footer is small print
+   already, so it isn't made smaller again */
+footer small {
+    font-size: inherit;
+}
+
+/* The first motto is in the page color: there, but quiet */
+footer i:first-child {
+    color: var(--bg);
 }
 
 /* The fire (fire.js) fills the footer, from the rule to the foot of the page,
@@ -398,30 +413,6 @@ p {
     justify-content: space-between;
     /* Three squares between the copyright and the colophon when they stack */
     gap: 3rlh 1rlh;
-    color: var(--ink-soft);
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-}
-
-.footer-content a {
-    color: var(--ink-soft);
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
-    text-decoration-thickness: 1px;
-}
-
-.footer-content a:hover {
-    color: var(--accent);
-}
-
-/* The colophon is set in italic */
-.colophon {
-    font-style: italic;
-}
-
-/* The colophon's first phrase is set in the page color: there, but quiet */
-.colophon .quiet {
-    color: var(--bg);
 }
 
 /* ---------- Accessibility ---------- */
@@ -596,7 +587,7 @@ address a:hover {
         padding-top: 1rlh;
     }
 
-    .site-footer {
+    footer {
         height: auto;
     }
 
