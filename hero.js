@@ -9,19 +9,55 @@ const HERO_IMAGES = [
 {%- endfor %}
 ];
 
-// Caption shown with each photo, by file name. Leave a photo out to show no caption.
-const HERO_CAPTIONS = {
-    'priest-lake.jpg': 'Priest Lake',
-    'state-capitol-pride.jpg': 'State Capitol',
-    'anderson-ranch.jpg': 'Anderson Ranch',
-    'schweitzer.jpg': 'Schweitzer',
-    'coeur-dalene.jpg': "Coeur d'Alene",
-    'blackfoot.jpg': 'Blackfoot',
-    'shoshone-falls.jpg': 'Shoshone Falls',
-    'owyhee-reservoir.jpg': 'Owyhee Reservoir',
-    'south-fork-payette.jpg': 'South Fork Payette',
-    'bruneau-river.jpg': 'Bruneau River',
-    'state-capitol-protest.jpg': 'State Capitol'
+// Each photo's caption (the place) and its description for people who can't
+// see it (alt), by file name. The caption follows the photo, so the
+// description leaves the place out. A photo left out shows no caption and no
+// description.
+const HERO_PHOTOS = {
+    'priest-lake.jpg': {
+        caption: 'Priest Lake',
+        alt: 'A forested island in a lake, with snowy mountains behind it'
+    },
+    'state-capitol-pride.jpg': {
+        caption: 'State Capitol',
+        alt: 'A rainbow flag held up at a rally on the front steps'
+    },
+    'anderson-ranch.jpg': {
+        caption: 'Anderson Ranch',
+        alt: 'A dam and its concrete spillway in a rocky canyon'
+    },
+    'schweitzer.jpg': {
+        caption: 'Schweitzer',
+        alt: 'Snow-covered ski runs on a mountain at sunset'
+    },
+    'coeur-dalene.jpg': {
+        caption: "Coeur d'Alene",
+        alt: 'A drive-in restaurant on a street corner at sunset'
+    },
+    'blackfoot.jpg': {
+        caption: 'Blackfoot',
+        alt: 'The Eastern Idaho State Fair entrance sign at dusk'
+    },
+    'shoshone-falls.jpg': {
+        caption: 'Shoshone Falls',
+        alt: 'A wide waterfall over pale cliffs'
+    },
+    'owyhee-reservoir.jpg': {
+        caption: 'Owyhee Reservoir',
+        alt: 'A reservoir between cliffs and sagebrush hills'
+    },
+    'south-fork-payette.jpg': {
+        caption: 'South Fork Payette',
+        alt: 'A river below hillsides of living and burned pine trees'
+    },
+    'bruneau-river.jpg': {
+        caption: 'Bruneau River',
+        alt: 'A river in a dry, grassy canyon on a cloudy day'
+    },
+    'state-capitol-protest.jpg': {
+        caption: 'State Capitol',
+        alt: 'A full public gallery above a legislative chamber'
+    }
 };
 
 // Shuffle the photo order once per visit (Fisher-Yates), so every photo shows
@@ -58,27 +94,34 @@ function shuffleHeroImages() {
 
 // Initialize hero image rotation
 function initHeroRotation() {
-    const layers = document.querySelectorAll('.hero-bg');
-    const captions = document.querySelectorAll('.photo-caption');
+    const figure = document.querySelector('.hero figure');
 
-    // Nothing to rotate without the hero layers and photos
-    if (layers.length < 2 || HERO_IMAGES.length === 0) {
+    // Nothing to rotate without the photo's figure and photos
+    if (!figure || HERO_IMAGES.length === 0) {
         return;
     }
+
+    const frame = figure.querySelector('div');
+    const caption = figure.querySelector('figcaption');
+    // The photo goes into the page once the first one has loaded
+    const photo = document.createElement('img');
 
     shuffleHeroImages();
 
     let current = 0;
-    let front = 0;
     // The rotation waits until the first photo is on screen
     let ready = false;
 
-    function show(index, layer) {
+    // Called once the photo has loaded, so it replaces the last one at once
+    function show(index) {
         const name = HERO_IMAGES[index];
-        layers[layer].style.setProperty('--photo', `url('${HERO_DIR}${name}')`);
-        captions.forEach((c) => {
-            c.textContent = HERO_CAPTIONS[name] || '';
-        });
+        const about = HERO_PHOTOS[name] || {};
+        photo.alt = about.alt || '';
+        photo.src = HERO_DIR + name;
+        caption.textContent = about.caption || '';
+        if (!photo.isConnected) {
+            frame.append(photo);
+        }
     }
 
     // Show the first photo that loads, so a missing file never leaves the hero empty
@@ -103,7 +146,7 @@ function initHeroRotation() {
             }
             settled = true;
             current = index;
-            show(index, 0);
+            show(index);
             ready = true;
         };
         img.onerror = () => {
@@ -122,7 +165,7 @@ function initHeroRotation() {
     let timer = null;
     let loading = false;
 
-    // Load the next photo first so the switch never reveals a blank layer.
+    // Load the next photo first so the switch never shows a blank photo.
     // Only one load runs at a time, and a photo that fails to load is skipped.
     function rotate() {
         if (!ready || loading) {
@@ -154,11 +197,7 @@ function initHeroRotation() {
             if (reducedMotion.matches) {
                 return;
             }
-            const back = 1 - front;
-            show(next, back);
-            layers[back].classList.add('active');
-            layers[front].classList.remove('active');
-            front = back;
+            show(next);
             current = next;
         };
         img.src = HERO_DIR + HERO_IMAGES[next];

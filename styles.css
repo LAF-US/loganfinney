@@ -83,23 +83,22 @@ p {
 /* Everything is sized in whole squares (rlh units). The content column is centered
    and an even number of squares wide (at most 48), so its edges land on grid
    lines. Rules are drawn with box-shadow so they add no height */
-.header-content,
-.hero-content,
-.photo-frame-column,
-.page,
-.footer-content {
-    width: min(48rlh, calc(100% - 2rlh));
-    margin: 0 auto;
+:root {
+    --column: min(48rlh, calc(100% - 2rlh));
 }
 
 @supports (width: round(1px, 1px)) {
-    .header-content,
-    .hero-content,
-    .photo-frame-column,
-    .page,
-    .footer-content {
-        width: min(48rlh, round(down, 100% - 2rlh, 2rlh));
+    :root {
+        --column: min(48rlh, round(down, 100% - 2rlh, 2rlh));
     }
+}
+
+.header-content,
+.hero-content,
+.page,
+.footer-content {
+    width: var(--column);
+    margin: 0 auto;
 }
 
 /* ---------- Baselines ---------- */
@@ -209,32 +208,47 @@ header a {
     overflow: clip;
 }
 
-/* The whole photo, uncropped, at full width, directly under the header,
-   dissolving into the page at the bottom */
-.hero-bg {
+/* The photo (hero.js puts it in and changes it) at full width, directly
+   under the header, with its place name as the caption at the bottom right */
+figure {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     aspect-ratio: 3 / 2;
-    /* The photo overlay sits in the same layer as the photo so both change
-       together; a new photo replaces the last one at once, with no fade.
-       The photo starts under the header. The overlay's top gradient
-       fades out from the top of the photo over its first 28%; the photo is
-       unobscured below that until the bottom gradient eases in to full
-       strength near the bottom, where the text starts. Both gradients are set
-       in shares of the photo's height, so they look the same at every width */
-    background-image: linear-gradient(to bottom, var(--bg), transparent 28%, transparent 70%, var(--hero-wash) 90%), var(--photo, none);
-    background-size: 100% auto;
-    background-position: top center;
-    background-repeat: no-repeat;
-    -webkit-mask-image: linear-gradient(to bottom, #000 80%, transparent);
-    mask-image: linear-gradient(to bottom, #000 80%, transparent);
-    opacity: 0;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
 }
 
-.hero-bg.active {
-    opacity: 1;
+/* The whole photo, uncropped, under a shade, dissolving into the page at the
+   bottom. A new photo replaces the last one at once, with no fade. The
+   shade's top gradient fades out from the top of the photo over its first
+   28%; the photo is unobscured below that until the bottom gradient eases in
+   to full strength near the bottom, where the text starts. Both gradients are
+   set in shares of the photo's height, so they look the same at every width */
+figure div {
+    position: absolute;
+    inset: 0;
+    -webkit-mask-image: linear-gradient(to bottom, #000 80%, transparent);
+    mask-image: linear-gradient(to bottom, #000 80%, transparent);
+}
+
+figure img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+}
+
+figure div::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(to bottom, var(--bg), transparent 28%, transparent 70%, var(--hero-wash) 90%);
 }
 
 .hero {
@@ -515,34 +529,16 @@ address a:hover {
     }
 }
 
-/* The photo's frame, the same box as the photo, with the content column inside */
-.photo-frame {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    aspect-ratio: 3 / 2;
-    z-index: 3;
-    pointer-events: none;
-}
-
-.photo-frame-column {
-    height: 100%;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: flex-end;
-}
-
 /* The photo's caption: small print in a half-frosted box at the bottom right
-   of the photo, one square up. When that corner is below the bottom of the
-   screen, it waits at the bottom right of the screen instead, so it shows
-   when the page opens. The box keeps the text readable wherever it lands */
-.photo-caption {
+   of the photo, one square up, in line with the right edge of the text
+   column. When that corner is below the bottom of the screen, it waits at
+   the bottom right of the screen instead, so it shows when the page opens.
+   The box keeps the text readable wherever it lands */
+figcaption {
     position: sticky;
     bottom: 1rlh;
-    margin: 0 0 1rlh;
+    z-index: 3;
+    margin: 0 calc((100% - var(--column)) / 2) 1rlh 0;
     pointer-events: auto;
     /* Six squares wide, enough for the longest caption (South Fork Payette), so both edges sit on grid lines */
     width: 6rlh;
@@ -556,7 +552,7 @@ address a:hover {
     background-color: color-mix(in srgb, var(--bg) 75%, transparent);
 }
 
-.photo-caption:empty {
+figcaption:empty {
     visibility: hidden;
 }
 
@@ -583,8 +579,7 @@ address a:hover {
 
     .skip-link,
     #themeToggle,
-    .hero-bg,
-    .photo-frame,
+    figure,
     .footer-fire-band {
         display: none;
     }
