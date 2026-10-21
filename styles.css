@@ -112,9 +112,10 @@ p {
 @supports (text-box: trim-both cap alphabetic) {
     .logo,
     .hero .headline span,
-    .rendercv h1,
+    h1,
+    h2,
+    h3,
     address div,
-    .rendercv h2,
     .rendercv p,
     .hero-bio p,
     footer p {
@@ -295,13 +296,14 @@ p {
 /* ---------- CV (RenderCV) ---------- */
 
 /* Everything between the bio and the footer is RenderCV's own HTML
-   (_includes/rendercv.html), unchanged: h1 for the name and each section, h2
-   for each entry, then paragraphs and bulleted or numbered lists. Every line
-   is one square tall, so it all sits on the grid */
+   (_includes/rendercv.html), unchanged: h1 for the CV's title, h2 for each
+   section, h3 for each entry (those levels come from the copies of RenderCV's
+   templates in markdown/), then paragraphs and bulleted or numbered lists.
+   Every line is one square tall, so it all sits on the grid */
 
-/* Sections: capitals one line high */
-.rendercv h1 {
-    font-family: var(--font-body);
+/* The CV's title and its sections: capitals one line high */
+h1,
+h2 {
     font-size: 1.25rem;
     padding-top: 1rlh;
     font-weight: 700;
@@ -314,27 +316,30 @@ p {
 
 /* With text-box trimming: the blank square plus the centering gap */
 @supports (text-box: trim-both cap alphabetic) {
-    .rendercv h1 {
+    h1,
+    h2 {
         padding-top: calc(1rlh + (1lh - 1cap) / 2);
     }
 }
 
-.rendercv h1:first-child {
+/* The title opens the CV, with no space above it */
+h1 {
     margin-top: 0;
 }
 
-.rendercv h1:not(:first-child) {
+/* Each section starts under a rule */
+h2 {
     box-shadow: inset 0 1px 0 var(--ink);
 }
 
 /* Entries: one blank square above each, body size; RenderCV bolds the name */
-.rendercv h2 {
+h3 {
     font-size: 1rem;
     font-weight: 400;
     margin-top: 1rlh;
 }
 
-.rendercv h1 + h2 {
+h2 + h3 {
     margin-top: 0;
 }
 
@@ -591,8 +596,9 @@ address a:hover {
         height: auto;
     }
 
-    .rendercv h1,
-    .rendercv h2 {
+    h1,
+    h2,
+    h3 {
         break-after: avoid;
     }
 

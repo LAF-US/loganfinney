@@ -70,6 +70,10 @@ fonts:
       - { file: cousine-italic.woff2, weight: 400, style: italic }
 include:
   - ".well-known"
+# RenderCV reads its template copies in markdown/ when it renders the CV;
+# they aren't pages of the site
+exclude:
+  - markdown
 defaults:
   - scope:
       path: ""
