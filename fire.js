@@ -2,9 +2,10 @@
 // doom-fire-algorithm (https://github.com/filipedeschamps/doom-fire-algorithm).
 // The spread rule is his; this file sizes the fire to fill the footer and
 // draws it in the page's grid squares and the site's colors, behind the
-// footer text. It lights the first time the footer scrolls into view and
-// keeps burning, lights again from nothing when the theme switches, and never
-// runs when the reader has asked for reduced motion.
+// footer text. It lights the first time the footer scrolls into view, pauses
+// while the footer is off screen and carries on when it comes back, lights
+// again from nothing when the theme switches, and never runs when the reader
+// has asked for reduced motion.
 //
 // MIT License
 //
@@ -133,7 +134,9 @@ function initFooterFire() {
     let scale = 1;
     let pixels = new Uint8Array(0);
     let timer = null;
-    let lit = false;
+    // Burning: the fire has been lit and not put out, whether running or paused
+    let burning = false;
+    let visible = false;
 
     // One grid square (1rlh) in CSS pixels
     function measureSquare() {
@@ -161,7 +164,7 @@ function initFooterFire() {
         canvas.width = Math.round(columns * square * scale);
         canvas.height = Math.round(FIRE_ROWS * square * scale);
         pixels = new Uint8Array(columns * FIRE_ROWS);
-        if (timer !== null) {
+        if (burning) {
             light();
         } else {
             update();
@@ -229,44 +232,52 @@ function initFooterFire() {
         draw(palette);
     }
 
+    // Lights the fire the first time, and carries on a paused one
     function start() {
         if (timer !== null || columns === 0) {
             return;
         }
-        light();
+        if (!burning) {
+            light();
+            burning = true;
+        }
         timer = setInterval(step, FIRE_STEP_MS);
     }
 
-    // Stopping clears the fire. It only stops when the reader turns on reduced
-    // motion, and lights again from nothing if they turn it off
-    function stop() {
-        if (timer === null) {
-            return;
-        }
+    // Pausing keeps the fire as it is, ready to carry on
+    function pause() {
         clearInterval(timer);
         timer = null;
+    }
+
+    // Stopping puts the fire out. It only stops when the reader turns on
+    // reduced motion, and lights again from nothing if they turn it off
+    function stop() {
+        if (!burning) {
+            return;
+        }
+        pause();
+        burning = false;
         context.clearRect(0, 0, canvas.width, canvas.height);
     }
 
     function update() {
-        if (lit && !reducedMotion.matches) {
+        if (reducedMotion.matches) {
+            stop();
+        } else if (visible) {
             start();
         } else {
-            stop();
+            pause();
         }
     }
 
     resize();
     new ResizeObserver(resize).observe(canvas.parentElement);
-    // The first time the footer comes into view, the fire lights for good
-    const observer = new IntersectionObserver((entries) => {
-        if (entries.some((entry) => entry.isIntersecting)) {
-            lit = true;
-            observer.disconnect();
-            update();
-        }
-    });
-    observer.observe(footer);
+    // The fire runs while any of the footer is on screen
+    new IntersectionObserver((entries) => {
+        visible = entries[entries.length - 1].isIntersecting;
+        update();
+    }).observe(footer);
     reducedMotion.addEventListener('change', update);
 }
 
