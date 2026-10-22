@@ -94,7 +94,7 @@ function shuffleHeroImages() {
 
 // Initialize hero image rotation
 function initHeroRotation() {
-    const figure = document.querySelector('.hero figure');
+    const figure = document.querySelector('figure');
 
     // Nothing to rotate without the photo's figure and photos
     if (!figure || HERO_IMAGES.length === 0) {

@@ -123,11 +123,11 @@ small {
     }
 }
 
-header {
+header,
+section {
     padding-inline: calc((100% - var(--column)) / 2);
 }
 
-.hero-content,
 .page,
 .footer-content {
     width: var(--column);
@@ -150,7 +150,7 @@ header {
     h4,
     address div,
     .rendercv p,
-    .hero-bio p,
+    section > p,
     footer p {
         text-box: trim-both cap alphabetic;
         padding-block: calc((1lh - 1cap) / 2);
@@ -228,14 +228,17 @@ header button svg:last-child { display: none; }
 /* ---------- Hero (home) ---------- */
 
 /* No rule between the header and the photo on the home page */
-.home header {
+body:has(figure) header {
     box-shadow: none;
 }
 
-.hero {
+/* The home page's opening: the photo, then your name, tagline, contacts and
+   bio, starting on the first grid row below the photo */
+section {
     position: relative;
-    display: flex;
-    align-items: flex-start;
+    padding-top: calc(100vw * 2 / 3);
+    padding-top: round(up, 100vw * 2 / 3, 1rlh);
+    color: var(--ink);
     /* Crops like hidden, but lets the caption stick to the bottom of the screen */
     overflow: clip;
 }
@@ -283,18 +286,16 @@ figure div::after {
     background-image: linear-gradient(to bottom, var(--bg), transparent 28%, transparent 70%, var(--hero-wash) 90%);
 }
 
-.hero {
-    color: var(--ink);
-}
-
-.hero-content {
+/* The text sits over the foot of the photo, under its caption */
+section > div,
+section > p {
     position: relative;
     z-index: 2;
-    /* Text starts on the first grid row below the photo */
-    padding: calc(100vw * 2 / 3) 0 0;
-    padding: round(up, 100vw * 2 / 3, 1rlh) 0 0;
-    /* Your name and tagline on the left, the contacts on the right; on a
-       narrow screen the contacts go under them */
+}
+
+/* Your name and tagline on the left, the contacts on the right; on a narrow
+   screen the contacts go under them */
+section > div {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -528,11 +529,8 @@ address a:hover {
 
 /* The bio (the site description in _config.yml) on its own line under the
    name, tagline and contacts, on the left, under a rule as wide as the contacts' rule */
-.hero-bio {
-    flex-basis: 100%;
-}
-
-.hero-bio p {
+section > p {
+    margin-top: 1rlh;
     width: fit-content;
     max-width: 68ch;
     padding-top: 1rlh;
@@ -548,7 +546,7 @@ address a:hover {
 
 /* With text-box trimming: the blank square plus the centering gap */
 @supports (text-box: trim-both cap alphabetic) {
-    .hero-bio p {
+    section > p {
         padding-top: calc(1rlh + (1lh - 1cap) / 2);
     }
 }
@@ -608,7 +606,7 @@ figcaption:empty {
     }
 
     /* No photo above your name, so the text starts one square down */
-    .hero-content {
+    section {
         padding-top: 1rlh;
     }
 

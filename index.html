@@ -1,6 +1,6 @@
 ---
 layout: default
-body_class: home h-card
+body_class: h-card
 # The home page is about its person
 seo:
   type: Person
@@ -14,7 +14,7 @@ redirect_from:
   - /work.html
   - /work/
 ---
-        <section class="hero">
+        <section>
             <!-- The photo with its place name; hero.js puts each photo in the
                  div and changes it every few seconds -->
             <figure>
@@ -22,14 +22,15 @@ redirect_from:
                 <figcaption></figcaption>
             </figure>
 
-            <div class="hero-content">
+            <!-- Your name and tagline, and beside them the contacts -->
+            <div>
                 <hgroup>
                     <h1>{{ site.title }}</h1>
                     <p class="p-job-title">{{ site.tagline }}</p>
                 </hgroup>
                 {% include contact.html %}
-                <div class="hero-bio"><p class="p-note">{{ site.description }}</p></div>
             </div>
+            <p class="p-note">{{ site.description }}</p>
         </section>
 
         <div class="page rendercv" id="cv">
