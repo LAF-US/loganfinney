@@ -457,7 +457,9 @@ footer canvas {
 
 /* ---------- Accessibility ---------- */
 
-.skip-link {
+/* The skip link, the first thing on every page: off screen until the
+   keyboard reaches it, then at the top left */
+body > a {
     position: absolute;
     left: -9999px;
     top: 0;
@@ -467,7 +469,7 @@ footer canvas {
     padding: 0.6rem 1.2rem;
 }
 
-.skip-link:focus {
+body > a:focus {
     left: 0;
 }
 
@@ -574,7 +576,7 @@ figcaption:empty {
         -webkit-backdrop-filter: none;
     }
 
-    .skip-link,
+    body > a,
     header button,
     figure,
     footer canvas {
