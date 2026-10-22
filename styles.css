@@ -124,11 +124,11 @@ small {
 }
 
 header,
-section {
+section,
+main > div {
     padding-inline: calc((100% - var(--column)) / 2);
 }
 
-.page,
 .footer-content {
     width: var(--column);
     margin: 0 auto;
@@ -143,14 +143,12 @@ section {
    text-box trimming leave the text at its normal place in its squares */
 @supports (text-box: trim-both cap alphabetic) {
     header a,
-    hgroup p,
     h1,
     h2,
     h3,
     h4,
     address div,
-    .rendercv p,
-    section > p,
+    main p,
     footer p {
         text-box: trim-both cap alphabetic;
         padding-block: calc((1lh - 1cap) / 2);
@@ -321,18 +319,20 @@ hgroup p {
 
 /* ---------- Page scaffolding ---------- */
 
-.page {
-    padding: 2rlh 0 0;
+/* The CV, or the 404 page's message, in the column under the opening */
+main > div {
+    padding-top: 2rlh;
 }
 
-.page a {
+/* Links in the main content: the contacts, the CV and the way home from the 404 page */
+main a {
     color: var(--main);
     text-decoration: underline;
     text-underline-offset: 0.2em;
     text-decoration-thickness: 1px;
 }
 
-.page a:hover {
+main a:hover {
     color: var(--accent);
 }
 
@@ -392,14 +392,14 @@ h3 + h4 {
     margin-top: 0;
 }
 
-.rendercv p,
-.rendercv li {
+main > div p,
+main > div li {
     color: var(--ink-soft);
     max-width: 68ch;
 }
 
-.rendercv ul,
-.rendercv ol {
+main > div ul,
+main > div ol {
     padding-left: 1rlh;
 }
 
@@ -514,17 +514,6 @@ address dt {
     font-weight: 700;
 }
 
-address a {
-    color: var(--main);
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
-    text-decoration-thickness: 1px;
-}
-
-address a:hover {
-    color: var(--accent);
-}
-
 /* ---------- Home layout ---------- */
 
 /* The bio (the site description in _config.yml) on its own line under the
@@ -622,7 +611,7 @@ figcaption:empty {
     }
 
     /* Paper can't be clicked, so each web link's address follows it */
-    .rendercv a[href^="http"]::after {
+    main > div a[href^="http"]::after {
         content: " (" attr(href) ")";
         overflow-wrap: anywhere;
     }
