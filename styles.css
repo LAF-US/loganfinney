@@ -80,6 +80,29 @@ p {
     text-wrap: pretty;
 }
 
+/* The fonts, by tag. A tag not named here takes the font of the tag it sits
+   in, and body's sans font is the default */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--font-body);
+}
+
+p,
+ul,
+li {
+    font-family: var(--font-display);
+}
+
+address,
+figcaption,
+small {
+    font-family: var(--font-mono);
+}
+
 /* Everything is sized in whole squares (rlh units). The content column is centered
    and an even number of squares wide (at most 48), so its edges land on grid
    lines. Rules are drawn with box-shadow so they add no height */
@@ -372,7 +395,7 @@ h3 + h4 {
 
 /* ---------- Footer ---------- */
 
-/* Small print in the mono font, under a rule across the page */
+/* Small print, under a rule across the page */
 footer {
     box-shadow: inset 0 1px 0 var(--ink);
     /* Three squares above the rule and three below it. The footer is 37
@@ -381,13 +404,12 @@ footer {
     padding-top: 3rlh;
     height: 37rlh;
     position: relative;
-    font-family: var(--font-mono);
     font-size: 0.75rem;
     color: var(--ink-soft);
 }
 
-/* The copyright is marked as small print, and the footer is small print
-   already, so it isn't made smaller again */
+/* The copyright and the mottos are marked as small print, and the footer is
+   small print already, so they aren't made smaller again */
 footer small {
     font-size: inherit;
 }
@@ -466,7 +488,6 @@ address {
     margin-left: auto;
     padding-top: 1rlh;
     box-shadow: inset 0 1px 0 var(--ink);
-    font-family: var(--font-mono);
     font-size: 0.75rem;
     /* Browsers set <address> in italic unless told otherwise */
     font-style: normal;
@@ -545,7 +566,6 @@ figcaption {
     min-height: 1rlh;
     padding: 0;
     text-align: center;
-    font-family: var(--font-mono);
     font-size: 0.75rem;
     line-height: 1.5rem;
     color: var(--ink);
