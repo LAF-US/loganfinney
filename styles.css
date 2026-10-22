@@ -123,7 +123,10 @@ small {
     }
 }
 
-.header-content,
+header {
+    padding-inline: calc((100% - var(--column)) / 2);
+}
+
 .hero-content,
 .page,
 .footer-content {
@@ -167,14 +170,13 @@ header {
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     box-shadow: 0 1px 0 var(--ink);
-}
-
-.header-content {
+    /* Your name and the theme switch share one row of squares, with a blank
+       square above and below */
     height: 3rlh;
-    padding-top: 1rlh;
+    padding-block: 1rlh;
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
     gap: 1rlh;
 }
 
@@ -192,7 +194,7 @@ header a {
 /* The theme switch is a bare icon: a moon in light mode, a sun in dark. The
    button around the icon is two squares (48px) each way, past WCAG AAA's 44px
    target size; the negative margin keeps the layout as if it were the icon alone */
-#themeToggle {
+header button {
     --icon: 1.125rem;
     background: none;
     border: 0;
@@ -201,26 +203,26 @@ header a {
     font: inherit;
     color: var(--ink-soft);
     cursor: pointer;
-    align-self: center;
 }
 
-#themeToggle:hover {
+header button:hover {
     color: var(--ink);
 }
 
-/* Moon switches to dark, sun switches back to light */
-#themeToggle svg {
+/* The first icon, a moon, switches to dark; the second, a sun, switches back
+   to light. Only the one for the current theme shows */
+header button svg {
     display: block;
     width: var(--icon);
     height: var(--icon);
 }
 
-#themeToggle .t-light { display: none; }
-[data-theme="dark"] #themeToggle .t-light { display: inline; }
-[data-theme="dark"] #themeToggle .t-dark { display: none; }
+header button svg:last-child { display: none; }
+[data-theme="dark"] header button svg:last-child { display: block; }
+[data-theme="dark"] header button svg:first-child { display: none; }
 @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) #themeToggle .t-light { display: inline; }
-    :root:not([data-theme="light"]) #themeToggle .t-dark { display: none; }
+    :root:not([data-theme="light"]) header button svg:last-child { display: block; }
+    :root:not([data-theme="light"]) header button svg:first-child { display: none; }
 }
 
 /* ---------- Hero (home) ---------- */
@@ -524,12 +526,6 @@ address a:hover {
 
 /* ---------- Home layout ---------- */
 
-.header-tools {
-    display: flex;
-    align-items: center;
-    height: 1rlh;
-}
-
 /* The bio (the site description in _config.yml) on its own line under the
    name, tagline and contacts, on the left, under a rule as wide as the contacts' rule */
 .hero-bio {
@@ -605,7 +601,7 @@ figcaption:empty {
     }
 
     .skip-link,
-    #themeToggle,
+    header button,
     figure,
     .footer-fire-band {
         display: none;

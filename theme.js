@@ -23,7 +23,7 @@ try {
 } catch {}
 
 function initThemeToggle() {
-    const themeToggle = document.getElementById('themeToggle');
+    const themeToggle = document.querySelector('header button');
     if (!themeToggle) {
         return;
     }
