@@ -57,7 +57,7 @@ html {
 }
 
 body {
-    font-family: var(--font-body);
+    font-family: var(--font-display);
     background-color: var(--bg);
     /* Graph-paper rule: squares one line of text tall (1rlh), drawn on the page so they scroll with the content */
     background-image:
@@ -81,7 +81,8 @@ p {
 }
 
 /* The fonts, by tag. A tag not named here takes the font of the tag it sits
-   in, and body's sans font is the default */
+   in, and body's serif font is the default */
+header,
 h1,
 h2,
 h3,
@@ -99,6 +100,7 @@ li {
 
 address,
 figcaption,
+footer,
 small {
     font-family: var(--font-mono);
 }
@@ -395,7 +397,7 @@ h3 + h4 {
 
 /* ---------- Footer ---------- */
 
-/* Small print, under a rule across the page */
+/* Small print in the mono font, under a rule across the page */
 footer {
     box-shadow: inset 0 1px 0 var(--ink);
     /* Three squares above the rule and three below it. The footer is 37
