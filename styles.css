@@ -80,6 +80,12 @@ p {
     text-wrap: pretty;
 }
 
+/* A link too long for its line, such as a long web address, breaks onto the
+   next line instead of running off a narrow screen */
+a {
+    overflow-wrap: break-word;
+}
+
 /* The fonts, by tag. A tag not named here takes the font of the tag it sits
    in, and body's serif font is the default */
 header,
