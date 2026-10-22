@@ -7,7 +7,7 @@
     {
       "url": "http://localhost:8000/index.html",
       "actions": [
-        "click element #themeToggle"
+        "click element header button"
       ],
       "wait": 1000
     },
