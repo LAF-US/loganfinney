@@ -125,13 +125,9 @@ small {
 
 header,
 section,
-main > div {
+main > div,
+footer {
     padding-inline: calc((100% - var(--column)) / 2);
-}
-
-.footer-content {
-    width: var(--column);
-    margin: 0 auto;
 }
 
 /* ---------- Baselines ---------- */
@@ -416,6 +412,15 @@ footer {
     position: relative;
     font-size: 0.75rem;
     color: var(--ink-soft);
+    /* The copyright on the left, the mottos on the right; on a narrow screen
+       the mottos go three squares under the copyright */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-content: flex-start;
+    gap: 3rlh 1rlh;
+    /* The fire stays inside the footer */
+    overflow: clip;
 }
 
 /* The copyright and the mottos are marked as small print, and the footer is
@@ -435,37 +440,19 @@ footer i:first-child {
    number of squares wide, centered like the grid, and sits behind the footer
    text. It takes up no space, so the layout is the same with or without it,
    and it never shows when the reader asks for reduced motion */
-.footer-fire-band {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    /* FIRE_ROWS squares tall, as in fire.js */
-    height: 37rlh;
-    overflow: hidden;
-    z-index: -1;
-    pointer-events: none;
-}
-
-.footer-fire {
+footer canvas {
     position: absolute;
     left: 50%;
     bottom: 0;
     transform: translateX(-50%);
+    z-index: -1;
+    pointer-events: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .footer-fire-band {
+    footer canvas {
         display: none;
     }
-}
-
-.footer-content {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    /* Three squares between the copyright and the colophon when they stack */
-    gap: 3rlh 1rlh;
 }
 
 /* ---------- Accessibility ---------- */
@@ -590,7 +577,7 @@ figcaption:empty {
     .skip-link,
     header button,
     figure,
-    .footer-fire-band {
+    footer canvas {
         display: none;
     }
 

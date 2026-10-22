@@ -121,7 +121,7 @@ function firePalette() {
 }
 
 function initFooterFire() {
-    const canvas = document.querySelector('.footer-fire');
+    const canvas = document.querySelector('footer canvas');
     const footer = canvas && canvas.closest('footer');
     if (!footer || !('IntersectionObserver' in window)) {
         return;
@@ -151,7 +151,7 @@ function initFooterFire() {
         const nextScale = window.devicePixelRatio || 1;
         const width = canvas.parentElement.clientWidth;
         const nextColumns = 2 * Math.ceil(width / nextSquare / 2);
-        // A hidden fire (reduced motion) has no width; keep its last size
+        // A footer with no width yet has no room for the fire; keep its last size
         if (nextColumns === 0
             || (nextColumns === columns && nextSquare === square && nextScale === scale)) {
             return;
