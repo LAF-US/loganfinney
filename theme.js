@@ -6,21 +6,23 @@
 
 // The browser bar's color: the accent blue, dark blue on a light page and light
 // blue on a dark one (blue-dark and blue-light in _config.yml's palette)
-var THEME_COLORS = { light: '{{ site.palette.blue-dark }}', dark: '{{ site.palette.blue-light }}' };
-function setThemeColor(t) {
-    document.querySelectorAll('meta[name="theme-color"]').forEach(function (meta) {
-        meta.content = THEME_COLORS[t];
+const THEME_COLORS = { light: '{{ site.palette.blue-dark }}', dark: '{{ site.palette.blue-light }}' };
+function setThemeColor(theme) {
+    document.querySelectorAll('meta[name="theme-color"]').forEach((meta) => {
+        meta.content = THEME_COLORS[theme];
         meta.removeAttribute('media');
     });
 }
 
 try {
-    var t = sessionStorage.getItem('theme');
-    if (t === 'dark' || t === 'light') {
-        document.documentElement.setAttribute('data-theme', t);
-        setThemeColor(t);
+    const stored = sessionStorage.getItem('theme');
+    if (stored === 'dark' || stored === 'light') {
+        document.documentElement.setAttribute('data-theme', stored);
+        setThemeColor(stored);
     }
-} catch {}
+} catch {
+    // Storage unavailable: the page follows the system's light or dark setting
+}
 
 function initThemeToggle() {
     const themeToggle = document.querySelector('header button');
