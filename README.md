@@ -11,3 +11,6 @@
 - **Waits for you:** pull requests for major updates or for updates to the
   workflow's actions (merge when green), and an issue titled "The daily site
   build failed" (open the run it links to).
+- **If the daily check ever stops running**, GitHub may have switched it off:
+  in the Actions tab, pick "Build and publish the site" and press "Enable
+  workflow".

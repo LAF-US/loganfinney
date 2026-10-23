@@ -152,16 +152,22 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          # A lookup that fails stops this step, so nothing merges
+          set -o pipefail
           # The pull request's number, from its ref: refs/pull/<number>/merge
           number=${GITHUB_REF#refs/pull/}
           number=${number%/merge}
           pr=$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/pull/$number
+          # The build tested GitHub's trial merge of the pull request
+          # ($GITHUB_SHA), whose second parent is the pull request's latest
+          # commit. Only that commit may merge; a newer one waits for its own run
+          tested=$(gh api "repos/$GITHUB_REPOSITORY/commits/$GITHUB_SHA" --jq '.parents[1].sha')
+          # Every page of commits, not only the first 30
           commits=repos/$GITHUB_REPOSITORY/pulls/$number/commits
-          authors=$(gh api "$commits" --jq '[.[].author.login] | unique | join(" ")')
+          authors=$(gh api --paginate "$commits" --jq '.[].author.login' | sort -u | paste -sd ' ' -)
           # Dependabot describes each update in its commit message, with one
           # "update-type:" line per dependency
-          types=$(gh api "$commits" --jq '.[].commit.message' | sed -n 's/^ *update-type: //p' | sort -u)
-          # A lookup that fails stops this step, so nothing merges
+          types=$(gh api --paginate "$commits" --jq '.[].commit.message' | sed -n 's/^ *update-type: //p' | sort -u)
           files=$(gh pr diff "$pr" --name-only)
           workflows=$(grep '^\.github/workflows/' <<< "$files" || true)
           echo "Commits by: $authors"
@@ -173,7 +179,7 @@ jobs:
           elif [ -z "$types" ] || grep -qv -e '^version-update:semver-minor$' -e '^version-update:semver-patch$' <<< "$types"; then
             echo "Waits for a person: not only minor and patch updates"
           else
-            gh pr merge --merge "$pr"
+            gh pr merge --merge --match-head-commit "$tested" "$pr"
           fi
 
   # GitHub switches off a public repository's scheduled runs after 60 days
