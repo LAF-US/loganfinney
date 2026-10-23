@@ -19,7 +19,7 @@ from ruamel.yaml import YAML
 
 root = Path(__file__).resolve().parents[2]
 cv_file = root / "cv.yaml"
-typed, model = build_rendercv_dictionary_and_model(cv_file.read_text(), input_file_path=cv_file)
+typed, model = build_rendercv_dictionary_and_model(cv_file.read_text(encoding="utf-8"), input_file_path=cv_file)
 cv = typed["cv"]
 profiles = model.cv.social_networks
 mastodon = next(profile.username for profile in profiles if profile.network == "Mastodon")
@@ -39,7 +39,7 @@ settings = {
 }
 
 target = root / "_config.cv.yml"
-with target.open("w") as file:
+with target.open("w", encoding="utf-8") as file:
     file.write("# Made from cv.yaml by .github/scripts/cv-settings.py. Edit cv.yaml, not this\n")
     yaml = YAML()
     # Each setting on one line, however long
