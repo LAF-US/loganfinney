@@ -9,56 +9,8 @@ const HERO_IMAGES = [
 {%- endfor %}
 ];
 
-// Each photo's caption (the place) and its description for people who can't
-// see it (alt), by file name. The caption follows the photo, so the
-// description leaves the place out. A photo left out shows no caption and no
-// description.
-const HERO_PHOTOS = {
-    'priest-lake.jpg': {
-        caption: 'Priest Lake',
-        alt: 'A forested island in a lake, with snowy mountains behind it'
-    },
-    'state-capitol-pride.jpg': {
-        caption: 'State Capitol',
-        alt: 'A rainbow flag held up at a rally on the front steps'
-    },
-    'anderson-ranch.jpg': {
-        caption: 'Anderson Ranch',
-        alt: 'A dam and its concrete spillway in a rocky canyon'
-    },
-    'schweitzer.jpg': {
-        caption: 'Schweitzer',
-        alt: 'Snow-covered ski runs on a mountain at sunset'
-    },
-    'coeur-dalene.jpg': {
-        caption: "Coeur d'Alene",
-        alt: 'A drive-in restaurant on a street corner at sunset'
-    },
-    'blackfoot.jpg': {
-        caption: 'Blackfoot',
-        alt: 'The Eastern Idaho State Fair entrance sign at dusk'
-    },
-    'shoshone-falls.jpg': {
-        caption: 'Shoshone Falls',
-        alt: 'A wide waterfall over pale cliffs'
-    },
-    'owyhee-reservoir.jpg': {
-        caption: 'Owyhee Reservoir',
-        alt: 'A reservoir between cliffs and sagebrush hills'
-    },
-    'south-fork-payette.jpg': {
-        caption: 'South Fork Payette',
-        alt: 'A river below hillsides of living and burned pine trees'
-    },
-    'bruneau-river.jpg': {
-        caption: 'Bruneau River',
-        alt: 'A river in a dry, grassy canyon on a cloudy day'
-    },
-    'state-capitol-protest.jpg': {
-        caption: 'State Capitol',
-        alt: 'A full public gallery above a legislative chamber'
-    }
-};
+// Each photo's caption and description, by file name: _data/hero.yml
+const HERO_PHOTOS = {{ site.data.hero | jsonify }};
 
 // Shuffle the photo order once per visit (Fisher-Yates), so every photo shows
 // once per cycle. The order is kept for the rest of the visit and reshuffled
