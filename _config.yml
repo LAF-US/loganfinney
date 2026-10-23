@@ -55,12 +55,13 @@ fonts:
       - { file: cousine-italic.woff2, weight: 400, style: italic }
 include:
   - ".well-known"
-# RenderCV reads its template copies in markdown/ when it renders the CV;
-# they aren't pages of the site. The others are from Jekyll's own default list,
-# which a site's exclude list replaces: the Gemfile and the Ruby gems the build
-# installs
+# RenderCV reads its template copies in markdown/ and the TTF fonts in fonts/
+# when it renders the CV; they aren't part of the site, which serves the WOFF2
+# fonts. The others are from Jekyll's own default list, which a site's exclude
+# list replaces: the Gemfile and the Ruby gems the build installs
 exclude:
   - markdown
+  - fonts/*.ttf
   - Gemfile
   - Gemfile.lock
   - vendor
@@ -73,6 +74,9 @@ defaults:
         width: 1024
         height: 683
         alt: A rainbow flag reading Love trumps hate held up at the Idaho State Capitol
+# No theme: the site has its own layout and styles. The github-pages gem
+# otherwise adds its default theme, whose stylesheet nothing uses
+theme: null
 plugins:
   - jekyll-redirect-from
   - jekyll-seo-tag
