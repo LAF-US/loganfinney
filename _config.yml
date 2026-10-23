@@ -1,33 +1,14 @@
-url: https://loganfinney.com
-# The site's identity, in the keys Jekyll's SEO plugin (jekyll-seo-tag) reads;
-# the templates read them too. cv.yaml holds the same name and headline for the CV
-title: Logan Finney
-tagline: Documentary Journalist
+# Your name, job title, bio, email, website, location and profiles are typed in
+# cv.yaml only: .github/scripts/cv-settings.py copies them into _config.cv.yml
+# at build time, and Jekyll reads both files (site.title, site.tagline,
+# site.description, site.url, site.location, site.author.name,
+# site.contact.email, site.social.links, site.mastodon)
 author:
-  name: Logan Finney
   # The name's parts, for logan.vcf
   given_name: Logan
   family_name: Finney
-# Default page description for search results and link previews; a page's own front matter description overrides it
-description: Logan Finney is an award-winning reporter who covers politics, elections, and government. He grew up hunting, hiking, and skiing in the Idaho Panhandle and remains forever fascinated by the people, history, and culture of his home state.
-# The profiles the site vouches for: the SEO plugin lists them as the person's
-# sameAs, and head.html links each with rel="me" (Mastodon shows a verified
-# check on a profile that links back here)
-social:
-  links:
-    - https://instagram.com/loganfinney27
-    - https://bsky.app/profile/loganfinney.com
-    - https://x.com/lfinneytweets
-    - https://syringa.social/@Logan
-    - https://linkedin.com/in/loganfinney
-    - https://youtube.com/@LoganFinney
-    - https://github.com/loganfinney27
-    - https://orcid.org/0009-0009-9584-0048
-# The fediverse account a search for anything@loganfinney.com finds (.well-known/webfinger)
-mastodon: Logan@syringa.social
-# Read by the contact line, logan.vcf, security.txt and humans.txt
+# Read by the contact line and logan.vcf, beside the email from cv.yaml
 contact:
-  email: loganfinney@proton.me
   signal:
     handle: signal.me/loganfinney.27
     url: https://signal.me/#eu/oBgA3Z4JO0BiXt--nvJGDDwAKT8Zp-DS5Y60BVvvlw7bVK5eV1lMNoBt1WZoZEeY
@@ -71,9 +52,14 @@ fonts:
 include:
   - ".well-known"
 # RenderCV reads its template copies in markdown/ when it renders the CV;
-# they aren't pages of the site
+# they aren't pages of the site. The others are from Jekyll's own default list,
+# which a site's exclude list replaces: the Gemfile and the Ruby gems the build
+# installs
 exclude:
   - markdown
+  - Gemfile
+  - Gemfile.lock
+  - vendor
 defaults:
   - scope:
       path: ""

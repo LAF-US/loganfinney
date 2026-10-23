@@ -1,4 +1,4 @@
-name: Deploy Jekyll with GitHub Pages dependencies preinstalled
+name: Build and publish the site
 
 # Builds loganfinney.com and publishes it to GitHub Pages (Settings → Pages →
 # Source: GitHub Actions): renders the CV from cv.yaml with RenderCV, builds
@@ -52,6 +52,8 @@ jobs:
         run: pip install -r .github/requirements.txt
       - name: Render the CV from cv.yaml
         run: rendercv render cv.yaml
+      - name: Copy the site's facts from cv.yaml for Jekyll (_config.cv.yml)
+        run: python3 .github/scripts/cv-settings.py
       # The daily run checks first: it publishes only if the CV's text differs
       # from the live site's copy, through an edit or a date rolling over. The
       # PDF's text is compared through its Typst source, because the PDF file
@@ -61,7 +63,7 @@ jobs:
         id: cv
         if: github.event_name == 'schedule'
         run: |
-          site=$(python3 -c "from ruamel.yaml import YAML; print(YAML(typ='safe').load(open('_config.yml'))['url'])")
+          site=$(python3 -c "from ruamel.yaml import YAML; print(YAML(typ='safe').load(open('_config.cv.yml'))['url'])")
           changed=false
           for file in rendercv_output/*.md rendercv_output/*.typ; do
             if ! curl -fsS "$site/rendercv_output/${file##*/}" -o "$RUNNER_TEMP/live" || ! cmp -s "$file" "$RUNNER_TEMP/live"; then
@@ -76,11 +78,19 @@ jobs:
         run: |
           python3 .github/scripts/rendercv-include.py rendercv_output/*.html
           cp rendercv_output/*.pdf cv.pdf
-      - name: Build site (same as GitHub Pages)
-        uses: actions/jekyll-build-pages@44a6e6beabd48582f863aeeb6cb2151cc1716697 # v1.0.13
+      - name: Install Ruby and the site's Jekyll and plugins (versions in Gemfile.lock)
+        uses: ruby/setup-ruby@651ff0d62c5c79bed6d53ec518387aae20e72c1a # v1.329.0
         with:
-          source: ./
-          destination: ./_site
+          ruby-version: "3.3"
+          bundler-cache: true
+      # The github-pages gem builds the way GitHub Pages does; the second
+      # settings file carries the facts from cv.yaml
+      - name: Build the site
+        run: bundle exec jekyll build --config _config.yml,_config.cv.yml
+        env:
+          JEKYLL_ENV: production
+          JEKYLL_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PAGES_REPO_NWO: ${{ github.repository }}
       - name: Serve built site
         run: |
           (python3 -m http.server 8000 -d _site >/dev/null 2>&1 &)

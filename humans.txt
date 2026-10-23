@@ -3,7 +3,7 @@
 /* TEAM */
 Journalist: {{ site.author.name }}
 Contact: {{ site.contact.email }}
-From: Idaho, USA
+From: {{ site.location }}
 
 /* SITE */
 Language: English
