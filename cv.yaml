@@ -538,11 +538,13 @@ cv:
 # needs whenever design is given
 design:
   theme: classic
-  # The site's look (styles.css) without its grid: its fonts, ink and link
-  # colors, left alignment and underlined links. The colors and typefaces are
-  # copies of _config.yml's palette and fonts. RenderCV reads the TTF files in
-  # fonts/ — the font makers' complete originals, committed beside the WOFF2
-  # files the site serves
+  # The site's look (styles.css) without its grid: its ink and link colors,
+  # left alignment and underlined links, and two of its typefaces, DejaVu Sans
+  # for the text and headings and Cousine for the contact line (the site sets
+  # its body text in Gelasio). The colors and typefaces are copies of
+  # _config.yml's palette and fonts. RenderCV reads the TTF files in fonts/ —
+  # the font makers' complete originals, committed beside the WOFF2 files the
+  # site serves
   colors:
     body: '#4a4641'
     name: '#131211'
