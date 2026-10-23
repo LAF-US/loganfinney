@@ -151,14 +151,17 @@ jobs:
       - name: Merge the update if it is a minor or patch update to a build tool
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PR: ${{ github.event.pull_request.html_url }}
-          COMMITS: repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/commits
         run: |
-          authors=$(gh api "$COMMITS" --jq '[.[].author.login] | unique | join(" ")')
+          # The pull request's number, from its ref: refs/pull/<number>/merge
+          number=${GITHUB_REF#refs/pull/}
+          number=${number%/merge}
+          pr=$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/pull/$number
+          commits=repos/$GITHUB_REPOSITORY/pulls/$number/commits
+          authors=$(gh api "$commits" --jq '[.[].author.login] | unique | join(" ")')
           # Dependabot describes each update in its commit message, with one
           # "update-type:" line per dependency
-          types=$(gh api "$COMMITS" --jq '.[].commit.message' | sed -n 's/^ *update-type: //p' | sort -u)
-          workflows=$(gh pr diff "$PR" --name-only | grep '^\.github/workflows/' || true)
+          types=$(gh api "$commits" --jq '.[].commit.message' | sed -n 's/^ *update-type: //p' | sort -u)
+          workflows=$(gh pr diff "$pr" --name-only | grep '^\.github/workflows/' || true)
           echo "Commits by: $authors"
           echo "Update types: ${types:-none given}"
           if [ "$authors" != "dependabot[bot]" ]; then
@@ -168,7 +171,7 @@ jobs:
           elif [ -z "$types" ] || grep -qv -e '^version-update:semver-minor$' -e '^version-update:semver-patch$' <<< "$types"; then
             echo "Waits for a person: not only minor and patch updates"
           else
-            gh pr merge --merge "$PR"
+            gh pr merge --merge "$pr"
           fi
 
   # GitHub switches off a public repository's scheduled runs after 60 days
