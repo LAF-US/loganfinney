@@ -161,7 +161,9 @@ jobs:
           # Dependabot describes each update in its commit message, with one
           # "update-type:" line per dependency
           types=$(gh api "$commits" --jq '.[].commit.message' | sed -n 's/^ *update-type: //p' | sort -u)
-          workflows=$(gh pr diff "$pr" --name-only | grep '^\.github/workflows/' || true)
+          # A lookup that fails stops this step, so nothing merges
+          files=$(gh pr diff "$pr" --name-only)
+          workflows=$(grep '^\.github/workflows/' <<< "$files" || true)
           echo "Commits by: $authors"
           echo "Update types: ${types:-none given}"
           if [ "$authors" != "dependabot[bot]" ]; then
