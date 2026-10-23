@@ -6,12 +6,18 @@ the templates read, and the site build loads the file after _config.yml:
 
     bundle exec jekyll build --config _config.yml,_config.cv.yml
 
+The site needs your name and website. Anything else cv.yaml leaves out, the
+pages leave out too. The bio is the text of the section titled Summary, and
+the site's fediverse address (.well-known/webfinger) is the Mastodon profile.
+Where cv.yaml gives more than one email or website, the site uses the first.
+
 The profile links come from RenderCV's own model, which builds each address
 from its network and username, so they match the links in the CV. The file is
 made fresh on every build and never committed; run this before building the
 site locally. Needs RenderCV, which brings ruamel.yaml.
 """
 
+import sys
 from pathlib import Path
 
 from rendercv.schema.rendercv_model_builder import build_rendercv_dictionary_and_model
@@ -21,22 +27,39 @@ root = Path(__file__).resolve().parents[2]
 cv_file = root / "cv.yaml"
 typed, model = build_rendercv_dictionary_and_model(cv_file.read_text(encoding="utf-8"), input_file_path=cv_file)
 cv = typed["cv"]
-profiles = model.cv.social_networks
-mastodon = next(profile.username for profile in profiles if profile.network == "Mastodon")
+
+missing = [fact for fact in ("name", "website") if not cv.get(fact)]
+if missing:
+    sys.exit(f"cv.yaml needs {' and '.join(missing)} under cv: the site's title is your name, and its address is your website")
+
+
+def first(fact):
+    """The fact, or the first of several"""
+    return fact[0] if isinstance(fact, list) else fact
+
 
 settings = {
     "title": cv["name"],
-    "tagline": cv["headline"],
-    "description": " ".join(cv["sections"]["Summary"]),
-    "url": cv["website"].rstrip("/"),
-    "location": cv["location"],
+    "url": first(cv["website"]).rstrip("/"),
     "author": {"name": cv["name"]},
-    "contact": {"email": cv["email"]},
-    "social": {"links": [profile.url for profile in profiles]},
-    # The fediverse account a search for anything@ the site's domain finds
-    # (.well-known/webfinger), without the username's leading @
-    "mastodon": mastodon.lstrip("@"),
 }
+if cv.get("headline"):
+    settings["tagline"] = cv["headline"]
+summary = [text for text in (cv.get("sections") or {}).get("Summary", []) if isinstance(text, str)]
+if summary:
+    settings["description"] = " ".join(summary)
+if cv.get("location"):
+    settings["location"] = cv["location"]
+if cv.get("email"):
+    settings["contact"] = {"email": first(cv["email"])}
+profiles = model.cv.social_networks or []
+if profiles:
+    settings["social"] = {"links": [profile.url for profile in profiles]}
+mastodon = next((profile.username for profile in profiles if profile.network == "Mastodon"), None)
+if mastodon:
+    # The fediverse account a search for anything@ the site's domain finds,
+    # without the username's leading @
+    settings["mastodon"] = mastodon.lstrip("@")
 
 target = root / "_config.cv.yml"
 with target.open("w", encoding="utf-8") as file:

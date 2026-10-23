@@ -1,6 +1,8 @@
 <address>
     <dl>
+        {%- if site.contact.email %}
         <div><dt>Email</dt> <dd><a class="u-email" href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a></dd></div>
+        {%- endif %}
         <div><dt>Signal</dt> <dd><a rel="noopener noreferrer" href="{{ site.contact.signal.url }}">{{ site.contact.signal.handle }}</a></dd></div>
         <div><dt>WhatsApp</dt> <dd><a rel="noopener noreferrer" href="{{ site.contact.whatsapp.url }}">{{ site.contact.whatsapp.handle }}</a></dd></div>
     </dl>

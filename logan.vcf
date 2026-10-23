@@ -4,9 +4,9 @@ BEGIN:VCARD
 VERSION:4.0
 N:{{ site.author.family_name }};{{ site.author.given_name }};;;
 {% include vcard-line.txt property="FN:" value=site.author.name %}
-{% include vcard-line.txt property="TITLE:" value=site.tagline %}
-{% include vcard-line.txt property="EMAIL:" value=site.contact.email %}
-{% assign u = site.url | append: "/" %}{% include vcard-line.txt property="URL:" value=u %}
+{% if site.tagline %}{% include vcard-line.txt property="TITLE:" value=site.tagline %}
+{% endif %}{% if site.contact.email %}{% include vcard-line.txt property="EMAIL:" value=site.contact.email %}
+{% endif %}{% assign u = site.url | append: "/" %}{% include vcard-line.txt property="URL:" value=u %}
 {% include vcard-line.txt property="IMPP:" value=site.contact.signal.url %}
 {% include vcard-line.txt property="IMPP:" value=site.contact.whatsapp.url %}
 END:VCARD

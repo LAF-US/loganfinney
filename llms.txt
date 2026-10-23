@@ -1,8 +1,10 @@
 ---
 ---
 # {{ site.title }}
+{%- if site.description %}
 
 > {{ site.description }}
+{%- endif %}
 
 ## CV
 

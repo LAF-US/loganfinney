@@ -2,9 +2,9 @@
 ---
 /* TEAM */
 Journalist: {{ site.author.name }}
-Contact: {{ site.contact.email }}
-From: {{ site.location }}
-
+{% if site.contact.email %}Contact: {{ site.contact.email }}
+{% endif %}{% if site.location %}From: {{ site.location }}
+{% endif %}
 /* SITE */
 Language: English
 Standards: HTML5, CSS3, JavaScript

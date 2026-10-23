@@ -26,11 +26,15 @@ redirect_from:
             <div>
                 <hgroup>
                     <h1>{{ site.title }}</h1>
+                    {%- if site.tagline %}
                     <p class="p-job-title">{{ site.tagline }}</p>
+                    {%- endif %}
                 </hgroup>
                 {% include contact.html %}
             </div>
+            {%- if site.description %}
             <p class="p-note">{{ site.description }}</p>
+            {%- endif %}
         </section>
 
         <div id="cv">

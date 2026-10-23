@@ -3,7 +3,9 @@
 {
   "name": {{ site.title | jsonify }},
   "short_name": {{ site.title | jsonify }},
+  {%- if site.description %}
   "description": {{ site.description | jsonify }},
+  {%- endif %}
   "lang": "en",
   "start_url": "/",
   "display": "browser",

@@ -1,7 +1,9 @@
 ---
 ---
 # {{ site.title }}
+{%- if site.description %}
 
 > {{ site.description }}
+{%- endif %}
 
 {% include rendercv.md %}
