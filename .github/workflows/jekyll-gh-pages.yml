@@ -2,7 +2,8 @@ name: Build and publish the site
 
 # Builds loganfinney.com and publishes it to GitHub Pages (Settings → Pages →
 # Source: GitHub Actions): renders the CV from cv.yaml with RenderCV, builds
-# the site with Jekyll, tests it against WCAG AAA, and publishes the result.
+# the site with Jekyll, checks its own links and images, tests it against
+# WCAG AAA, and publishes the result.
 # If any step fails, nothing is published and the live site keeps its last
 # good version.
 #
@@ -14,7 +15,8 @@ name: Build and publish the site
 #
 # It looks after itself between a person's visits: Dependabot's minor and
 # patch updates merge themselves once tested, the daily run keeps itself
-# switched on, and a failed daily run opens an issue for the site's owner.
+# switched on, a failed daily run opens an issue for the site's owner, and
+# each publish asks the Wayback Machine to save the pages the CV links to.
 
 on:
   push:
@@ -47,6 +49,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       cv-changed: ${{ steps.cv.outputs.changed }}
+      site: ${{ steps.facts.outputs.site }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
@@ -57,7 +60,11 @@ jobs:
       - name: Render the CV from cv.yaml
         run: rendercv render cv.yaml
       - name: Copy the site's facts from cv.yaml for Jekyll (_config.cv.yml)
-        run: python3 .github/scripts/cv-settings.py
+        id: facts
+        run: |
+          python3 .github/scripts/cv-settings.py
+          # The site's address, for the steps and jobs below
+          python3 -c "from ruamel.yaml import YAML; print('site=' + YAML(typ='safe').load(open('_config.cv.yml'))['url'])" >> "$GITHUB_OUTPUT"
       # The daily run checks first: it publishes only if the CV's text differs
       # from the live site's copy, through an edit or a date rolling over. The
       # PDF's text is compared through its Typst source, because the PDF file
@@ -66,11 +73,12 @@ jobs:
       - name: Check whether the CV changed since the live site was built (daily run only)
         id: cv
         if: github.event_name == 'schedule'
+        env:
+          SITE: ${{ steps.facts.outputs.site }}
         run: |
-          site=$(python3 -c "from ruamel.yaml import YAML; print(YAML(typ='safe').load(open('_config.cv.yml'))['url'])")
           changed=false
           for file in rendercv_output/*.md rendercv_output/*.typ; do
-            if ! curl -fsS "$site/rendercv_output/${file##*/}" -o "$RUNNER_TEMP/live" || ! cmp -s "$file" "$RUNNER_TEMP/live"; then
+            if ! curl -fsS "$SITE/rendercv_output/${file##*/}" -o "$RUNNER_TEMP/live" || ! cmp -s "$file" "$RUNNER_TEMP/live"; then
               changed=true
             fi
           done
@@ -95,6 +103,16 @@ jobs:
           JEKYLL_ENV: production
           JEKYLL_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PAGES_REPO_NWO: ${{ github.repository }}
+      # Every link, image and script on the site's own pages, and each page's
+      # link-preview image, must exist in the built site. Addresses on the
+      # site's own domain are checked as files here; links to other sites
+      # aren't checked
+      - name: Check the site's own links and images (html-proofer, version in Gemfile.lock)
+        env:
+          SITE: ${{ steps.facts.outputs.site }}
+        run: |
+          domain=$(sed 's/[.]/\\./g; s/:/\\:/g' <<< "$SITE")
+          bundle exec htmlproofer _site --disable-external --checks Links,Images,Scripts,OpenGraph --swap-urls "^$domain:"
       - name: Serve built site
         run: |
           (python3 -m http.server 8000 -d _site >/dev/null 2>&1 &)
@@ -135,6 +153,55 @@ jobs:
       - name: Publish to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
+
+  # After each publish, the Internet Archive's Wayback Machine saves the home
+  # page and the pages it links to (the first 100), so the CV's links still
+  # lead somewhere if a story is taken down. A link saved in the last 30 days
+  # isn't saved again. It needs a free archive.org account's keys
+  # (archive.org/account/s3.php) as the repository secrets
+  # ARCHIVE_ORG_ACCESS_KEY and ARCHIVE_ORG_SECRET_KEY; without them it does
+  # nothing. If the archive can't take the request, the run shows a warning,
+  # not a failure, and the next publish tries again
+  archive-links:
+    needs: [build, deploy]
+    runs-on: ubuntu-latest
+    permissions: {}
+    steps:
+      - name: Ask the Wayback Machine to save the site and its outgoing links
+        env:
+          SITE: ${{ needs.build.outputs.site }}
+          ACCESS_KEY: ${{ secrets.ARCHIVE_ORG_ACCESS_KEY }}
+          SECRET_KEY: ${{ secrets.ARCHIVE_ORG_SECRET_KEY }}
+        run: |
+          if [ -z "$ACCESS_KEY" ] || [ -z "$SECRET_KEY" ]; then
+            echo "::notice::Nothing saved: add the ARCHIVE_ORG_ACCESS_KEY and ARCHIVE_ORG_SECRET_KEY secrets to switch this on"
+            exit 0
+          fi
+          # The Wayback Machine's Save Page Now: the home page unless saved in
+          # the last hour, each linked page unless saved in the last 30 days
+          api() { curl -sS --retry 3 --max-time 60 -H "Accept: application/json" -H "Authorization: LOW $ACCESS_KEY:$SECRET_KEY" "$@" || true; }
+          response=$(api -X POST https://web.archive.org/save --data-urlencode "url=$SITE/" -d capture_outlinks=1 -d if_not_archived_within=1h,30d)
+          job=$(jq -r '.job_id // empty' <<< "$response" 2>/dev/null || true)
+          if [ -z "$job" ]; then
+            reason=$(jq -r '.message // .status_ext // empty' <<< "$response" 2>/dev/null || head -c 300 <<< "$response")
+            echo "::warning::The Wayback Machine didn't take the request: ${reason:-no answer}"
+            exit 0
+          fi
+          # The home page is saved first, then the pages it links to; wait up
+          # to 2 minutes for the home page
+          for attempt in $(seq 24); do
+            sleep 5
+            status=$(api "https://web.archive.org/save/status/$job")
+            case $(jq -r '.status // empty' <<< "$status" 2>/dev/null || true) in
+              success)
+                echo "Saved $(jq -r '"https://web.archive.org/web/\(.timestamp)/\(.original_url)"' <<< "$status"); $(jq '.outlinks | length' <<< "$status") linked pages are being saved"
+                exit 0 ;;
+              error)
+                echo "::warning::The Wayback Machine couldn't save the site: $(jq -r '.message // .status_ext' <<< "$status")"
+                exit 0 ;;
+            esac
+          done
+          echo "The Wayback Machine is still saving the site after 2 minutes, and carries on by itself"
 
   # Dependabot's minor and patch updates to the build tools merge themselves
   # once the build and tests above have passed. Major updates, and updates

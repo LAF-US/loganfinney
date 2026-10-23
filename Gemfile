@@ -4,3 +4,7 @@
 source "https://rubygems.org"
 
 gem "github-pages", "= 232", group: :jekyll_plugins
+
+# Checks that the built site's own links and images exist (the workflow's
+# "Check the site's own links and images" step)
+gem "html-proofer", "~> 5.2", group: :test
