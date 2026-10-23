@@ -33,8 +33,8 @@
     --accent: light-dark(var(--blue-dark), var(--blue-light));
     /* Shade at the foot of the hero photo */
     --hero-wash: light-dark(color-mix(in srgb, var(--white) 92%, transparent), color-mix(in srgb, var(--black) 87%, transparent));
-    --font-display: "Site Serif", Georgia, serif;
-    --font-body: "Site Sans", Verdana, sans-serif;
+    --font-serif: "Site Serif", Georgia, serif;
+    --font-sans: "Site Sans", Verdana, sans-serif;
     --font-mono: "Site Mono", "Courier New", monospace;
 }
 
@@ -57,7 +57,7 @@ html {
 }
 
 body {
-    font-family: var(--font-display);
+    font-family: var(--font-serif);
     background-color: var(--bg);
     /* Graph-paper rule: squares one line of text tall (1rlh), drawn on the page so they scroll with the content */
     background-image:
@@ -95,13 +95,13 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: var(--font-body);
+    font-family: var(--font-sans);
 }
 
 p,
 ul,
 li {
-    font-family: var(--font-display);
+    font-family: var(--font-serif);
 }
 
 address,
