@@ -38,11 +38,14 @@ permissions:
 env:
   PIP_UPLOADED_PRIOR_TO: P7D
 
-# One run at a time per branch; a newer run waits rather than cancelling one
-# that has started
+# One run at a time per branch. A newer run waits its turn: it neither cancels
+# one that has started nor replaces one already waiting (by default GitHub
+# keeps only one waiting run, so a daily run could replace a waiting push,
+# and that push's changes wouldn't be published)
 concurrency:
   group: pages-${{ github.ref }}
   cancel-in-progress: false
+  queue: max
 
 jobs:
   build:
