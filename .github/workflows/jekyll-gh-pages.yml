@@ -179,19 +179,20 @@ jobs:
           fi
           # The Wayback Machine's Save Page Now: the home page unless saved in
           # the last hour, each linked page unless saved in the last 30 days
-          api() { curl -sS --retry 3 --max-time 60 -H "Accept: application/json" -H "Authorization: LOW $ACCESS_KEY:$SECRET_KEY" "$@" || true; }
-          response=$(api -X POST https://web.archive.org/save --data-urlencode "url=$SITE/" -d capture_outlinks=1 -d if_not_archived_within=1h,30d)
+          api() { curl -sS -H "Accept: application/json" -H "Authorization: LOW $ACCESS_KEY:$SECRET_KEY" "$@" || true; }
+          response=$(api --retry 3 --max-time 60 -X POST https://web.archive.org/save --data-urlencode "url=$SITE/" -d capture_outlinks=1 -d if_not_archived_within=1h,30d)
           job=$(jq -r '.job_id // empty' <<< "$response" 2>/dev/null || true)
           if [ -z "$job" ]; then
             reason=$(jq -r '.message // .status_ext // empty' <<< "$response" 2>/dev/null || head -c 300 <<< "$response")
             echo "::warning::The Wayback Machine didn't take the request: ${reason:-no answer}"
             exit 0
           fi
-          # The home page is saved first, then the pages it links to; wait up
-          # to 2 minutes for the home page
-          for attempt in $(seq 24); do
+          # The home page is saved first, then the pages it links to; wait
+          # about 2 minutes for the home page
+          deadline=$((SECONDS + 120))
+          while [ "$SECONDS" -lt "$deadline" ]; do
             sleep 5
-            status=$(api "https://web.archive.org/save/status/$job")
+            status=$(api --max-time 15 "https://web.archive.org/save/status/$job")
             case $(jq -r '.status // empty' <<< "$status" 2>/dev/null || true) in
               success)
                 echo "Saved $(jq -r '"https://web.archive.org/web/\(.timestamp)/\(.original_url)"' <<< "$status"); $(jq '.outlinks | length' <<< "$status") linked pages are being saved"
