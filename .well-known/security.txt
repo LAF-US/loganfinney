@@ -1,6 +1,7 @@
 ---
 ---
+{%- comment -%} Expires: 52 weeks after the build, as the standard (RFC 9116) asks for under a year ahead; each publish moves it on {%- endcomment -%}
 {% if site.contact.email %}Contact: mailto:{{ site.contact.email }}
-{% endif %}Expires: 2027-10-12T00:00:00.000Z
+{% endif %}Expires: {{ site.time | date: '%s' | plus: 31449600 | date_to_xmlschema }}
 Canonical: {{ site.url }}/.well-known/security.txt
 Preferred-Languages: en
