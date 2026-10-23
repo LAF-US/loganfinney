@@ -3,6 +3,10 @@
 # at build time, and Jekyll reads both files (site.title, site.tagline,
 # site.description, site.url, site.location, site.author.name,
 # site.contact.email, site.social.links, site.mastodon)
+# The site sits at the top of its domain, so its links start at /. Set here,
+# the build never asks GitHub for it: when that lookup fails, the build still
+# finishes, with every link to the stylesheet, scripts and fonts broken
+baseurl: ""
 author:
   # The name's parts, for logan.vcf
   given_name: Logan
