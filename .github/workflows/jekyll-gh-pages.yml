@@ -10,7 +10,11 @@ name: Build and publish the site
 # text ("Last updated", durations ending "present") has rolled over, publishing
 # only if the CV changed; by hand from the Actions tab; and on pull requests,
 # short of publishing, so each proposed change (Dependabot's included) is
-# tested before a person merges it.
+# tested before it is merged.
+#
+# It looks after itself between a person's visits: Dependabot's minor and
+# patch updates merge themselves once tested, the daily run keeps itself
+# switched on, and a failed daily run opens an issue for the site's owner.
 
 on:
   push:
@@ -131,3 +135,79 @@ jobs:
       - name: Publish to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
+
+  # Dependabot's minor and patch updates to the build tools merge themselves
+  # once the build and tests above have passed. Major updates, and updates
+  # that change this workflow (what runs with write access), wait for a
+  # person. The pull request's code is never checked out here
+  merge-update:
+    needs: build
+    if: ${{ github.event_name == 'pull_request' && github.event.pull_request.user.login == 'dependabot[bot]' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Merge the update if it is a minor or patch update to a build tool
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ github.event.pull_request.html_url }}
+          COMMITS: repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/commits
+        run: |
+          authors=$(gh api "$COMMITS" --jq '[.[].author.login] | unique | join(" ")')
+          # Dependabot describes each update in its commit message, with one
+          # "update-type:" line per dependency
+          types=$(gh api "$COMMITS" --jq '.[].commit.message' | sed -n 's/^ *update-type: //p' | sort -u)
+          workflows=$(gh pr diff "$PR" --name-only | grep '^\.github/workflows/' || true)
+          echo "Commits by: $authors"
+          echo "Update types: ${types:-none given}"
+          if [ "$authors" != "dependabot[bot]" ]; then
+            echo "Waits for a person: not every commit is Dependabot's"
+          elif [ -n "$workflows" ]; then
+            echo "Waits for a person: it changes $workflows"
+          elif [ -z "$types" ] || grep -qv -e '^version-update:semver-minor$' -e '^version-update:semver-patch$' <<< "$types"; then
+            echo "Waits for a person: not only minor and patch updates"
+          else
+            gh pr merge --merge "$PR"
+          fi
+
+  # GitHub switches off a public repository's scheduled runs after 60 days
+  # without activity. Re-enabling this workflow on each daily run resets that
+  # count (as keepalive workflows rely on; GitHub's docs don't say), so the
+  # daily check keeps running however long the repository sits untouched
+  keep-scheduled:
+    if: ${{ github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+    steps:
+      - name: Re-enable the daily run
+        run: gh api -X PUT "repos/${{ github.repository }}/actions/workflows/jekyll-gh-pages.yml/enable"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # A failed daily run opens an issue assigned to the site's owner, or adds to
+  # the one already open, so a person hears of it. GitHub's own email for a
+  # scheduled run goes to whoever last edited its cron line, who may not be
+  # the owner
+  report-failure:
+    needs: [build, deploy, keep-scheduled]
+    if: ${{ failure() && github.event_name == 'schedule' }}
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Open or add to the issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          RUN: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          title="The daily site build failed"
+          issue=$(gh issue list --state open --json number,title --jq ".[] | select(.title == \"$title\") | .number" | head -1)
+          if [ -n "$issue" ]; then
+            gh issue comment "$issue" --body "It failed again: $RUN"
+          else
+            # loganfinney27 is the site's owner, as in .github/CODEOWNERS
+            gh issue create --title "$title" --assignee loganfinney27 --body "The daily check of loganfinney.com failed, so nothing new was published; the live site still shows its last good version. What happened: $RUN. Close this issue once it's fixed."
+          fi
