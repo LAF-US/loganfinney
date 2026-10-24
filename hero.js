@@ -60,36 +60,27 @@ const HERO_PHOTOS = {
     }
 };
 
-// Shuffle the photo order once per visit (Fisher-Yates), so every photo shows
-// once per cycle. The order is kept for the rest of the visit and reshuffled
-// on the next one.
-function shuffleHeroImages() {
-    const key = 'heroOrder';
-    let saved = null;
-    try {
-        saved = JSON.parse(sessionStorage.getItem(key));
-    } catch {
-        saved = null;
+// Shuffle the photos (Fisher-Yates), so each page load starts somewhere new
+// and every photo shows once per cycle
+function shuffle(list) {
+    for (let i = list.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [list[i], list[j]] = [list[j], list[i]];
     }
-    const sameSet = Array.isArray(saved)
-        && saved.length === HERO_IMAGES.length
-        && new Set(saved).size === HERO_IMAGES.length
-        && saved.every((name) => HERO_IMAGES.includes(name));
-    let order = HERO_IMAGES.slice();
-    if (sameSet) {
-        order = saved;
-    } else {
-        for (let i = order.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [order[i], order[j]] = [order[j], order[i]];
-        }
-        try {
-            sessionStorage.setItem(key, JSON.stringify(order));
-        } catch {
-            // Storage unavailable: the order still holds for this page view
-        }
-    }
-    HERO_IMAGES.splice(0, HERO_IMAGES.length, ...order);
+}
+
+// Load a photo before it is shown, so the switch never shows a blank photo.
+// Resolves once it has loaded; rejects if it fails or doesn't answer within
+// 10 seconds. A promise settles only once, so a photo that arrives after its
+// 10 seconds is ignored
+function preload(name) {
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+        setTimeout(reject, 10000);
+        img.onload = resolve;
+        img.onerror = reject;
+        img.src = HERO_DIR + name;
+    });
 }
 
 // Initialize hero image rotation
@@ -106,7 +97,7 @@ function initHeroRotation() {
     // The photo goes into the page once the first one has loaded
     const photo = document.createElement('img');
 
-    shuffleHeroImages();
+    shuffle(HERO_IMAGES);
 
     let current = 0;
     // The rotation waits until the first photo is on screen
@@ -122,38 +113,19 @@ function initHeroRotation() {
         if (!photo.isConnected) {
             frame.append(photo);
         }
+        current = index;
     }
 
     // Show the first photo that loads, so a missing file never leaves the hero empty
     function showFirst(index) {
-        const img = new Image();
-        let settled = false;
-        // A photo that fails, or doesn't answer within 7 seconds, hands off to the next one
-        const tryNext = () => {
-            if (settled) {
-                return;
-            }
-            settled = true;
+        preload(HERO_IMAGES[index]).then(() => {
+            show(index);
+            ready = true;
+        }, () => {
             if (index + 1 < HERO_IMAGES.length) {
                 showFirst(index + 1);
             }
-        };
-        const timedOut = setTimeout(tryNext, 7000);
-        img.onload = () => {
-            clearTimeout(timedOut);
-            if (settled) {
-                return;
-            }
-            settled = true;
-            current = index;
-            show(index);
-            ready = true;
-        };
-        img.onerror = () => {
-            clearTimeout(timedOut);
-            tryNext();
-        };
-        img.src = HERO_DIR + HERO_IMAGES[index];
+        });
     }
 
     showFirst(0);
@@ -165,42 +137,24 @@ function initHeroRotation() {
     let timer = null;
     let loading = false;
 
-    // Load the next photo first so the switch never shows a blank photo.
-    // Only one load runs at a time, and a photo that fails to load is skipped.
+    // The next photo, once it has loaded. Only one load runs at a time, and a
+    // photo that fails to load is skipped
     function rotate() {
         if (!ready || loading) {
             return;
         }
         loading = true;
         const next = (current + 1) % HERO_IMAGES.length;
-        const img = new Image();
-        // A request that never answers counts as failed, so the rotation can't freeze
-        let expired = false;
-        const timedOut = setTimeout(() => {
-            expired = true;
-            loading = false;
-            current = next;
-        }, 10000);
-        img.onerror = () => {
-            clearTimeout(timedOut);
-            loading = false;
-            current = next;
-        };
-        img.onload = () => {
-            clearTimeout(timedOut);
-            // A photo that arrives after its timeout is ignored
-            if (expired) {
-                return;
-            }
-            loading = false;
+        preload(HERO_IMAGES[next]).then(() => {
             // Reduced motion may have been switched on while this photo loaded
-            if (reducedMotion.matches) {
-                return;
+            if (!reducedMotion.matches) {
+                show(next);
             }
-            show(next);
+        }, () => {
             current = next;
-        };
-        img.src = HERO_DIR + HERO_IMAGES[next];
+        }).finally(() => {
+            loading = false;
+        });
     }
 
     // Rotate every 7 seconds, stopping or resuming if the motion preference changes
