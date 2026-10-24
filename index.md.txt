@@ -1,0 +1,10 @@
+---
+permalink: /index.html.md
+---
+# {{ site.title }}
+{%- if site.tagline %}
+
+{{ site.tagline }}
+{%- endif %}
+
+{% include rendercv.md %}

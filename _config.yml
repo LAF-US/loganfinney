@@ -1,2 +1,77 @@
+# Your name, job title, bio, email, website, location, profiles and other
+# contacts are typed in cv.yaml only: .github/scripts/cv-settings.py copies
+# them into _config.cv.yml at build time, and Jekyll reads both files
+# (site.title, site.tagline, site.description, site.url, site.location,
+# site.author.name, site.contact.email, site.contact.signal,
+# site.contact.whatsapp, site.social.links, site.mastodon)
+# The site sits at the top of its domain, so its links start at /. Set here,
+# the build never asks GitHub for it: when that lookup fails, the build still
+# finishes, with every link to the stylesheet, scripts and fonts broken
+baseurl: ""
+author:
+  # The name's parts, for logan.vcf
+  given_name: Logan
+  family_name: Finney
+# The site's ten colors, read by styles.css, favicon.svg, the theme-color tags,
+# theme.js and site.webmanifest
+palette:
+  black: "#131211"
+  white: "#faf9f7"
+  grey-dark: "#4a4641"
+  grey-light: "#bab5af"
+  green-dark: "#1f4f39"
+  green-light: "#9ad4b6"
+  blue-dark: "#1d3f6e"
+  blue-light: "#a9c7ee"
+  red-dark: "#702323"
+  red-light: "#edabab"
+# The site's three typefaces and their files in fonts/, read by styles.css, the
+# font preloads in _includes/head.html and humans.txt. The CV's PDF uses two
+# of them, DejaVu Sans and Cousine: cv.yaml names them, and RenderCV reads the
+# TTFs in fonts/
+fonts:
+  sans:
+    name: DejaVu Sans
+    files:
+      - { file: dejavu-sans.woff2, weight: 400, style: normal, preload: true }
+      - { file: dejavu-sans-oblique.woff2, weight: 400, style: italic }
+      - { file: dejavu-sans-bold.woff2, weight: 700, style: normal, preload: true }
+  serif:
+    name: Gelasio
+    files:
+      - { file: gelasio.woff2, weight: 400 700, style: normal }
+      - { file: gelasio-italic.woff2, weight: 400 700, style: italic }
+  mono:
+    name: Cousine
+    files:
+      - { file: cousine.woff2, weight: 400, style: normal }
+      - { file: cousine-bold.woff2, weight: 700, style: normal }
+      - { file: cousine-italic.woff2, weight: 400, style: italic }
 include:
   - ".well-known"
+# RenderCV reads its template copies in markdown/ and the TTF fonts in fonts/
+# when it renders the CV; they aren't part of the site, which serves the WOFF2
+# fonts. The others are from Jekyll's own default list, which a site's exclude
+# list replaces: the Gemfile and the Ruby gems the build installs
+exclude:
+  - markdown
+  - fonts/*.ttf
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+defaults:
+  - scope:
+      path: ""
+    values:
+      image:
+        path: /images/hero/state-capitol-pride.jpg
+        width: 1024
+        height: 683
+        alt: A rainbow flag reading Love trumps hate held up at the Idaho State Capitol
+# No theme: the site has its own layout and styles. The github-pages gem
+# otherwise adds its default theme, whose stylesheet nothing uses
+theme: null
+plugins:
+  - jekyll-redirect-from
+  - jekyll-seo-tag
+  - jekyll-sitemap

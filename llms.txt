@@ -1,0 +1,22 @@
+---
+---
+# {{ site.title }}
+{%- if site.description %}
+
+> {{ site.description }}
+{%- endif %}
+
+## CV
+
+- [{{ site.author.name }}'s CV]({{ "/index.html.md" | absolute_url }}): the CV on the home page, in Markdown
+{%- if site.social.links %}
+
+## Profiles
+{% for link in site.social.links %}
+- [{{ link | remove_first: "https://" }}]({{ link }})
+{%- endfor %}
+{%- endif %}
+
+## Optional
+
+- [Full text]({{ "/llms-full.txt" | absolute_url }}): this summary and the whole CV in one file

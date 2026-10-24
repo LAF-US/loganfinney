@@ -14,6 +14,25 @@ Thumbs.db
 .env.local
 node_modules/
 
-# Build artifacts
-dist/
-build/
+# What Jekyll and Bundler write when the site is built locally (from GitHub's
+# Jekyll .gitignore template)
+_site/
+.jekyll-cache/
+.jekyll-metadata
+.bundle/
+vendor/
+
+# Made from cv.yaml at build time by .github/scripts/cv-settings.py
+_config.cv.yml
+
+# Made at build time by RenderCV and .github/scripts/rendercv-include.py
+rendercv_output/
+_includes/rendercv.html
+_includes/rendercv.md
+cv.pdf
+
+# Drawn from favicon.svg at build time (.github/scripts/icons.py)
+favicon.ico
+apple-touch-icon.png
+icon-192.png
+icon-512.png
