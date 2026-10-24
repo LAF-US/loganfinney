@@ -2,8 +2,8 @@
 ---
 {%- comment -%} The standard (RFC 9116) requires a contact and an expiry. Contact: the email, or with none in cv.yaml, the Signal and WhatsApp links. Expires: 52 weeks after the build, as the standard asks for under a year ahead; each publish moves it on {%- endcomment -%}
 {% if site.contact.email %}Contact: mailto:{{ site.contact.email }}
-{% else %}Contact: {{ site.contact.signal.url }}
-Contact: {{ site.contact.whatsapp.url }}
-{% endif %}Expires: {{ site.time | date: '%s' | plus: 31449600 | date_to_xmlschema }}
+{% else %}{% if site.contact.signal %}Contact: {{ site.contact.signal.url }}
+{% endif %}{% if site.contact.whatsapp %}Contact: {{ site.contact.whatsapp.url }}
+{% endif %}{% endif %}Expires: {{ site.time | date: '%s' | plus: 31449600 | date_to_xmlschema }}
 Canonical: {{ site.url }}/.well-known/security.txt
 Preferred-Languages: en
