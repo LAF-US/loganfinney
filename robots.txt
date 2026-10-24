@@ -1,6 +1,9 @@
 ---
 ---
 User-agent: *
+# How the site may be used once crawled (https://contentsignals.org/): search
+# results and AI answers yes, AI training no
+Content-Signal: search=yes, ai-input=yes, ai-train=no
 Allow: /
 
 Sitemap: {{ "/sitemap.xml" | absolute_url }}

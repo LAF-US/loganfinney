@@ -14,6 +14,9 @@
     {%- for link in site.social.links %}
     <link rel="me" href="{{ link | escape }}">
     {%- endfor %}
+    {%- if site.mastodon %}
+    <meta name="fediverse:creator" content="@{{ site.mastodon | escape }}">
+    {%- endif %}
     <script src="{{ '/theme.js' | relative_url }}"></script>
     {%- for font in site.fonts %}{% for face in font[1].files %}{% if face.preload %}
     <link rel="preload" href="{{ '/fonts/' | append: face.file | relative_url }}" as="font" type="font/woff2" crossorigin>

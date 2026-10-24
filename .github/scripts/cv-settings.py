@@ -9,10 +9,14 @@ after _config.yml:
 
 The site needs your name and website. Anything else cv.yaml leaves out, the
 pages leave out too. The bio is the text of the section titled Summary, and
-the site's fediverse address (.well-known/webfinger) is the Mastodon profile.
+the site's fediverse address (.well-known/webfinger) and the author credit on
+Mastodon's link previews are the Mastodon profile.
 Where cv.yaml gives more than one email or website, the site uses the first.
 The contact line, logan.vcf and security.txt take Signal and WhatsApp from the
 custom connections with the signal-messenger and whatsapp icons.
+
+The memberships trust.txt lists are the links in the Professional Memberships
+section, for the ones with no end date or an end date of present.
 
 The rel="me" links are every profile and custom connection. The profile links
 come from RenderCV's own model, which builds each address from its network
@@ -21,6 +25,7 @@ every build and never committed; run this before building the site locally.
 Needs RenderCV, which brings ruamel.yaml.
 """
 
+import re
 import sys
 from pathlib import Path
 
@@ -74,6 +79,14 @@ if mastodon:
     # The fediverse account a search for anything@ the site's domain finds,
     # without the username's leading @
     settings["mastodon"] = mastodon.lstrip("@")
+# Each name is a Markdown link, [Name](address); a name without one is skipped
+memberships = []
+for entry in (cv.get("sections") or {}).get("Professional Memberships", []):
+    link = re.search(r"\]\((\S+?)\)", str(entry.get("name", "")))
+    if link and str(entry.get("end_date", "present")) == "present":
+        memberships.append(link.group(1))
+if memberships:
+    settings["memberships"] = memberships
 
 target = root / "_config.cv.yml"
 with target.open("w", encoding="utf-8") as file:

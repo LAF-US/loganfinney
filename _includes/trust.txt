@@ -1,0 +1,8 @@
+{%- comment -%} JournalList's trust.txt (spec v1.5): the associations the site's owner belongs to (the current Professional Memberships in cv.yaml), the accounts they control (the same links as the rel="me" ones), how to reach them, and that the site may not be used to train AI. trust.txt and .well-known/trust.txt both show this, since JournalList's documents name both places {%- endcomment -%}
+# trust.txt for {{ site.url }}, after https://journallist.net/reference-document-for-trust-txt-specifications
+{% for membership in site.memberships %}belongto={{ membership }}
+{% endfor %}{% for link in site.social.links %}social={{ link }}
+{% endfor %}{% if site.contact.email %}contact=mailto:{{ site.contact.email }}
+{% endif %}{% if site.contact.signal %}contact={{ site.contact.signal.url }}
+{% endif %}{% if site.contact.whatsapp %}contact={{ site.contact.whatsapp.url }}
+{% endif %}datatrainingallowed=no
