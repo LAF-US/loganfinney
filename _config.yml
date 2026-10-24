@@ -1,8 +1,9 @@
-# Your name, job title, bio, email, website, location and profiles are typed in
-# cv.yaml only: .github/scripts/cv-settings.py copies them into _config.cv.yml
-# at build time, and Jekyll reads both files (site.title, site.tagline,
-# site.description, site.url, site.location, site.author.name,
-# site.contact.email, site.social.links, site.mastodon)
+# Your name, job title, bio, email, website, location, profiles and other
+# contacts are typed in cv.yaml only: .github/scripts/cv-settings.py copies
+# them into _config.cv.yml at build time, and Jekyll reads both files
+# (site.title, site.tagline, site.description, site.url, site.location,
+# site.author.name, site.contact.email, site.contact.signal,
+# site.contact.whatsapp, site.social.links, site.mastodon)
 # The site sits at the top of its domain, so its links start at /. Set here,
 # the build never asks GitHub for it: when that lookup fails, the build still
 # finishes, with every link to the stylesheet, scripts and fonts broken
@@ -11,14 +12,6 @@ author:
   # The name's parts, for logan.vcf
   given_name: Logan
   family_name: Finney
-# Read by the contact line and logan.vcf, beside the email from cv.yaml
-contact:
-  signal:
-    handle: signal.me/loganfinney.27
-    url: https://signal.me/#eu/oBgA3Z4JO0BiXt--nvJGDDwAKT8Zp-DS5Y60BVvvlw7bVK5eV1lMNoBt1WZoZEeY
-  whatsapp:
-    handle: wa.me/loganfinney
-    url: https://wa.me/loganfinney
 # The site's ten colors, read by styles.css, favicon.svg, the theme-color tags,
 # theme.js and site.webmanifest
 palette:

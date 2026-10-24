@@ -1,8 +1,9 @@
 """Copy the site's facts from cv.yaml into _config.cv.yml for Jekyll.
 
-Your name, job title, bio, email, website, location and profiles are typed in
-cv.yaml only. This writes them under the setting names Jekyll's SEO plugin and
-the templates read, and the site build loads the file after _config.yml:
+Your name, job title, bio, email, website, location, profiles and other
+contacts are typed in cv.yaml only. This writes them under the setting names
+Jekyll's SEO plugin and the templates read, and the site build loads the file
+after _config.yml:
 
     bundle exec jekyll build --config _config.yml,_config.cv.yml
 
@@ -10,11 +11,14 @@ The site needs your name and website. Anything else cv.yaml leaves out, the
 pages leave out too. The bio is the text of the section titled Summary, and
 the site's fediverse address (.well-known/webfinger) is the Mastodon profile.
 Where cv.yaml gives more than one email or website, the site uses the first.
+The contact line, logan.vcf and security.txt take Signal and WhatsApp from the
+custom connections with the signal-messenger and whatsapp icons.
 
-The profile links come from RenderCV's own model, which builds each address
-from its network and username, so they match the links in the CV. The file is
-made fresh on every build and never committed; run this before building the
-site locally. Needs RenderCV, which brings ruamel.yaml.
+The rel="me" links are every profile and custom connection. The profile links
+come from RenderCV's own model, which builds each address from its network
+and username, so they match the links in the CV. The file is made fresh on
+every build and never committed; run this before building the site locally.
+Needs RenderCV, which brings ruamel.yaml.
 """
 
 import sys
@@ -50,11 +54,21 @@ if summary:
     settings["description"] = " ".join(summary)
 if cv.get("location"):
     settings["location"] = cv["location"]
+connections = cv.get("custom_connections") or []
+contact = {}
 if cv.get("email"):
-    settings["contact"] = {"email": first(cv["email"])}
+    contact["email"] = first(cv["email"])
+apps = {"signal-messenger": "signal", "whatsapp": "whatsapp"}
+for connection in connections:
+    app = apps.get(connection.get("fontawesome_icon"))
+    if app and app not in contact and connection.get("url"):
+        contact[app] = {"handle": connection["placeholder"], "url": connection["url"]}
+if contact:
+    settings["contact"] = contact
 profiles = model.cv.social_networks or []
-if profiles:
-    settings["social"] = {"links": [profile.url for profile in profiles]}
+links = [profile.url for profile in profiles] + [connection["url"] for connection in connections if connection.get("url")]
+if links:
+    settings["social"] = {"links": links}
 mastodon = next((profile.username for profile in profiles if profile.network == "Mastodon"), None)
 if mastodon:
     # The fediverse account a search for anything@ the site's domain finds,
