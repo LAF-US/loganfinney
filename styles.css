@@ -36,6 +36,13 @@
     --font-serif: "Site Serif", Georgia, serif;
     --font-sans: "Site Sans", Verdana, sans-serif;
     --font-mono: "Site Mono", "Courier New", monospace;
+    /* Everything is sized in whole squares (rlh units). The content column is
+       centered and an even number of squares wide (at most 48), so its edges
+       land on grid lines. Rules are drawn with box-shadow so they add no height */
+    --column: min(48rlh, calc(100% - 2rlh));
+    /* The contact box and the rule over the bio: ten squares wide, room for
+       the longest contact line */
+    --contacts: 10rlh;
 }
 
 [data-theme="light"] { color-scheme: light; }
@@ -110,13 +117,8 @@ small {
     font-family: var(--font-mono);
 }
 
-/* Everything is sized in whole squares (rlh units). The content column is centered
-   and an even number of squares wide (at most 48), so its edges land on grid
-   lines. Rules are drawn with box-shadow so they add no height */
-:root {
-    --column: min(48rlh, calc(100% - 2rlh));
-}
-
+/* The content column, rounded down to an even number of squares where the
+   browser can round */
 @supports (width: round(1px, 1px)) {
     :root {
         --column: min(48rlh, round(down, 100% - 2rlh, 2rlh));
@@ -483,6 +485,7 @@ body > a:focus {
 /* One contact per line, left-aligned, in a box on the right side of the
    page, beside your name and tagline, under a rule as wide as the box */
 address {
+    width: min(var(--contacts), 100%);
     /* Stays at the right side when it goes under your name and tagline */
     margin-left: auto;
     padding-top: 1rlh;
@@ -505,20 +508,14 @@ address dt {
 
 /* ---------- Home layout ---------- */
 
-/* The bio (the site description in _config.yml) on its own line under the
-   name, tagline and contacts, on the left, under a rule as wide as the contacts' rule */
+/* The bio (the Summary section in cv.yaml) on its own line under the name,
+   tagline and contacts, on the left, under a rule as wide as the contacts' rule */
 section > p {
     margin-top: 1rlh;
     width: fit-content;
     max-width: 68ch;
     padding-top: 1rlh;
-    /* The contacts' rule is as wide as the contact box: its longest line,
-       in Cousine characters (0.6em each) at 0.75rem */
-    {%- assign email = "Email " | append: site.contact.email | size %}
-    {%- assign signal = "Signal " | append: site.contact.signal.handle | size %}
-    {%- assign whatsapp = "WhatsApp " | append: site.contact.whatsapp.handle | size %}
-    {%- assign longest = email | at_least: signal | at_least: whatsapp %}
-    background: linear-gradient(var(--ink), var(--ink)) top left / min(calc({{ longest }} * 0.6 * 0.75rem), 100%) 1px no-repeat;
+    background: linear-gradient(var(--ink), var(--ink)) top left / min(var(--contacts), 100%) 1px no-repeat;
     color: var(--ink-soft);
 }
 

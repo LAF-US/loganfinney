@@ -102,11 +102,11 @@ function firePalette() {
     )]);
     const distance = (rgb) => Math.abs(luminance(rgb) - luminance(page));
     const stops = keys.map(([heat, first, ...shades]) => {
-        if (first !== 'far' && first !== 'near') {
+        if (first !== 'far') {
             return [heat, first];
         }
         shades.sort((a, b) => distance(a) - distance(b));
-        return [heat, first === 'near' ? shades[0] : shades[1]];
+        return [heat, shades[1]];
     });
     const palette = [];
     for (let heat = 0; heat <= FIRE_HEAT; heat++) {
