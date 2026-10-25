@@ -1,6 +1,6 @@
 # loganfinney.com
 
-© 2026 Logan Finney. All rights reserved.
+© 2018–present Logan Finney. All rights reserved.
 
 ## Looking after the site
 
