@@ -1,7 +1,7 @@
 ---
 ---
 // Hero photos: every image in images/hero/
-const HERO_DIR = 'images/hero/';
+const HERO_DIR = {{ '/images/hero/' | relative_url | jsonify }};
 const HERO_IMAGES = [
 {%- assign photos = site.static_files | where_exp: "file", "file.path contains '/images/hero/'" %}
 {%- for photo in photos %}
