@@ -274,7 +274,7 @@ jobs:
   # the owner
   report-failure:
     needs: [build, deploy, keep-scheduled]
-    if: ${{ failure() && github.event_name == 'schedule' }}
+    if: ${{ always() && github.event_name == 'schedule' && contains(needs.*.result, 'failure') }}
     runs-on: ubuntu-latest
     permissions:
       issues: write
