@@ -1,5 +1,10 @@
 ---
 ---
+{%- comment -%} WebFinger (RFC 7033) for this site's domain: a fediverse search for any
+address @ this domain finds the Mastodon account in cv.yaml. The subject names
+that account, so Mastodon then checks it with the account's own server, which
+stays the account's authoritative WebFinger. As a static file it can't read
+the ?resource= query, so every address gets this one answer {%- endcomment -%}
 {%- if site.mastodon -%}
 {%- assign account = site.mastodon -%}
 {%- assign user = account | split: "@" | first -%}
