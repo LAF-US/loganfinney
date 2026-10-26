@@ -11,8 +11,8 @@ const HERO_IMAGES = [
 
 // Each photo's caption (the place) and its description for people who can't
 // see it (alt), by file name. The caption follows the photo, so the
-// description leaves the place out. A photo left out shows no caption and no
-// description.
+// description leaves the place out. The build stops if a photo in
+// images/hero/ has no entry here, or an entry has no photo
 const HERO_PHOTOS = {
     'priest-lake.jpg': {
         caption: 'Priest Lake',
@@ -76,9 +76,15 @@ function shuffle(list) {
 function preload(name) {
     return new Promise((resolve, reject) => {
         const img = new Image();
-        setTimeout(reject, 10000);
-        img.onload = resolve;
-        img.onerror = reject;
+        const timeout = setTimeout(reject, 10000);
+        img.onload = () => {
+            clearTimeout(timeout);
+            resolve();
+        };
+        img.onerror = () => {
+            clearTimeout(timeout);
+            reject();
+        };
         img.src = HERO_DIR + name;
     });
 }
@@ -157,9 +163,10 @@ function initHeroRotation() {
         });
     }
 
-    // Rotate every 7 seconds, stopping or resuming if the motion preference changes
+    // Rotate every 7 seconds, stopping while the motion preference is on or
+    // the page is out of sight (another tab, or a minimized window)
     function updateRotation() {
-        if (reducedMotion.matches) {
+        if (reducedMotion.matches || document.hidden) {
             clearInterval(timer);
             timer = null;
         } else if (timer === null) {
@@ -169,6 +176,7 @@ function initHeroRotation() {
 
     updateRotation();
     reducedMotion.addEventListener('change', updateRotation);
+    document.addEventListener('visibilitychange', updateRotation);
 }
 
 document.addEventListener('DOMContentLoaded', initHeroRotation);

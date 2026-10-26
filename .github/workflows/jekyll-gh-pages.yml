@@ -87,6 +87,8 @@ jobs:
           done
           echo "changed=$changed" >> "$GITHUB_OUTPUT"
           echo "The CV changed since the live site was built: $changed"
+      - name: Check every hero photo has a caption and a description in hero.js
+        run: python3 .github/scripts/hero-check.py
       - name: Draw the favicon and app icons from favicon.svg
         run: python3 .github/scripts/icons.py
       - name: Put the CV on the site, and its PDF at /cv.pdf
@@ -106,6 +108,14 @@ jobs:
           JEKYLL_ENV: production
           JEKYLL_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PAGES_REPO_NWO: ${{ github.repository }}
+      # A file that lost its front matter (the two --- lines at its top) is
+      # copied as it is, with its {{ }} and {% %} code unbuilt
+      - name: Check no file was published with its template code unbuilt
+        run: |
+          if leftovers=$(grep -rlI -e '{{' -e '{%' _site); then
+            echo "::error::Unbuilt template code in: $(echo $leftovers)"
+            exit 1
+          fi
       # Every link, image and script on the site's own pages, and each page's
       # link-preview image, must exist in the built site. Addresses on the
       # site's own domain are checked as files here; links to other sites
