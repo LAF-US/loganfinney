@@ -289,14 +289,21 @@ section > p {
     z-index: 2;
 }
 
-/* Your name and tagline on the left, the contacts on the right; on a narrow
-   screen the contacts go under them */
+/* Your photo, name and tagline on the left, the contacts on the right; on a
+   narrow screen each goes under the one before */
 section > div {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
     align-items: flex-start;
     gap: 1rlh;
+}
+
+/* Your photo, six squares on a side, left of your name, its top level with
+   the contacts' rule */
+section > div img {
+    width: 6rlh;
+    height: 6rlh;
+    object-fit: cover;
 }
 
 /* Your name and tagline under the photo: the name two squares high, the

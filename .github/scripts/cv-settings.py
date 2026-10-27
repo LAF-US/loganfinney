@@ -59,6 +59,9 @@ if summary:
     settings["description"] = " ".join(summary)
 if cv.get("location"):
     settings["location"] = cv["location"]
+# The CV's photo, also shown beside your name on the home page
+if cv.get("photo"):
+    settings["photo"] = str(cv["photo"])
 connections = cv.get("custom_connections") or []
 contact = {}
 if cv.get("email"):
