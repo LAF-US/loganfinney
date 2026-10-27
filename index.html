@@ -23,22 +23,27 @@ redirect_from:
             </figure>
             <script src="{{ '/hero.js' | relative_url }}" defer></script>
 
-            <!-- Your photo, name and tagline, and beside them the contacts -->
+            <!-- Your name and tagline, and beside them your photo under a rule -->
             <div>
-                {%- if site.photo %}
-                <img class="u-photo" src="{{ '/' | append: site.photo | relative_url }}" alt="{{ site.author.photo_description | escape }}" width="553" height="553">
-                {%- endif %}
                 <hgroup>
                     <h1>{{ site.title }}</h1>
                     {%- if site.tagline %}
                     <p class="p-job-title">{{ site.tagline }}</p>
                     {%- endif %}
                 </hgroup>
+                {%- if site.photo %}
+                <div>
+                    <img class="u-photo" src="{{ '/' | append: site.photo | relative_url }}" alt="{{ site.author.photo_description | escape }}" width="553" height="553">
+                </div>
+                {%- endif %}
+            </div>
+            <!-- Your bio, and beside it the contacts -->
+            <div>
+                {%- if site.description %}
+                <p class="p-note">{{ site.description }}</p>
+                {%- endif %}
                 {% include contact.html %}
             </div>
-            {%- if site.description %}
-            <p class="p-note">{{ site.description }}</p>
-            {%- endif %}
         </section>
 
         <div id="cv">

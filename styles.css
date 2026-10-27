@@ -228,8 +228,9 @@ body:has(figure) header {
     box-shadow: none;
 }
 
-/* The home page's opening: the photo, then your name, tagline, contacts and
-   bio, starting on the first grid row below the photo */
+/* The home page's opening: the photo, then your name and tagline, your own
+   photo, your bio and the contacts, starting on the first grid row below the
+   photo */
 section {
     position: relative;
     padding-top: calc(100vw * 2 / 3);
@@ -283,14 +284,14 @@ figure div::after {
 }
 
 /* The text sits over the foot of the photo, under its caption */
-section > div,
-section > p {
+section > div {
     position: relative;
     z-index: 2;
 }
 
-/* Your photo, name and tagline on the left, the contacts on the right; on a
-   narrow screen each goes under the one before */
+/* Your name and tagline on the left, your photo on the right, and under
+   them your bio on the left, the contacts on the right; on a narrow screen
+   each goes under the one before */
 section > div {
     display: flex;
     flex-wrap: wrap;
@@ -298,17 +299,36 @@ section > div {
     gap: 1rlh;
 }
 
-/* Your photo, six squares on a side, left of your name, its top level with
-   the contacts' rule */
+/* Your bio and the contacts start one blank square under your name, tagline
+   and photo */
+section > div + div {
+    margin-top: 1rlh;
+}
+
+/* A rule on the right side of the page, beside your name and tagline, and
+   your photo under its right end */
+section > div > div {
+    width: min(var(--contacts), 100%);
+    /* Stays at the right side when it goes under your name and tagline */
+    margin-left: auto;
+    box-shadow: inset 0 1px 0 var(--ink);
+}
+
+/* Your photo, four squares on a side, a blank square under the rule: its
+   top level with the top of your name, its foot level with the bio's rule.
+   It's drawn one square below its place, so nothing around it moves */
 section > div img {
-    width: 6rlh;
-    height: 6rlh;
+    display: block;
+    position: relative;
+    top: 1rlh;
+    width: 4rlh;
+    height: 4rlh;
+    margin-left: auto;
     object-fit: cover;
 }
 
 /* Your name and tagline under the photo: the name two squares high, the
-   tagline one. Like every h1 (below), the name starts one blank square down,
-   level with the contacts under their rule */
+   tagline one. Like every h1 (below), the name starts one blank square down */
 hgroup h1 {
     font-size: 2.5rem;
     line-height: 3rem;
@@ -490,13 +510,12 @@ body > a:focus {
 /* ---------- Contact ---------- */
 
 /* One contact per line, left-aligned, in a box on the right side of the
-   page, beside your name and tagline, under a rule as wide as the box */
+   page, beside your bio and level with its lines */
 address {
     width: min(var(--contacts), 100%);
-    /* Stays at the right side when it goes under your name and tagline */
+    /* Stays at the right side when it goes under your bio */
     margin-left: auto;
     padding-top: 1rlh;
-    box-shadow: inset 0 1px 0 var(--ink);
     font-size: 0.75rem;
     /* Browsers set <address> in italic unless told otherwise */
     font-style: normal;
@@ -515,10 +534,9 @@ address dt {
 
 /* ---------- Home layout ---------- */
 
-/* The bio (the Summary section in cv.yaml) on its own line under the name,
-   tagline and contacts, on the left, under a rule as wide as the contacts' rule */
-section > p {
-    margin-top: 1rlh;
+/* The bio (the Summary section in cv.yaml) under the name, tagline and
+   photo, on the left, under a rule as wide as the one over your photo */
+section > div > p {
     width: fit-content;
     max-width: 68ch;
     padding-top: 1rlh;
@@ -528,7 +546,7 @@ section > p {
 
 /* With text-box trimming: the blank square plus the centering gap */
 @supports (text-box: trim-both cap alphabetic) {
-    section > p {
+    section > div > p {
         padding-top: calc(1rlh + (1lh - 1cap) / 2);
     }
 }

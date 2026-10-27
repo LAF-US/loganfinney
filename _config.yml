@@ -13,7 +13,8 @@ author:
   given_name: Logan
   family_name: Finney
   # The photo's description, for people who can't see it (the photo is
-  # cv.yaml's photo; your name follows it on the page, so it leaves the name out)
+  # cv.yaml's photo; your name comes just before it on the page, so it leaves
+  # the name out)
   photo_description: Smiling, in a denim shirt, with sand dunes behind
 # The site's ten colors, read by styles.css, favicon.svg, the theme-color tags,
 # theme.js and site.webmanifest
