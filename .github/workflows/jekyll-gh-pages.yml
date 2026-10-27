@@ -218,14 +218,15 @@ jobs:
           echo "The Wayback Machine is still saving the site after 2 minutes, and carries on by itself"
 
   # Dependabot's minor and patch updates to the build tools merge themselves
-  # once the build and tests above have passed. Major updates, and updates
-  # that change this workflow (what runs with write access), wait for a
-  # person. The pull request's code is never checked out here
+  # once the build and tests above have passed, then publish. Major updates,
+  # and updates that change this workflow (what runs with write access), wait
+  # for a person. The pull request's code is never checked out here
   merge-update:
     needs: build
     if: ${{ github.event_name == 'pull_request' && github.event.pull_request.user.login == 'dependabot[bot]' }}
     runs-on: ubuntu-latest
     permissions:
+      actions: write
       contents: write
       pull-requests: write
     steps:
@@ -261,6 +262,10 @@ jobs:
             echo "Waits for a person: not only minor and patch updates"
           else
             gh pr merge --merge --match-head-commit "$tested" "$pr"
+            # A merge made with this job's token starts no run of its own
+            # (only a by-hand run does), so main would wait for the next CV
+            # change to publish. This starts that run
+            gh workflow run jekyll-gh-pages.yml --repo "$GITHUB_REPOSITORY" --ref main
           fi
 
   # GitHub switches off a public repository's scheduled runs after 60 days

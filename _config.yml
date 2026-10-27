@@ -75,6 +75,12 @@ defaults:
 # No theme: the site has its own layout and styles. The github-pages gem
 # otherwise adds its default theme, whose stylesheet nothing uses
 theme: null
+# The github-pages gem also makes a page of every Markdown file without front
+# matter. The only one here is RenderCV's rendercv_output/Logan_Finney_CV.md,
+# whose page would land on the same address as RenderCV's own
+# Logan_Finney_CV.html. Off, the Markdown file is published as it is
+optional_front_matter:
+  enabled: false
 plugins:
   - jekyll-redirect-from
   - jekyll-seo-tag
