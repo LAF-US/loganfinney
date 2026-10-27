@@ -10,7 +10,8 @@ import sys
 from pathlib import Path
 
 root = Path(__file__).resolve().parents[2]
-photos = {path.name for path in (root / "images/hero").iterdir() if path.is_file()}
+# Jekyll leaves files whose names start with "." (such as .DS_Store) off the site
+photos = {path.name for path in (root / "images/hero").iterdir() if path.is_file() and not path.name.startswith(".")}
 # Each entry is 'file name': { caption: '...', alt: '...' }
 entries = dict(re.findall(r"'([^']+)':\s*\{([^}]*)\}", (root / "hero.js").read_text(encoding="utf-8")))
 
