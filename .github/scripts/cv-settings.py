@@ -10,7 +10,9 @@ after _config.yml:
 The site needs your name and website. Anything else cv.yaml leaves out, the
 pages leave out too. The bio is the text of the section titled Summary, and
 the site's fediverse address (.well-known/webfinger) and the author credit on
-Mastodon's link previews are the Mastodon profile.
+Mastodon's link previews are the Mastodon profile. The site's Nostr address
+(.well-known/nostr.json) is the Nostr key, written as an npub, in a custom
+connection's address.
 Where cv.yaml gives more than one email or website, the site uses the first.
 The contact line, logan.vcf and security.txt take Signal and WhatsApp from the
 custom connections with the signal-messenger and whatsapp icons.
@@ -45,6 +47,28 @@ if missing:
 def first(fact):
     """The fact, or the first of several"""
     return fact[0] if isinstance(fact, list) else fact
+
+
+BECH32 = "qpzry9x8gf2tvdw0s3jn54khce6mua7l"
+
+
+def npub_to_hex(npub):
+    """A Nostr key written as an npub (NIP-19's bech32), in the lowercase hex
+    NIP-05 asks for. Stops the build if the key is the wrong length or its
+    checksum doesn't match, as with a typo"""
+    data = [BECH32.index(char) for char in npub[len("npub1"):]]
+    check = 1
+    for value in [ord(char) >> 5 for char in "npub"] + [0] + [ord(char) & 31 for char in "npub"] + data:
+        top = check >> 25
+        check = (check & 0x1FFFFFF) << 5 ^ value
+        for bit, generator in enumerate((0x3B6A57B2, 0x26508E6D, 0x1EA119FA, 0x3D4233DD, 0x2A1462B3)):
+            if top >> bit & 1:
+                check ^= generator
+    # A key is 32 bytes: 52 five-bit letters before the 6-letter checksum
+    if check != 1 or len(data) != 58:
+        sys.exit(f"The Nostr key {npub} in cv.yaml has a typo: it isn't a whole, valid npub")
+    bits = "".join(f"{value:05b}" for value in data[:-6])
+    return "".join(f"{int(bits[start:start + 8], 2):02x}" for start in range(0, 256, 8))
 
 
 settings = {
@@ -82,6 +106,13 @@ if mastodon:
     # The fediverse account a search for anything@ the site's domain finds,
     # without the username's leading @
     settings["mastodon"] = mastodon.lstrip("@")
+# The Nostr key, written as an npub, in a custom connection's address, for
+# .well-known/nostr.json
+for connection in connections:
+    npub = re.search(r"npub1[02-9ac-hj-np-z]+", str(connection.get("url", "")))
+    if npub:
+        settings["nostr"] = npub_to_hex(npub.group(0))
+        break
 # Each name is a Markdown link, [Name](address); a name without one is skipped
 memberships = []
 for entry in (cv.get("sections") or {}).get("Professional Memberships", []):

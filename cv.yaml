@@ -37,6 +37,9 @@ cv:
     - placeholder: Threads
       url: https://www.threads.net/@loganfinney27
       fontawesome_icon: threads
+    - placeholder: Nostr
+      url: https://njump.me/npub1cuz7hfeuassqkldu38yv9dyt9x6rdrmswv9r9s3n66nsddf4rwyqtu8ssp
+      fontawesome_icon: link
     - placeholder: Twitch
       url: https://www.twitch.tv/loganfinney
       fontawesome_icon: twitch
