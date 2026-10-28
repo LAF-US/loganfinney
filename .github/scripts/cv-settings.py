@@ -116,6 +116,9 @@ for connection in connections:
 # Each name is a Markdown link, [Name](address); a name without one is skipped
 memberships = []
 for entry in (cv.get("sections") or {}).get("Professional Memberships", []):
+    # An entry can be plain text: then it is the name, with no end date
+    if isinstance(entry, str):
+        entry = {"name": entry}
     link = re.search(r"\]\((\S+?)\)", str(entry.get("name", "")))
     if link and str(entry.get("end_date", "present")) == "present":
         memberships.append(link.group(1))
