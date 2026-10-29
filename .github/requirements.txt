@@ -1,0 +1,6 @@
+# The Python packages the site build installs, at exact versions; Dependabot
+# keeps them current (.github/dependabot.yml). The packages these bring in
+# follow the 7-day rule in .github/workflows/jekyll-gh-pages.yml.
+
+# Render the CV from cv.yaml
+rendercv[full]==2.8

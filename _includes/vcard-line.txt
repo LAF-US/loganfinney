@@ -1,0 +1,24 @@
+{%- comment -%}
+One line of logan.vcf, folded as the vCard standard (RFC 6350) asks: at
+most 75 octets a line (counted here as characters, the same for plain
+ASCII), each continuation line starting with a space. The fold is the
+line break and space before the second {{ }} below, so this file keeps
+the CRLF line endings the standard asks for
+{%- endcomment -%}
+{%- comment -%}
+A text value (text=true) gets a backslash before each backslash, comma and
+semicolon, as the standard asks (four backslashes write two: replace reads
+two as one); a web address is left as it is
+{%- endcomment -%}
+{%- assign value = include.value -%}
+{%- if include.text -%}
+{%- assign value = value | replace: "\", "\\\\" | replace: ",", "\," | replace: ";", "\;" -%}
+{%- endif -%}
+{%- assign line = include.property | append: value -%}
+{{- line | slice: 0, 75 -}}
+{%- comment -%} Each continuation line: a space and the next 74 characters {%- endcomment -%}
+{%- assign folds = line.size | minus: 2 | divided_by: 74 -%}
+{%- for fold in (1..folds) -%}
+{%- assign start = fold | times: 74 | plus: 1 %}
+ {{ line | slice: start, 74 }}
+{%- endfor -%}

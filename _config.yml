@@ -1,2 +1,148 @@
+# Your name, job title, bio, email, website, location and links are in
+# cv.yaml too, for the CV: a change to one goes in both
+title: Logan Finney
+url: https://loganfinney.com
+tagline: Documentary Journalist
+description: Logan Finney is an award-winning political reporter who covers civics, elections, and government. He grew up hunting, hiking, and skiing in the Idaho Panhandle mountains and remains forever fascinated by the people, history, and culture of his home state.
+location: Idaho, USA
+# Beside your name on the home page, as on the CV
+photo: images/cv-photo.jpg
+# The contact line, logan.vcf and security.txt
+contact:
+  email: loganfinney@proton.me
+  signal:
+    handle: signal.me/loganfinney.27
+    url: https://signal.me/#eu/oBgA3Z4JO0BiXt--nvJGDDwAKT8Zp-DS5Y60BVvvlw7bVK5eV1lMNoBt1WZoZEeY
+  whatsapp:
+    handle: wa.me/loganfinney
+    url: https://wa.me/loganfinney
+# Every profile and link in cv.yaml, as the page's rel="me" links
+social:
+  links:
+    - https://instagram.com/loganfinney27
+    - https://bsky.app/profile/loganfinney.com
+    - https://x.com/lfinneytweets
+    - https://syringa.social/@Logan
+    - https://linkedin.com/in/loganfinney
+    - https://youtube.com/@LoganFinney
+    - https://github.com/loganfinney27
+    - https://orcid.org/0009-0009-9584-0048
+    - https://signal.me/#eu/oBgA3Z4JO0BiXt--nvJGDDwAKT8Zp-DS5Y60BVvvlw7bVK5eV1lMNoBt1WZoZEeY
+    - https://wa.me/loganfinney
+    - https://www.facebook.com/lfinneynews/
+    - https://www.threads.net/@loganfinney27
+    - https://njump.me/npub1cuz7hfeuassqkldu38yv9dyt9x6rdrmswv9r9s3n66nsddf4rwyqtu8ssp
+    - https://www.twitch.tv/loganfinney
+    - https://www.tiktok.com/@finneylogan
+    - https://vimeo.com/loganfinney
+    - https://www.flickr.com/photos/loganfinney
+    - https://soundcloud.com/loganfinney
+    - https://open.spotify.com/user/loganfinney27
+    - https://www.imdb.com/name/nm13184582/
+    - https://muckrack.com/loganfinney
+    - https://authory.com/LoganFinney
+    - https://linktr.ee/loganfinney
+    - https://letterboxd.com/loganfinney
+    - https://www.goodreads.com/loganfinney
+    - https://www.paypal.com/paypalme/LoganFinney
+    - https://cash.app/$loganfinney27
+    - https://account.venmo.com/u/loganfinney27
+    - https://ko-fi.com/loganfinney
+    - https://buymeacoffee.com/loganfinney
+    - https://www.patreon.com/loganfinney
+    - https://profile.stripe.com/@loganfinney
+# The fediverse account a search for anything@loganfinney.com finds
+# (.well-known/webfinger), and the author credit on Mastodon's link previews
+mastodon: Logan@syringa.social
+# Your Nostr key, the npub in cv.yaml written in hex, for
+# .well-known/nostr.json
+nostr: c705eba73cec200b7dbc89c8c2b48b29b4368f70730a32c233d6a706b5351b88
+# Your current memberships, as listed in trust.txt
+memberships:
+  - https://www.docproducers.org/
+  - https://www.archivalproducersalliance.com/
+  - https://www.nlgja.org/
+  - https://natasnw.org/
+  - https://www.ire.org/
+  - https://idahopressclub.org/
+  - https://idahopressclub.org/capitol-correspondents-association/
+  - https://www.spj.org/
+  - https://freelancejournalistsunion.org/
+# The site sits at the top of its domain, so its links start at /. Set here,
+# the build never asks GitHub for it: when that lookup fails, the build still
+# finishes, with every link to the stylesheet, scripts and fonts broken
+baseurl: ""
+author:
+  name: Logan Finney
+  # The name's parts, for logan.vcf
+  given_name: Logan
+  family_name: Finney
+  # The photo's description, for people who can't see it (the photo is
+  # cv.yaml's photo; your name comes just before it on the page, so it leaves
+  # the name out)
+  photo_description: Smiling, in a denim shirt, with sand dunes behind
+# The site's ten colors, read by styles.css, favicon.svg, the theme-color tags,
+# theme.js and site.webmanifest
+palette:
+  black: "#131211"
+  white: "#faf9f7"
+  grey-dark: "#4a4641"
+  grey-light: "#bab5af"
+  green-dark: "#1f4f39"
+  green-light: "#9ad4b6"
+  blue-dark: "#1d3f6e"
+  blue-light: "#a9c7ee"
+  red-dark: "#702323"
+  red-light: "#edabab"
+# The site's three typefaces and their files in fonts/, read by styles.css, the
+# font preloads in _includes/head.html and humans.txt. The CV's PDF uses two
+# of them, DejaVu Sans and Cousine: cv.yaml names them, and RenderCV reads the
+# TTFs in fonts/
+fonts:
+  sans:
+    name: DejaVu Sans
+    files:
+      - { file: dejavu-sans.woff2, weight: 400, style: normal, preload: true }
+      - { file: dejavu-sans-oblique.woff2, weight: 400, style: italic }
+      - { file: dejavu-sans-bold.woff2, weight: 700, style: normal, preload: true }
+  serif:
+    name: Gelasio
+    files:
+      - { file: gelasio.woff2, weight: 400 700, style: normal }
+      - { file: gelasio-italic.woff2, weight: 400 700, style: italic }
+  mono:
+    name: Cousine
+    files:
+      - { file: cousine.woff2, weight: 400, style: normal }
+      - { file: cousine-bold.woff2, weight: 700, style: normal }
+      - { file: cousine-italic.woff2, weight: 400, style: italic }
 include:
   - ".well-known"
+# RenderCV reads its template copies in markdown/ and the TTF fonts in fonts/
+# when it renders the CV; they aren't part of the site, which serves the WOFF2
+# fonts. Nor is RenderCV's output, rendercv_output/: the workflow takes the CV
+# from it. The others are from Jekyll's own default list, which a site's
+# exclude list replaces: the Gemfile and the Ruby gems the build installs
+exclude:
+  - markdown
+  - rendercv_output
+  - fonts/*.ttf
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+defaults:
+  - scope:
+      path: ""
+    values:
+      image:
+        path: /images/hero/state-capitol-pride.jpg
+        width: 1024
+        height: 683
+        alt: A rainbow flag reading Love trumps hate held up at the Idaho State Capitol
+# No theme: the site has its own layout and styles. The github-pages gem
+# otherwise adds its default theme, whose stylesheet nothing uses
+theme: null
+plugins:
+  - jekyll-redirect-from
+  - jekyll-seo-tag
+  - jekyll-sitemap

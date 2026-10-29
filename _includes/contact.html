@@ -1,0 +1,13 @@
+<address>
+    <dl>
+        {%- if site.contact.email %}
+        <div><dt>Email</dt> <dd><a class="u-email" href="mailto:{{ site.contact.email | escape }}">{{ site.contact.email | escape }}</a></dd></div>
+        {%- endif %}
+        {%- if site.contact.signal %}
+        <div><dt>Signal</dt> <dd><a rel="noopener noreferrer" href="{{ site.contact.signal.url | escape }}">{{ site.contact.signal.handle | escape }}</a></dd></div>
+        {%- endif %}
+        {%- if site.contact.whatsapp %}
+        <div><dt>WhatsApp</dt> <dd><a rel="noopener noreferrer" href="{{ site.contact.whatsapp.url | escape }}">{{ site.contact.whatsapp.handle | escape }}</a></dd></div>
+        {%- endif %}
+    </dl>
+</address>

@@ -1,0 +1,12 @@
+---
+# Published as nostr.json; the file is named without .json because, before
+# the build, it is a template, not JSON
+permalink: /.well-known/nostr.json
+---
+{%- comment -%} NIP-05 for this site's domain: names the Nostr key in cv.yaml "_",
+which Nostr apps show as the bare domain, so a Nostr profile whose NIP-05
+address is this domain shows it. As a static file it can't read the ?name=
+query, so every name gets this one answer {%- endcomment -%}
+{%- if site.nostr -%}
+{"names":{"_":"{{ site.nostr }}"}}
+{%- endif %}
