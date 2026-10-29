@@ -5,9 +5,11 @@
 ## Looking after the site
 
 - **To change the CV**, edit `cv.yaml` on GitHub. Saving it opens a pull
-  request; merge it once its build shows green, and the site updates.
-- **Runs by itself:** a daily check that republishes when the CV's dates roll
-  over; Dependabot's minor and patch updates, which merge once tested; and,
+  request; merge it once its build shows green, and the site updates. Your
+  name, job title, bio, email, website, location and links are in
+  `_config.yml` too, for the site's pages: a change to one goes in both.
+- **Runs by itself:** a daily check that republishes the site, so the CV's
+  dates stay current; Dependabot's minor and patch updates, which merge once tested; and,
   after each publish, the Internet Archive's Wayback Machine saving the pages
   the CV links to.
 - **Waits for you:** pull requests for major updates or for updates to the
