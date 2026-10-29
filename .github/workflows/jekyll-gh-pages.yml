@@ -51,8 +51,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     outputs:
-      cv-changed: ${{ steps.cv.outputs.changed }}
-      site: ${{ steps.facts.outputs.site }}
+      cv-changed: ${{ steps.build.outputs.changed }}
+      site: ${{ steps.build.outputs.site }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
@@ -60,69 +60,29 @@ jobs:
           python-version: "3.13"
       - name: Install RenderCV, resvg-py and Pillow (versions in .github/requirements.txt)
         run: pip install -r .github/requirements.txt
-      - name: Render the CV from cv.yaml
-        run: rendercv render cv.yaml
-      - name: Copy the site's facts from cv.yaml for Jekyll (_config.cv.yml)
-        id: facts
-        run: |
-          python3 .github/scripts/cv-settings.py
-          # The site's address, for the steps and jobs below
-          python3 -c "from ruamel.yaml import YAML; print('site=' + YAML(typ='safe').load(open('_config.cv.yml'))['url'])" >> "$GITHUB_OUTPUT"
-      # The daily run checks first: it publishes only if the CV's text differs
-      # from the live site's copy, through an edit or a date rolling over. The
-      # PDF's text is compared through its Typst source, because the PDF file
-      # carries the day it was made. A live copy that can't be fetched counts
-      # as a change
-      - name: Check whether the CV changed since the live site was built (daily run only)
-        id: cv
-        if: github.event_name == 'schedule'
-        env:
-          SITE: ${{ steps.facts.outputs.site }}
-        run: |
-          changed=false
-          for file in rendercv_output/*.md rendercv_output/*.typ; do
-            if ! curl -fsS "$SITE/rendercv_output/${file##*/}" -o "$RUNNER_TEMP/live" || ! cmp -s "$file" "$RUNNER_TEMP/live"; then
-              changed=true
-            fi
-          done
-          echo "changed=$changed" >> "$GITHUB_OUTPUT"
-          echo "The CV changed since the live site was built: $changed"
-      - name: Check every hero photo has a caption and a description in hero.js
-        run: python3 .github/scripts/hero-check.py
-      - name: Draw the favicon and app icons from favicon.svg
-        run: python3 .github/scripts/icons.py
-      - name: Put the CV on the site, and its PDF at /cv.pdf
-        run: |
-          python3 .github/scripts/rendercv-include.py rendercv_output/*.html
-          cp rendercv_output/*.pdf cv.pdf
       - name: Install Ruby and the site's Jekyll and plugins (versions in Gemfile.lock)
         uses: ruby/setup-ruby@651ff0d62c5c79bed6d53ec518387aae20e72c1a # v1.329.0
         with:
           ruby-version: "3.3"
           bundler-cache: true
-      # The github-pages gem builds the way GitHub Pages does; the second
-      # settings file carries the facts from cv.yaml
-      - name: Build the site
-        run: bundle exec jekyll build --config _config.yml,_config.cv.yml
+      # Renders the CV, copies its facts for Jekyll, checks the hero photos,
+      # draws the icons, puts the CV on the site, builds it with Jekyll and
+      # checks for unbuilt template code. On the daily run it also checks
+      # whether the CV changed since the live site was built
+      - name: Build the site from cv.yaml (.github/scripts/build.py)
+        id: build
+        run: python3 .github/scripts/build.py
         env:
           JEKYLL_ENV: production
           JEKYLL_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PAGES_REPO_NWO: ${{ github.repository }}
-      # A file that lost its front matter (the two --- lines at its top) is
-      # copied as it is, with its {{ }} and {% %} code unbuilt
-      - name: Check no file was published with its template code unbuilt
-        run: |
-          if leftovers=$(grep -rlI -e '{{' -e '{%' _site); then
-            echo "::error::Unbuilt template code in: $(echo $leftovers)"
-            exit 1
-          fi
       # Every link, image and script on the site's own pages, and each page's
       # link-preview image, must exist in the built site. Addresses on the
       # site's own domain are checked as files here; links to other sites
       # aren't checked
       - name: Check the site's own links and images (html-proofer, version in Gemfile.lock)
         env:
-          SITE: ${{ steps.facts.outputs.site }}
+          SITE: ${{ steps.build.outputs.site }}
         run: |
           domain=$(sed 's/[.]/\\./g; s/:/\\:/g' <<< "$SITE")
           bundle exec htmlproofer _site --disable-external --checks Links,Images,Scripts,OpenGraph --swap-urls "^$domain:"

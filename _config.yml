@@ -1,6 +1,6 @@
 # Your name, job title, bio, email, website, location, profiles and other
-# contacts are typed in cv.yaml only: .github/scripts/cv-settings.py copies
-# them into _config.cv.yml at build time, and Jekyll reads both files
+# contacts are typed in cv.yaml only: .github/scripts/build.py copies them
+# into _config.cv.yml at build time, and Jekyll reads both files
 # (site.title, site.tagline, site.description, site.url, site.location,
 # site.author.name, site.contact.email, site.contact.signal,
 # site.contact.whatsapp, site.social.links, site.mastodon)
@@ -55,10 +55,13 @@ include:
   - ".well-known"
 # RenderCV reads its template copies in markdown/ and the TTF fonts in fonts/
 # when it renders the CV; they aren't part of the site, which serves the WOFF2
-# fonts. The others are from Jekyll's own default list, which a site's exclude
-# list replaces: the Gemfile and the Ruby gems the build installs
+# fonts. RenderCV's output, rendercv_output/, is RenderCV's finished files:
+# Jekyll leaves it alone, and .github/scripts/build.py copies it into the
+# built site as it is. The others are from Jekyll's own default list, which a
+# site's exclude list replaces: the Gemfile and the Ruby gems the build installs
 exclude:
   - markdown
+  - rendercv_output
   - fonts/*.ttf
   - Gemfile
   - Gemfile.lock
@@ -75,12 +78,6 @@ defaults:
 # No theme: the site has its own layout and styles. The github-pages gem
 # otherwise adds its default theme, whose stylesheet nothing uses
 theme: null
-# The github-pages gem also makes a page of every Markdown file without front
-# matter. The only one here is RenderCV's rendercv_output/Logan_Finney_CV.md,
-# whose page would land on the same address as RenderCV's own
-# Logan_Finney_CV.html. Off, the Markdown file is published as it is
-optional_front_matter:
-  enabled: false
 plugins:
   - jekyll-redirect-from
   - jekyll-seo-tag
