@@ -182,8 +182,10 @@ cv:
         area: Broadcasting & Digital Media, School of Journalism and Mass Media
         degree: B.S.
         start_date: 2016
-        end_date: 2020
+        end_date: '2020-05-15'
         highlights:
+          - French minor
+          - 3.64 GPA
           - University Honors Program member
           - Dean’s List · fall 2016, spring 2017, fall 2017, spring 2018, fall 2018, spring 2019
       - institution: Sandpoint High School
