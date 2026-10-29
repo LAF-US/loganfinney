@@ -702,8 +702,8 @@ settings:
     design:
     locale:
     typst_path: OUTPUT_FOLDER/NAME_IN_SNAKE_CASE_CV.typ
-    pdf_path: OUTPUT_FOLDER/NAME_IN_SNAKE_CASE_CV.pdf
-    markdown_path: OUTPUT_FOLDER/NAME_IN_SNAKE_CASE_CV.md
+    pdf_path: cv.pdf
+    markdown_path: _includes/rendercv.md
     html_path: OUTPUT_FOLDER/NAME_IN_SNAKE_CASE_CV.html
     png_path: OUTPUT_FOLDER/NAME_IN_SNAKE_CASE_CV.png
     dont_generate_markdown: false

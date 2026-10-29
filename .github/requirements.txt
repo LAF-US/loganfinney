@@ -4,9 +4,3 @@
 
 # Render the CV from cv.yaml
 rendercv[full]==2.8
-# Draw the favicon and app icons from favicon.svg
-resvg-py==0.5.0
-pillow==12.3.0
-# Reads _config.yml's palette for the icons; RenderCV brings it in too, but
-# build.py imports it directly, so it is pinned here
-ruamel.yaml==0.19.1

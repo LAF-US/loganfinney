@@ -7,11 +7,10 @@ name: Build and publish the site
 # If any step fails, nothing is published and the live site keeps its last
 # good version.
 #
-# It runs on each push to main; daily, to check whether the CV's date-derived
-# text ("Last updated", durations ending "present") has rolled over, publishing
-# only if the CV changed; by hand from the Actions tab; and on pull requests,
-# short of publishing, so each proposed change (Dependabot's included) is
-# tested before it is merged.
+# It runs on each push to main; daily, so the CV's date-derived text ("Last
+# updated", durations ending "present") stays current; by hand from the
+# Actions tab; and on pull requests, short of publishing, so each proposed
+# change (Dependabot's included) is tested before it is merged.
 #
 # It looks after itself between a person's visits: Dependabot's minor and
 # patch updates merge themselves once tested, the daily run keeps itself
@@ -50,28 +49,33 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    outputs:
-      cv-changed: ${{ steps.build.outputs.changed }}
-      site: ${{ steps.build.outputs.site }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: "3.13"
-      - name: Install RenderCV, resvg-py and Pillow (versions in .github/requirements.txt)
+      - name: Install RenderCV (version in .github/requirements.txt)
         run: pip install -r .github/requirements.txt
       - name: Install Ruby and the site's Jekyll and plugins (versions in Gemfile.lock)
         uses: ruby/setup-ruby@651ff0d62c5c79bed6d53ec518387aae20e72c1a # v1.329.0
         with:
           ruby-version: "3.3"
           bundler-cache: true
-      # Renders the CV, copies its facts for Jekyll, checks the hero photos,
-      # draws the icons, puts the CV on the site, builds it with Jekyll and
-      # checks for unbuilt template code. On the daily run it also checks
-      # whether the CV changed since the live site was built
-      - name: Build the site from cv.yaml (.github/scripts/build.py)
-        id: build
-        run: python3 .github/scripts/build.py
+      # The PDF goes straight to cv.pdf, and the Markdown to
+      # _includes/rendercv.md for index.md.txt and llms-full.txt to include
+      # (cv.yaml's pdf_path and markdown_path)
+      - name: Render the CV from cv.yaml (RenderCV)
+        run: rendercv render cv.yaml
+      # RenderCV's own HTML, the CV inside its <article class="markdown-body">,
+      # unchanged, for index.html to include. raw keeps Jekyll from reading the
+      # CV's text as template code. If RenderCV's HTML has no such article,
+      # this stops, rather than publish the site without its CV
+      - name: Put the CV on the home page
+        run: |
+          grep -q '<article class="markdown-body">' rendercv_output/*.html
+          { echo '{% raw %}'; sed -n '/<article class="markdown-body">/,/<\/article>/p' rendercv_output/*.html | sed '1d;$d'; echo '{% endraw %}'; } > _includes/rendercv.html
+      - name: Build the site (Jekyll)
+        run: bundle exec jekyll build
         env:
           JEKYLL_ENV: production
           JEKYLL_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -81,11 +85,7 @@ jobs:
       # site's own domain are checked as files here; links to other sites
       # aren't checked
       - name: Check the site's own links and images (html-proofer, version in Gemfile.lock)
-        env:
-          SITE: ${{ steps.build.outputs.site }}
-        run: |
-          domain=$(sed 's/[.]/\\./g; s/:/\\:/g' <<< "$SITE")
-          bundle exec htmlproofer _site --disable-external --checks Links,Images,Scripts,OpenGraph --swap-urls "^$domain:"
+        run: bundle exec htmlproofer _site --disable-external --checks Links,Images,Scripts,OpenGraph --swap-urls '^https\://loganfinney\.com:'
       - name: Serve built site
         run: |
           (python3 -m http.server 8000 -d _site >/dev/null 2>&1 &)
@@ -111,9 +111,8 @@ jobs:
           include-hidden-files: true
 
   deploy:
-    # Publishes main only, never a pull request's test build, and on the daily
-    # run only if the CV changed
-    if: ${{ github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && needs.build.outputs.cv-changed != 'false' }}
+    # Publishes main only, never a pull request's test build
+    if: ${{ github.ref == 'refs/heads/main' && github.event_name != 'pull_request' }}
     needs: build
     runs-on: ubuntu-latest
     permissions:
@@ -142,7 +141,6 @@ jobs:
     steps:
       - name: Ask the Wayback Machine to save the site and its outgoing links
         env:
-          SITE: ${{ needs.build.outputs.site }}
           ACCESS_KEY: ${{ secrets.ARCHIVE_ORG_ACCESS_KEY }}
           SECRET_KEY: ${{ secrets.ARCHIVE_ORG_SECRET_KEY }}
         run: |
@@ -153,7 +151,7 @@ jobs:
           # The Wayback Machine's Save Page Now: the home page unless saved in
           # the last hour, each linked page unless saved in the last 30 days
           api() { curl -sS -H "Accept: application/json" -H "Authorization: LOW $ACCESS_KEY:$SECRET_KEY" "$@" || true; }
-          response=$(api --retry 3 --max-time 60 -X POST https://web.archive.org/save --data-urlencode "url=$SITE/" -d capture_outlinks=1 -d if_not_archived_within=1h,30d)
+          response=$(api --retry 3 --max-time 60 -X POST https://web.archive.org/save --data-urlencode "url=https://loganfinney.com/" -d capture_outlinks=1 -d if_not_archived_within=1h,30d)
           job=$(jq -r '.job_id // empty' <<< "$response" 2>/dev/null || true)
           if [ -z "$job" ]; then
             reason=$(jq -r '.message // .status_ext // empty' <<< "$response" 2>/dev/null || head -c 300 <<< "$response")
@@ -223,8 +221,8 @@ jobs:
           else
             gh pr merge --merge --match-head-commit "$tested" "$pr"
             # A merge made with this job's token starts no run of its own
-            # (only a by-hand run does), so main would wait for the next CV
-            # change to publish. This starts that run
+            # (only a by-hand run does), so main would wait for the next daily
+            # run to publish. This starts that run now
             gh workflow run jekyll-gh-pages.yml --repo "$GITHUB_REPOSITORY" --ref main
           fi
 
