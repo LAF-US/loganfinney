@@ -139,9 +139,6 @@ defaults:
         width: 1024
         height: 683
         alt: A rainbow flag reading Love trumps hate held up at the Idaho State Capitol
-# No theme: the site has its own layout and styles. The github-pages gem
-# otherwise adds its default theme, whose stylesheet nothing uses
-theme: null
 plugins:
   - jekyll-redirect-from
   - jekyll-seo-tag

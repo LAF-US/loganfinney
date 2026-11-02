@@ -78,8 +78,6 @@ jobs:
         run: bundle exec jekyll build
         env:
           JEKYLL_ENV: production
-          JEKYLL_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PAGES_REPO_NWO: ${{ github.repository }}
       # Every link, image and script on the site's own pages, and each page's
       # link-preview image, must exist in the built site. Addresses on the
       # site's own domain are checked as files here; links to other sites
