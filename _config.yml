@@ -5,8 +5,6 @@ url: https://loganfinney.com
 tagline: Documentary Journalist
 description: Logan Finney is an award-winning political reporter who covers civics, elections, and government. He grew up hunting, hiking, and skiing in the Idaho Panhandle mountains and remains forever fascinated by the people, history, and culture of his home state.
 location: Idaho, USA
-# Beside your name on the home page, as on the CV
-photo: images/cv-photo.jpg
 # The contact line, logan.vcf and security.txt
 contact:
   email: logan@loganfinney.com
@@ -77,10 +75,6 @@ author:
   # The name's parts, for logan.vcf
   given_name: Logan
   family_name: Finney
-  # The photo's description, for people who can't see it (the photo is
-  # cv.yaml's photo; your name comes just before it on the page, so it leaves
-  # the name out)
-  photo_description: Smiling, in a denim shirt, with sand dunes behind
 # The site's ten colors, read by styles.css, favicon.svg, the theme-color tags,
 # theme.js and site.webmanifest
 palette:
@@ -118,13 +112,12 @@ fonts:
       - { file: cousine-italic.woff2, weight: 400, style: italic }
 include:
   - ".well-known"
-# RenderCV reads its template copies in markdown/ and the TTF fonts in fonts/
-# when it renders the CV; they aren't part of the site, which serves the WOFF2
-# fonts. Nor is RenderCV's output, rendercv_output/: the workflow takes the CV
-# from it. The others are from Jekyll's own default list, which a site's
-# exclude list replaces: the Gemfile and the Ruby gems the build installs
+# RenderCV reads the TTF fonts in fonts/ when it renders the CV; they aren't
+# part of the site, which serves the WOFF2 fonts. Nor is RenderCV's output,
+# rendercv_output/: the workflow takes the CV from it. The others are from
+# Jekyll's own default list, which a site's exclude list replaces: the Gemfile
+# and the Ruby gems the build installs
 exclude:
-  - markdown
   - rendercv_output
   - fonts/*.ttf
   - Gemfile

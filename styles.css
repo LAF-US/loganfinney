@@ -40,9 +40,6 @@
        centered and an even number of squares wide (at most 48), so its edges
        land on grid lines. Rules are drawn with box-shadow so they add no height */
     --column: min(48rlh, calc(100% - 2rlh));
-    /* The contact box and the rule over the bio: ten squares wide, room for
-       the longest contact line */
-    --contacts: 10rlh;
 }
 
 [data-theme="light"] { color-scheme: light; }
@@ -111,7 +108,6 @@ li {
     font-family: var(--font-serif);
 }
 
-address,
 figcaption,
 small {
     font-family: var(--font-mono);
@@ -145,7 +141,6 @@ footer {
     h2,
     h3,
     h4,
-    address div,
     main p,
     footer p {
         text-box: trim-both cap alphabetic;
@@ -228,9 +223,7 @@ body:has(figure) header {
     box-shadow: none;
 }
 
-/* The home page's opening: the photo, then your name and tagline, your own
-   photo, your bio and the contacts, starting on the first grid row below the
-   photo */
+/* The home page's opening: the photo, which the CV starts under */
 section {
     position: relative;
     padding-top: calc(100vw * 2 / 3);
@@ -283,65 +276,6 @@ figure div::after {
     background-image: linear-gradient(to bottom, var(--bg), transparent 28%, transparent 70%, var(--hero-wash) 90%);
 }
 
-/* The text sits over the foot of the photo, under its caption */
-section > div {
-    position: relative;
-    z-index: 2;
-}
-
-/* Your name and tagline on the left, your photo on the right, and under
-   them your bio on the left, the contacts on the right; on a narrow screen
-   each goes under the one before */
-section > div {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    gap: 1rlh;
-}
-
-/* Your bio and the contacts start one blank square under your name, tagline
-   and photo */
-section > div + div {
-    margin-top: 1rlh;
-}
-
-/* A rule on the right side of the page, beside your name and tagline, and
-   your photo under its right end */
-section > div > div {
-    width: min(var(--contacts), 100%);
-    /* Stays at the right side when it goes under your name and tagline */
-    margin-left: auto;
-    box-shadow: inset 0 1px 0 var(--ink);
-}
-
-/* Your photo, four squares on a side, a blank square under the rule: its
-   top level with the top of your name, its foot level with the bio's rule.
-   It's drawn one square below its place, so nothing around it moves */
-section > div img {
-    display: block;
-    position: relative;
-    top: 1rlh;
-    width: 4rlh;
-    height: 4rlh;
-    margin-left: auto;
-    object-fit: cover;
-}
-
-/* Your name and tagline under the photo: the name two squares high, the
-   tagline one. Like every h1 (below), the name starts one blank square down */
-hgroup h1 {
-    font-size: 2.5rem;
-    line-height: 3rem;
-    margin: 0;
-}
-
-hgroup p {
-    font-size: 1.25rem;
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    text-transform: uppercase;
-}
-
 /* ---------- Page scaffolding ---------- */
 
 /* The CV, or the 404 page's message, in the column under the opening */
@@ -349,7 +283,7 @@ main > div {
     padding-top: 2rlh;
 }
 
-/* Links in the main content: the contacts, the CV and the way home from the 404 page */
+/* Links in the main content: the CV and the way home from the 404 page */
 main a {
     color: var(--main);
     text-decoration: underline;
@@ -363,18 +297,16 @@ main a:hover {
 
 /* ---------- CV (RenderCV) ---------- */
 
-/* Everything between the bio and the footer is RenderCV's own HTML
-   (_includes/rendercv.html), unchanged: h2 for the CV's title, h3 for each
-   section, h4 for each entry (those levels come from the copies of RenderCV's
-   templates in markdown/; the page's h1 is your name), then paragraphs and
-   bulleted or numbered lists. Every line is one square tall, so it all sits
-   on the grid */
+/* Everything between the photo and the footer is RenderCV's own HTML
+   (_includes/rendercv.html), unchanged: h1 for your name, which opens the
+   CV, h2 for each section, h3 for each entry, then paragraphs and bulleted
+   or numbered lists. Every line is one square tall, so it all sits on the
+   grid */
 
-/* Headings (the 404 page's title, the CV's title and its sections):
+/* Headings (the 404 page's title, your name and the CV's sections):
    capitals one line high */
 h1,
-h2,
-h3 {
+h2 {
     font-size: 1.25rem;
     padding-top: 1rlh;
     font-weight: 700;
@@ -388,32 +320,30 @@ h3 {
 /* With text-box trimming: the blank square plus the centering gap */
 @supports (text-box: trim-both cap alphabetic) {
     h1,
-    h2,
-    h3 {
+    h2 {
         padding-top: calc(1rlh + (1lh - 1cap) / 2);
     }
 }
 
-/* A title (the 404 page's, the CV's) opens its page or CV, with no space
+/* A title (the 404 page's, your name) opens its page or CV, with no space
    above it */
-h1,
-h2 {
+h1 {
     margin-top: 0;
 }
 
 /* Each section starts under a rule */
-h3 {
+h2 {
     box-shadow: inset 0 1px 0 var(--ink);
 }
 
 /* Entries: one blank square above each, body size; RenderCV bolds the name */
-h4 {
+h3 {
     font-size: 1rem;
     font-weight: 400;
     margin-top: 1rlh;
 }
 
-h3 + h4 {
+h2 + h3 {
     margin-top: 0;
 }
 
@@ -507,49 +437,7 @@ body > a:focus {
     outline-offset: 2px;
 }
 
-/* ---------- Contact ---------- */
-
-/* One contact per line, left-aligned, in a box on the right side of the
-   page, beside your bio and level with its lines */
-address {
-    width: min(var(--contacts), 100%);
-    /* Stays at the right side when it goes under your bio */
-    margin-left: auto;
-    padding-top: 1rlh;
-    font-size: 0.75rem;
-    /* Browsers set <address> in italic unless told otherwise */
-    font-style: normal;
-    color: var(--ink-soft);
-}
-
-/* Each label and its handle share a line: the label bold, the handle regular */
-address dt,
-address dd {
-    display: inline;
-}
-
-address dt {
-    font-weight: 700;
-}
-
 /* ---------- Home layout ---------- */
-
-/* The bio (the Summary section in cv.yaml) under the name, tagline and
-   photo, on the left, under a rule as wide as the one over your photo */
-section > div > p {
-    width: fit-content;
-    max-width: 68ch;
-    padding-top: 1rlh;
-    background: linear-gradient(var(--ink), var(--ink)) top left / min(var(--contacts), 100%) 1px no-repeat;
-    color: var(--ink-soft);
-}
-
-/* With text-box trimming: the blank square plus the centering gap */
-@supports (text-box: trim-both cap alphabetic) {
-    section > div > p {
-        padding-top: calc(1rlh + (1lh - 1cap) / 2);
-    }
-}
 
 /* The photo's caption: small print in a half-frosted box at the bottom right
    of the photo, one square up, in line with the right edge of the text
@@ -579,8 +467,8 @@ figcaption:empty {
 
 /* ---------- Print ---------- */
 
-/* On paper: the name, tagline, contacts, bio and CV in the light theme's
-   ink, with no grid, photos, theme switch or fire */
+/* On paper: the CV in the light theme's ink, with no grid, photos, theme
+   switch or fire */
 @media print {
     :root,
     [data-theme] {
@@ -600,14 +488,9 @@ figcaption:empty {
 
     body > a,
     header button,
-    figure,
+    section,
     footer canvas {
         display: none;
-    }
-
-    /* No photo above your name, so the text starts one square down */
-    section {
-        padding-top: 1rlh;
     }
 
     footer {

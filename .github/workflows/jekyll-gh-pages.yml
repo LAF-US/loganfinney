@@ -61,19 +61,20 @@ jobs:
         with:
           ruby-version: "3.3"
           bundler-cache: true
-      # The PDF goes straight to cv.pdf, and the Markdown to
-      # _includes/rendercv.md for index.md.txt and llms-full.txt to include
-      # (cv.yaml's pdf_path and markdown_path)
+      # The PDF goes straight to cv.pdf, the Markdown to _includes/rendercv.md
+      # for index.md.txt and llms-full.txt to include, and the HTML to
+      # rendercv_output/cv.html for the next step. The paths are set here, so
+      # cv.yaml needs no settings for the site
       - name: Render the CV from cv.yaml (RenderCV)
-        run: rendercv render cv.yaml
+        run: rendercv render cv.yaml --pdf-path cv.pdf --markdown-path _includes/rendercv.md --html-path rendercv_output/cv.html
       # RenderCV's own HTML, the CV inside its <article class="markdown-body">,
       # unchanged, for index.html to include. raw keeps Jekyll from reading the
       # CV's text as template code. If RenderCV's HTML has no such article,
       # this stops, rather than publish the site without its CV
       - name: Put the CV on the home page
         run: |
-          grep -q '<article class="markdown-body">' rendercv_output/*.html
-          { echo '{% raw %}'; sed -n '/<article class="markdown-body">/,/<\/article>/p' rendercv_output/*.html | sed '1d;$d'; echo '{% endraw %}'; } > _includes/rendercv.html
+          grep -q '<article class="markdown-body">' rendercv_output/cv.html
+          { echo '{% raw %}'; sed -n '/<article class="markdown-body">/,/<\/article>/p' rendercv_output/cv.html | sed '1d;$d'; echo '{% endraw %}'; } > _includes/rendercv.html
       - name: Build the site (Jekyll)
         run: bundle exec jekyll build
         env:
@@ -238,6 +239,65 @@ jobs:
         run: gh api -X PUT "repos/${{ github.repository }}/actions/workflows/jekyll-gh-pages.yml/enable"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # While .github/requirements.txt installs RenderCV 2.9 from its unreleased
+  # code, the daily run checks whether that's still needed. Once 2.9 is on
+  # PyPI, the code moves on from the pinned commit, or the pin is gone, it
+  # opens an issue for the site's owner, or updates the one already open. It
+  # doesn't stop the site publishing
+  check-rendercv:
+    if: ${{ github.event_name == 'schedule' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - name: Look for RenderCV 2.9's release or newer unreleased code
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          # The branch of RenderCV's unreleased 2.9 code
+          BRANCH: sinaatalay/triage-prs-issues-v2-9
+        run: |
+          set -o pipefail
+          # The commit .github/requirements.txt installs RenderCV from
+          pinned=$(gh api "repos/$GITHUB_REPOSITORY/contents/.github/requirements.txt?ref=$GITHUB_SHA" -H "Accept: application/vnd.github.raw" | grep -o -m1 'rendercv@[0-9a-f]\{40\}' | cut -d@ -f2) || pinned=""
+          notes=()
+          if [ -z "$pinned" ]; then
+            notes+=("The site no longer installs RenderCV from unreleased code (.github/requirements.txt), so the check-rendercv job in .github/workflows/jekyll-gh-pages.yml can be removed.")
+          fi
+          # A RenderCV release of 2.9 or later on PyPI
+          if latest=$(curl -fsS https://pypi.org/pypi/rendercv/json | jq -er .info.version); then
+            if [ "$(printf '%s\n' 2.9 "$latest" | sort -V | head -1)" = 2.9 ]; then
+              notes+=("RenderCV $latest is out on PyPI. .github/requirements.txt can go back to a released version, rendercv[full]==$latest without the rendercv-fonts line, and the check-rendercv job can be removed.")
+            fi
+          else
+            echo "::warning::Couldn't read RenderCV's latest version from PyPI"
+          fi
+          # The 2.9 branch's latest commit; none once the branch is merged or deleted
+          if head=$(git ls-remote https://github.com/rendercv/rendercv "refs/heads/$BRANCH" | cut -f1); then
+            if [ -z "$head" ]; then
+              notes+=("RenderCV's $BRANCH branch is gone, merged or deleted, so a release of 2.9 may be near.")
+            elif [ -n "$pinned" ] && [ "$head" != "$pinned" ]; then
+              notes+=("RenderCV's $BRANCH branch has newer code than the commit the site uses: https://github.com/rendercv/rendercv/compare/$pinned...$head")
+            fi
+          else
+            echo "::warning::Couldn't reach RenderCV's repository"
+          fi
+          if [ ${#notes[@]} -eq 0 ]; then
+            echo "Nothing new from RenderCV"
+            exit 0
+          fi
+          body=$(printf '%s\n\n' "${notes[@]}")
+          title="RenderCV has an update to look at"
+          issue=$(gh issue list --state open --json number,title --jq ".[] | select(.title == \"$title\") | .number" | head -1)
+          if [ -n "$issue" ]; then
+            # Keep the open issue's text current, without a new notification each day
+            gh issue edit "$issue" --body "$body"
+          else
+            # loganfinney27 is the site's owner, as in .github/CODEOWNERS
+            gh issue create --title "$title" --assignee loganfinney27 --body "$body"
+          fi
 
   # A failed daily run opens an issue assigned to the site's owner, or adds to
   # the one already open, so a person hears of it. GitHub's own email for a
