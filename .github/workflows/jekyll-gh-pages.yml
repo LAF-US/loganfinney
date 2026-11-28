@@ -61,12 +61,19 @@ jobs:
         with:
           ruby-version: "3.3"
           bundler-cache: true
-      # The PDF goes straight to cv.pdf, the Markdown to _includes/rendercv.md
-      # for index.md.txt and llms-full.txt to include, and the HTML to
-      # rendercv_output/cv.html for the next step. The paths are set here, so
-      # cv.yaml needs no settings for the site
-      - name: Render the CV from cv.yaml (RenderCV)
-        run: rendercv render cv.yaml --pdf-path cv.pdf --markdown-path _includes/rendercv.md --html-path rendercv_output/cv.html
+      # The Markdown goes to _includes/rendercv.md for index.md.txt and
+      # llms-full.txt to include, and the HTML to rendercv_output/cv.html for
+      # the next step. The paths are set here, so cv.yaml needs no settings for
+      # the site
+      - name: Render the CV for the web from cv.yaml (RenderCV)
+        run: rendercv render cv.yaml --markdown-path _includes/rendercv.md --html-path rendercv_output/cv.html --dont-generate-pdf --dont-generate-png --dont-generate-svg
+      # The PDF, cv.pdf, is the same CV with only the first line of contact
+      # details: location, email and phone. An overlay clears the website and
+      # the other links for this render alone, so the web CV keeps them
+      - name: Render the CV's PDF from cv.yaml (RenderCV)
+        run: |
+          printf 'cv:\n  website:\n  social_networks: []\n  custom_connections: []\n' > rendercv_output/pdf.yaml
+          rendercv render cv.yaml --overlay rendercv_output/pdf.yaml --pdf-path cv.pdf --dont-generate-markdown --dont-generate-html --dont-generate-png --dont-generate-svg
       # RenderCV's own HTML, the CV inside its <article class="markdown-body">,
       # unchanged, for index.html to include. raw keeps Jekyll from reading the
       # CV's text as template code. If RenderCV's HTML has no such article,
