@@ -1,0 +1,12 @@
+---
+---
+/* TEAM */
+Journalist: {{ site.author.name }}
+{% if site.contact.email %}Contact: {{ site.contact.email }}
+{% endif %}{% if site.location %}From: {{ site.location }}
+{% endif %}
+/* SITE */
+Language: English
+Standards: HTML5, CSS3, JavaScript
+Components: Jekyll, RenderCV, GitHub Pages
+Fonts: {% for font in site.fonts %}{{ font[1].name }}{% unless forloop.last %}, {% endunless %}{% endfor %}

@@ -14,6 +14,17 @@ Thumbs.db
 .env.local
 node_modules/
 
-# Build artifacts
-dist/
-build/
+# What Jekyll and Bundler write when the site is built locally (from GitHub's
+# Jekyll .gitignore template)
+_site/
+.jekyll-cache/
+.jekyll-metadata
+.bundle/
+vendor/
+
+# Made from cv.yaml at build time by RenderCV and the workflow's "Put the CV
+# on the home page" step
+rendercv_output/
+_includes/rendercv.html
+_includes/rendercv.md
+cv.pdf

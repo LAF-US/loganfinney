@@ -1,0 +1,11 @@
+# The Python packages the site build installs, at exact versions; Dependabot
+# keeps them current (.github/dependabot.yml). The packages these bring in
+# follow the 7-day rule in .github/workflows/jekyll-gh-pages.yml.
+
+# Render the CV from cv.yaml. RenderCV 2.9 isn't released yet, so it comes from
+# one commit of its unreleased code (rendercv/rendercv pull request 812), with
+# the font package 2.9 needs, which is in the same commit. The daily run's
+# check-rendercv job opens an issue once 2.9 is out; then this goes back to
+# rendercv[full]==2.9, without the second line
+rendercv[full] @ git+https://github.com/rendercv/rendercv@d537e0afd2c97ee1e1cc63d63491d6ffa98377b3
+rendercv-fonts @ git+https://github.com/rendercv/rendercv@d537e0afd2c97ee1e1cc63d63491d6ffa98377b3#subdirectory=packages/rendercv-fonts

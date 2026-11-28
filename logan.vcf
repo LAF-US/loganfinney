@@ -1,0 +1,12 @@
+---
+---
+BEGIN:VCARD
+VERSION:4.0
+{% assign family = site.author.family_name | replace: "\", "\\\\" | replace: ",", "\," | replace: ";", "\;" %}{% assign given = site.author.given_name | replace: "\", "\\\\" | replace: ",", "\," | replace: ";", "\;" %}N:{{ family }};{{ given }};;;
+{% include vcard-line.txt property="FN:" value=site.author.name text=true %}
+{% if site.tagline %}{% include vcard-line.txt property="TITLE:" value=site.tagline text=true %}
+{% endif %}{% if site.contact.email %}{% include vcard-line.txt property="EMAIL:" value=site.contact.email text=true %}
+{% endif %}{% assign u = site.url | append: "/" %}{% include vcard-line.txt property="URL:" value=u %}
+{% if site.contact.signal %}{% include vcard-line.txt property="IMPP:" value=site.contact.signal.url %}
+{% endif %}{% if site.contact.whatsapp %}{% include vcard-line.txt property="IMPP:" value=site.contact.whatsapp.url %}
+{% endif %}END:VCARD

@@ -1,0 +1,23 @@
+name: Problem with the site
+description: Something on loganfinney.com is wrong, broken or hard to use
+body:
+  - type: input
+    id: page
+    attributes:
+      label: Page
+      description: The address where you saw it
+      placeholder: https://loganfinney.com/
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What's wrong
+      description: What you saw, and what you expected instead
+    validations:
+      required: true
+  - type: input
+    id: browser
+    attributes:
+      label: Browser and device
+      placeholder: Firefox on Windows, Safari on iPhone, a screen reader…
