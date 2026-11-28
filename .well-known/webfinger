@@ -1,4 +1,5 @@
 ---
+permalink: /.well-known/webfinger
 ---
 {%- comment -%} WebFinger (RFC 7033) for this site's domain: a fediverse search for any
 address @ this domain finds the Mastodon account in cv.yaml. The subject names
