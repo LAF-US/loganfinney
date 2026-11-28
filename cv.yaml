@@ -98,6 +98,10 @@ cv:
       url: https://profile.stripe.com/@loganfinney
       fontawesome_icon: stripe
   sections:
+    # Also the site's bio, under your name on the home page, and the
+    # description in _config.yml
+    Summary:
+      - Logan Finney is an award-winning documentary journalist who reports on religion, faith, and values and has covered civics, elections, and government. He grew up hunting, hiking, and skiing in the Idaho Panhandle mountains and remains forever fascinated by the people, history, and culture of his home state.
     experience:
       - company: '[FāVS News](https://favs.news/)'
         position: reporter and photographer
